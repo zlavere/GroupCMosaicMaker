@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/ImageSandbox/obj/x64/Release
+/ImageSandbox/obj/x64/Debug
+/ImageSandbox/obj/x86
+/ImageSandbox/obj/ARM/Release
+/ImageSandbox/obj/ARM/Debug
+/.vs/GroupCMosaicMaker/v15/Server/sqlite3/db.lock

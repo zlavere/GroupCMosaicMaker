@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2047
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageSandbox", "ImageSandbox\ImageSandbox.csproj", "{CF0F10F7-7223-451D-9E70-CF65D6CB3AFD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MosaicMaker", "ImageSandbox\MosaicMaker.csproj", "{CF0F10F7-7223-451D-9E70-CF65D6CB3AFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
