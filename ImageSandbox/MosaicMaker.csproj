@@ -96,6 +96,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="utility\RelayCommand.cs" />
+    <Compile Include="viewmodel\MainPageViewModel.cs" />
     <Compile Include="view\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -144,7 +145,6 @@
     <Folder Include="extensions\" />
     <Folder Include="IO\" />
     <Folder Include="model\" />
-    <Folder Include="viewmodel\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

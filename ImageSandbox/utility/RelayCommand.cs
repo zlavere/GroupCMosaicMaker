@@ -3,7 +3,7 @@
 namespace ImageSandbox.utility
 {
     /// <summary>
-    /// Handles the relaying of commands for the MVVM structure.
+    ///     Handles the relaying of commands for the MVVM structure.
     /// </summary>
     public class RelayCommand
     {
