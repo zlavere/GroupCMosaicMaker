@@ -6,13 +6,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="653.5" Width="792.5">
 
-    <Grid>
-        <Image x:Name="imageDisplay" HorizontalAlignment="Left" Height="429" Margin="37,34,0,0" VerticalAlignment="Top" Width="684"/>
-        <Button x:Name="loadButton" Content="Load" HorizontalAlignment="Left" Margin="104,500,0,0" VerticalAlignment="Top" Click="loadButton_Click"/>
-        <Button x:Name="saveButton" Content="Save" HorizontalAlignment="Left" Margin="192,500,0,0" VerticalAlignment="Top" Click="saveButton_Click"/>
-        <Button x:Name="settingsButton" Content="Settings" HorizontalAlignment="Left" Margin="282,500,0,0" VerticalAlignment="Top"/>
+    <Grid Margin="0,0,10,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Image x:Name="imageDisplay" HorizontalAlignment="Center" Height="429" VerticalAlignment="Center" Width="684"/>
+        <AppBarButton x:Name="openImageButton" HorizontalAlignment="Left" Icon="BrowsePhotos" Label="Open" Margin="10,10,0,0" VerticalAlignment="Top" Height="76" Click="loadButton_Click"/>
+        <AppBarButton x:Name="saveMosaicButton" HorizontalAlignment="Left" Icon="SaveLocal" Label="Save Mosaic" Margin="78,10,0,0" VerticalAlignment="Top" Click="saveButton_Click"/>
+        <AppBarButton x:Name="settingsButton" HorizontalAlignment="Left" Icon="Setting" Label="Settings" Margin="151,10,0,0" VerticalAlignment="Top" Height="76"/>
+
 
     </Grid>
 </Page>
