@@ -6,14 +6,52 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="653.5" Width="792.5">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
 
-    <Grid Margin="0,0,10,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Image x:Name="imageDisplay" HorizontalAlignment="Center" Height="429" VerticalAlignment="Center" Width="684"/>
-        <AppBarButton x:Name="openImageButton" HorizontalAlignment="Left" Icon="BrowsePhotos" Label="Open" Margin="10,10,0,0" VerticalAlignment="Top" Height="76" Click="loadButton_Click"/>
-        <AppBarButton x:Name="saveMosaicButton" HorizontalAlignment="Left" Icon="SaveLocal" Label="Save Mosaic" Margin="78,10,0,0" VerticalAlignment="Top" Click="saveButton_Click"/>
-        <AppBarButton x:Name="settingsButton" HorizontalAlignment="Left" Icon="Setting" Label="Settings" Margin="151,10,0,0" VerticalAlignment="Top" Height="76"/>
-
-
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+        <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <CommandBar Grid.Column="0" Grid.Row="0">
+            <AppBarButton x:Name="openImageButton"  Icon="BrowsePhotos" Label="Open" Margin="0" VerticalAlignment="Top"  Click="loadButton_Click"/>
+            <AppBarButton x:Name="saveMosaicButton" Icon="SaveLocal" Label="Save Mosaic" Margin="0" VerticalAlignment="Top" Click="saveButton_Click"/>
+            <AppBarButton x:Name="settingsButton"  Icon="Setting" Label="Settings" Margin="0" VerticalAlignment="Top" />
+        </CommandBar>
+        <Grid Grid.Row="1" Margin="0,10, 0, 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="5" x:Name="GridSizeLabel" Text="Grid Size"/>
+                <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="5" x:Name="GridSizeInput" InputScope="Number" PlaceholderText="Size in Pixels" />
+            </Grid>
+            <Grid Grid.Column="1" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="0" Grid.Row="0" x:Name="originalImageLabel" Margin="10"  Text="Original Image"/>
+                <Image Grid.Column="0" Grid.Row="1"  x:Name="originalImage"  Margin="10"  MinWidth="50" MinHeight="50"  />
+                <TextBlock Grid.Column="1" Grid.Row="0" x:Name="outputImageLabel" Margin="10"   Text="Output Preview Image"/>
+                <Image Grid.Column="1" Grid.Row="1" x:Name="outputImage"  MinWidth="50" MinHeight="50" Margin="10" />
+            </Grid>
+        </Grid>
     </Grid>
 </Page>

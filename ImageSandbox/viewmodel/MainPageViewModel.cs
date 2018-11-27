@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace ImageSandbox.viewmodel
+namespace ImageSandbox.ViewModel
 {
     /// <summary>
     ///     Handles communications between the view and model in a testable fashion.

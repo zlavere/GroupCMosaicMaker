@@ -9,13 +9,8 @@ namespace ImageSandbox.IO
     /// <summary>
     /// 
     /// </summary>
-    class ImageReader
+    public class ImageReader
     {
-
-        //TODO
-        /*
-         * Should be able to read various different kinds of image files.
-         * Possibly a different method for each type.
-         */
+        //TODO Should be able to read various different kinds of image files. Possibly a different method for each type.
     }
 }

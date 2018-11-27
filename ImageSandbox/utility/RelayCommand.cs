@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ImageSandbox.utility
+namespace ImageSandbox.Utility
 {
     /// <summary>
     ///     Handles the relaying of commands for the MVVM structure.

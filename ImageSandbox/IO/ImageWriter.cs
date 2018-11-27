@@ -9,13 +9,8 @@ namespace ImageSandbox.IO
     /// <summary>
     /// 
     /// </summary>
-    class ImageWriter
+    public class ImageWriter
     {
-        //TODO
-        /*
-         * Handle saving as various different image file types?
-         *
-         * Could use a different class for any kind of file type conversion needed.
-         */
+        //TODO Handle saving as various different image file types? Could use a different class for any kind of file type conversion needed.
     }
 }

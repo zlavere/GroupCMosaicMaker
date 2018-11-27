@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
 using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
@@ -14,6 +16,7 @@ using Windows.UI.Xaml.Media.Imaging;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace ImageSandbox
+
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
@@ -33,6 +36,8 @@ namespace ImageSandbox
         public MainPage()
         {
             this.InitializeComponent();
+
+            ApplicationView.PreferredLaunchViewSize = new Size(1080, 720);
 
             this.modifiedImage = null;
             this.dpiX = 0;
@@ -108,7 +113,7 @@ namespace ImageSandbox
                 using (var writeStream = this.modifiedImage.PixelBuffer.AsStream())
                 {
                     await writeStream.WriteAsync(sourcePixels, 0, sourcePixels.Length);
-                    this.imageDisplay.Source = this.modifiedImage;
+                    this.outputImage.Source = this.modifiedImage;
                 }
             }
         }

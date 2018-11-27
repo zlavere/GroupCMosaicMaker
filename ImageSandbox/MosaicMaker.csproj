@@ -98,14 +98,14 @@
     <Compile Include="IO\ImageReader.cs" />
     <Compile Include="IO\ImageWriter.cs" />
     <Compile Include="IO\PaletteReader.cs" />
-    <Compile Include="model\Mosaic.cs" />
-    <Compile Include="utility\RelayCommand.cs" />
-    <Compile Include="viewmodel\MainPageViewModel.cs" />
-    <Compile Include="view\MainPage.xaml.cs">
+    <Compile Include="Model\IMosaic.cs" />
+    <Compile Include="Utility\RelayCommand.cs" />
+    <Compile Include="ViewModel\MainPageViewModel.cs" />
+    <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="view\SettingsPage.xaml.cs">
+    <Compile Include="View\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -130,11 +130,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="view\MainPage.xaml">
+    <Page Include="View\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="view\SettingsPage.xaml">
+    <Page Include="View\SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -145,8 +145,8 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="controller\" />
-    <Folder Include="extensions\" />
+    <Folder Include="Controller\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

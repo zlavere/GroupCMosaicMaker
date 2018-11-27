@@ -9,12 +9,8 @@ namespace ImageSandbox.IO
     /// <summary>
     /// 
     /// </summary>
-    class PaletteReader
+    public class PaletteReader
     {
-
-        //TODO
-        /*
-         * Reads the images in a folder as the mosaic palette.
-         */
+        //TODO Reads the images in a folder as the mosaic palette.
     }
 }
