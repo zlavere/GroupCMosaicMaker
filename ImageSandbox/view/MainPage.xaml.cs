@@ -107,7 +107,7 @@ namespace ImageSandbox
 
                 var sourcePixels = pixelData.DetachPixelData();
 
-                this.giveImageRedTint(sourcePixels, decoder.PixelWidth, decoder.PixelHeight);
+                //this.giveImageRedTint(sourcePixels, decoder.PixelWidth, decoder.PixelHeight);
 
                 this.modifiedImage = new WriteableBitmap((int)decoder.PixelWidth, (int)decoder.PixelHeight);
                 using (var writeStream = this.modifiedImage.PixelBuffer.AsStream())
