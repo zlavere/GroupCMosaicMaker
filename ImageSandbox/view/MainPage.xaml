@@ -17,8 +17,8 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <CommandBar Grid.Column="0" Grid.Row="0">
-            <AppBarButton x:Name="openImageButton"  Icon="BrowsePhotos" Label="Open" Margin="0" VerticalAlignment="Top"  Click="loadButton_Click"/>
-            <AppBarButton x:Name="saveMosaicButton" Icon="SaveLocal" Label="Save Mosaic" Margin="0" VerticalAlignment="Top" Click="saveButton_Click"/>
+            <AppBarButton x:Name="openImageButton"  Icon="BrowsePhotos" Label="Open" Margin="0" VerticalAlignment="Top"  Command="{Binding LoadImageCommand}"/>
+            <AppBarButton x:Name="saveMosaicButton" Icon="SaveLocal" Label="Save Mosaic" Margin="0" VerticalAlignment="Top" Command="{Binding SaveImageCommand}" />
             <AppBarButton x:Name="settingsButton"  Icon="Setting" Label="Settings" Margin="0" VerticalAlignment="Top" />
         </CommandBar>
         <Grid Grid.Row="1" Margin="0,10, 0, 0">
@@ -48,9 +48,9 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" x:Name="originalImageLabel" Margin="10"  Text="Original Image"/>
-                <Image Grid.Column="0" Grid.Row="1"  x:Name="originalImage"  Margin="10"  MinWidth="50" MinHeight="50"  />
+                <Image Grid.Column="0" Grid.Row="1"  x:Name="originalImage"  Margin="10"  MinWidth="50" MinHeight="50" Source="{Binding CurrentlyDisplayedImage}"/>
                 <TextBlock Grid.Column="1" Grid.Row="0" x:Name="outputImageLabel" Margin="10"   Text="Output Preview Image"/>
-                <Image Grid.Column="1" Grid.Row="1" x:Name="outputImage"  MinWidth="50" MinHeight="50" Margin="10" />
+                <Image Grid.Column="1" Grid.Row="1" x:Name="outputImage"  MinWidth="50" MinHeight="50" Margin="10" Source="{Binding CurrentlyDisplayedMosaic}" />
             </Grid>
         </Grid>
     </Grid>
