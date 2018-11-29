@@ -32,23 +32,36 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" Margin="10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="5" x:Name="gridSizeLabel" Text="Grid Size"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="5" x:Name="gridSizeLabel" Text="Grid Cell Size:"/>
                 <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="5" x:Name="gridSizeInput" InputScope="Number" PlaceholderText="Size in Pixels" />
-                <Button x:Name="createMosaicButton" Content="Create Mosaic" HorizontalAlignment="Left" Margin="5,106,0,0" Grid.Row="1"
+                <Button x:Name="createMosaicButton" Content="Create Mosaic" HorizontalAlignment="Left" Margin="5" Grid.Row="2"
                         Grid.Column="0" VerticalAlignment="Top" Command="{Binding CreateMosaicCommand}"/>
-                <RadioButton x:Name="solidMosaicRadio" Content="Solid" HorizontalAlignment="Left" Margin="10,32,0,0" Grid.Row="1"
-                             Grid.Column="0" VerticalAlignment="Top" GroupName="MosaicType" IsChecked="True" Command="{Binding MosaicType}"/>
-                <RadioButton x:Name="pictureMosaicRadio" Content="Picture" HorizontalAlignment="Left" Margin="10,69,0,0" Grid.Row="1"
-                             Grid.Column="0" VerticalAlignment="Top" GroupName="MosaicType" Command="{Binding MosaicType}"/>
-                <TextBlock x:Name="mosaicTypeBlock" HorizontalAlignment="Left" Margin="5,0,0,0" Grid.Row="1"
-                           Grid.Column="0" Text="Mosaic Type:" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                <Button Grid.Row="2" Grid.Column="1" Content="Test" Click="Button_Click" />
+                <Image Grid.Column="0" Grid.Row="3" x:Name="testImage" />
+                <Grid Grid.Column="0" Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock x:Name="mosaicTypeBlock" HorizontalAlignment="Left" Margin="5" Grid.Row="0"
+                               Grid.Column="0" Text="Mosaic Type:" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                    <RadioButton x:Name="solidMosaicRadio" Content="Solid" HorizontalAlignment="Left" Margin="5" Grid.Row="1"
+                                 Grid.Column="0" VerticalAlignment="Top" GroupName="MosaicType" IsChecked="True" Command="{Binding MosaicType}"/>
+                    <RadioButton x:Name="pictureMosaicRadio" Content="Picture" HorizontalAlignment="Left" Margin="5" Grid.Row="2"
+                                 Grid.Column="0" VerticalAlignment="Top" GroupName="MosaicType" Command="{Binding MosaicType}"/>
+                </Grid>
+
+               
             </Grid>
             <Grid Grid.Column="1" Margin="10">
                 <Grid.ColumnDefinitions>
