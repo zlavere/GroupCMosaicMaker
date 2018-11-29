@@ -1,5 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Roots >
+  <Roots.PropertyPathNames>
+    <RootPropertyPathName Name="CurrentlyDisplayedMosaic" />
+    <RootPropertyPathName Name="CurrentlyDisplayedImage" />
+    <RootPropertyPathName Name="SaveImageCommand" />
+    <RootPropertyPathName Name="LoadImageCommand" />
+  </Roots.PropertyPathNames>
   <Roots.RootTypes>
     <RootType FullName="Windows.UI.Xaml.Application" />
     <RootType FullName="Windows.UI.Xaml.Controls.Page">
@@ -41,7 +47,9 @@
       <RootProperty Name="Margin" />
       <RootProperty Name="MinWidth" />
       <RootProperty Name="MinHeight" />
+      <RootProperty Name="Source" />
     </RootType>
+    <RootType FullName="Windows.UI.Xaml.Data.Binding" />
     <RootType FullName="Windows.UI.Xaml.Controls.TextBox">
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Margin" />
@@ -53,7 +61,7 @@
       <RootProperty Name="Label" />
       <RootProperty Name="Margin" />
       <RootProperty Name="VerticalAlignment" />
-      <RootEvent Name="Click" />
+      <RootProperty Name="Command" />
     </RootType>
     <RootType FullName="ImageSandbox.MainPage" />
     <RootType FullName="Windows.UI.Xaml.Controls.RadioButton">

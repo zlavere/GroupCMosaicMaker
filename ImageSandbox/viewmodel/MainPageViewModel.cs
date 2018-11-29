@@ -92,6 +92,8 @@ namespace ImageSandbox.ViewModel
             set
             {
                 this.currentlyDisplayedMosaic = value ?? throw new ArgumentNullException();
+                this.canSaveImage(true);
+                this.canCreateMosaic(true);
                 this.OnPropertyChanged();
             }
         }
@@ -157,6 +159,7 @@ namespace ImageSandbox.ViewModel
         {
             this.LoadImageCommand = new RelayCommand(this.loadImage, this.canLoadImage);
             this.SaveImageCommand = new RelayCommand(this.saveImage, this.canSaveImage);
+            this.canLoadImage(true);
             this.CreateMosaicCommand = new RelayCommand(this.createMosaic, this.canCreateMosaic);
         }
 
