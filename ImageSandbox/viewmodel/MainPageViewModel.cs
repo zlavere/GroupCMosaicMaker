@@ -26,7 +26,21 @@ namespace ImageSandbox.ViewModel
 
         private bool mosaicType;
 
+        /// <summary>
+        /// Gets or sets the load image command.
+        /// </summary>
+        /// <value>
+        /// The load image command.
+        /// </value>
+        public RelayCommand LoadImageCommand { get; set; }
 
+        /// <summary>
+        /// Gets or sets the save image command.
+        /// </summary>
+        /// <value>
+        /// The save image command.
+        /// </value>
+        public RelayCommand SaveImageCommand { get; set; }
 
         /// <summary>
         /// Gets or sets the create mosaic command.
@@ -83,6 +97,8 @@ namespace ImageSandbox.ViewModel
             set
             {
                 this.currentlyDisplayedMosaic = value ?? throw new ArgumentNullException();
+                this.canSaveImage(true);
+                this.canCreateMosaic(true);
                 this.OnPropertyChanged();
             }
         }
@@ -151,6 +167,9 @@ namespace ImageSandbox.ViewModel
 
         private void loadCommands()
         {
+            this.LoadImageCommand = new RelayCommand(this.loadImage, this.canLoadImage);
+            this.SaveImageCommand = new RelayCommand(this.saveImage, this.canSaveImage);
+            this.canLoadImage(true);
             this.CreateMosaicCommand = new RelayCommand(this.createMosaic, this.canCreateMosaic);
         }
 

@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Windows.Input;
 
 namespace ImageSandbox.Utility
 {
     /// <summary>
     ///     Handles the relaying of commands for the MVVM structure.
     /// </summary>
-    public class RelayCommand
+    public class RelayCommand:ICommand
     {
         #region Data members
 
