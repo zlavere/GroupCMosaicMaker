@@ -64,9 +64,8 @@
       <RootProperty Name="Margin" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Command" />
-      <RootEvent Name="Click" />
     </RootType>
-    <RootType FullName="ImageSandbox.MainPage" />
+    <RootType FullName="ImageSandbox.View.MainPage" />
     <RootType FullName="Windows.UI.Xaml.Controls.RadioButton">
       <RootProperty Name="Content" />
       <RootProperty Name="HorizontalAlignment" />

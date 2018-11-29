@@ -1,30 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Graphics.Imaging;
-using Windows.Storage;
-using Windows.Storage.Pickers;
-using Windows.Storage.Streams;
+﻿using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media.Imaging;
 using ImageSandbox.ViewModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
-namespace ImageSandbox
+namespace ImageSandbox.View
 
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    ///     An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        #region Data members
+        #region Properties
 
         public MainPageViewModel ViewModel { get; set; }
 
@@ -43,30 +33,11 @@ namespace ImageSandbox
 
         #endregion
 
-        private void saveButton_Click(object sender, RoutedEventArgs e)
-        {
-            //this.saveWritableBitmap();
-        }
-
-
-
-
-        private void loadButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                this.ViewModel.LoadImage();
-            }
-            catch (ArgumentNullException)
-            {
-                //TODO Show dialogue here.
-            }
-            
-        }
+        #region Methods
 
         private Color getPixelBgra8(byte[] pixels, int x, int y, uint width, uint height)
         {
-            var offset = (x * (int)width + y) * 4;
+            var offset = (x * (int) width + y) * 4;
             var r = pixels[offset + 2];
             var g = pixels[offset + 1];
             var b = pixels[offset + 0];
@@ -75,10 +46,12 @@ namespace ImageSandbox
 
         private void setPixelBgra8(byte[] pixels, int x, int y, Color color, uint width, uint height)
         {
-            var offset = (x * (int)width + y) * 4;
+            var offset = (x * (int) width + y) * 4;
             pixels[offset + 2] = color.R;
             pixels[offset + 1] = color.G;
             pixels[offset + 0] = color.B;
         }
+
+        #endregion
     }
 }
