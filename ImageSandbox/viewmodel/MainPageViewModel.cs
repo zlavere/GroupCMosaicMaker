@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Imaging;
 using ImageSandbox.IO;
 using ImageSandbox.Utility;
@@ -14,6 +13,7 @@ namespace ImageSandbox.ViewModel
     /// <seealso cref="System.ComponentModel.INotifyPropertyChanged" />
     public class MainPageViewModel : INotifyPropertyChanged
     {
+        #region Data members
 
         private WriteableBitmap currentlyDisplayedImage;
         private WriteableBitmap currentlyDisplayedGridLines;
@@ -26,35 +26,39 @@ namespace ImageSandbox.ViewModel
 
         private bool mosaicType;
 
+        #endregion
+
+        #region Properties
+
         /// <summary>
-        /// Gets or sets the load image command.
+        ///     Gets or sets the load image command.
         /// </summary>
         /// <value>
-        /// The load image command.
+        ///     The load image command.
         /// </value>
         public RelayCommand LoadImageCommand { get; set; }
 
         /// <summary>
-        /// Gets or sets the save image command.
+        ///     Gets or sets the save image command.
         /// </summary>
         /// <value>
-        /// The save image command.
+        ///     The save image command.
         /// </value>
         public RelayCommand SaveImageCommand { get; set; }
 
         /// <summary>
-        /// Gets or sets the create mosaic command.
+        ///     Gets or sets the create mosaic command.
         /// </summary>
         /// <value>
-        /// The create mosaic command.
+        ///     The create mosaic command.
         /// </value>
         public RelayCommand CreateMosaicCommand { get; set; }
 
         /// <summary>
-        /// Gets or sets the currently displayed image.
+        ///     Gets or sets the currently displayed image.
         /// </summary>
         /// <value>
-        /// The currently displayed image.
+        ///     The currently displayed image.
         /// </value>
         /// <exception cref="ArgumentNullException"></exception>
         public WriteableBitmap CurrentlyDisplayedImage
@@ -63,15 +67,16 @@ namespace ImageSandbox.ViewModel
             set
             {
                 this.currentlyDisplayedImage = value ?? throw new ArgumentNullException();
+                this.canCreateMosaic(true);
                 this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets or sets the currently displayed grid lines.
+        ///     Gets or sets the currently displayed grid lines.
         /// </summary>
         /// <value>
-        /// The currently displayed grid lines.
+        ///     The currently displayed grid lines.
         /// </value>
         /// <exception cref="ArgumentNullException"></exception>
         public WriteableBitmap CurrentlyDisplayedGridLines
@@ -85,10 +90,10 @@ namespace ImageSandbox.ViewModel
         }
 
         /// <summary>
-        /// Gets or sets the currently displayed mosaic.
+        ///     Gets or sets the currently displayed mosaic.
         /// </summary>
         /// <value>
-        /// The currently displayed mosaic.
+        ///     The currently displayed mosaic.
         /// </value>
         /// <exception cref="ArgumentNullException"></exception>
         public WriteableBitmap CurrentlyDisplayedMosaic
@@ -97,17 +102,17 @@ namespace ImageSandbox.ViewModel
             set
             {
                 this.currentlyDisplayedMosaic = value ?? throw new ArgumentNullException();
-                this.canSaveImage(true);
-                this.canCreateMosaic(true);
+                this.CreateMosaicCommand.OnCanExecuteChanged();
+                this.SaveImageCommand.OnCanExecuteChanged();
                 this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets or sets the size of the mosaic pixel.
+        ///     Gets or sets the size of the mosaic pixel.
         /// </summary>
         /// <value>
-        /// The size of the mosaic pixel.
+        ///     The size of the mosaic pixel.
         /// </value>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         public int MosaicPixelSize
@@ -121,15 +126,16 @@ namespace ImageSandbox.ViewModel
                 }
 
                 this.mosaicPixelSize = value;
+                this.CreateMosaicCommand.OnCanExecuteChanged();
                 this.OnPropertyChanged();
             }
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether [mosaic type].
+        ///     Gets or sets a value indicating whether [mosaic type].
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [mosaic type]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [mosaic type]; otherwise, <c>false</c>.
         /// </value>
         public bool MosaicType
         {
@@ -137,10 +143,12 @@ namespace ImageSandbox.ViewModel
             set
             {
                 this.mosaicType = value;
+                this.CreateMosaicCommand.OnCanExecuteChanged();
                 this.OnPropertyChanged();
             }
         }
 
+        #endregion
 
         #region Constructors
 
@@ -167,41 +175,45 @@ namespace ImageSandbox.ViewModel
 
         private void loadCommands()
         {
-            this.LoadImageCommand = new RelayCommand(this.loadImage, this.canLoadImage);
+            this.LoadImageCommand = new RelayCommand(this.loadImage, canAlwaysExecute);
             this.SaveImageCommand = new RelayCommand(this.saveImage, this.canSaveImage);
-            this.canLoadImage(true);
             this.CreateMosaicCommand = new RelayCommand(this.createMosaic, this.canCreateMosaic);
         }
 
         private async void loadImage(object obj)
         {
-            //TODO
-            ImageReader readImage = new ImageReader();
+            var readImage = new ImageReader();
             var results = await readImage.OpenImage();
             this.CurrentlyDisplayedImage = results;
+            this.CurrentlyDisplayedMosaic = results;
             this.currentDpiX = readImage.DpiX;
             this.currentDpiY = readImage.DpiY;
-
         }
 
-        private bool canLoadImage(object obj)
+        private static bool canAlwaysExecute(object obj)
         {
             return true;
         }
 
+        public void SaveImage()
+        {
+            var imageWriter = new ImageWriter();
+            imageWriter.SaveImage(this.CurrentlyDisplayedMosaic, this.currentDpiX, this.currentDpiY);
+        }
+
         private void saveImage(object obj)
         {
-
+            var imageWriter = new ImageWriter();
+            imageWriter.SaveImage(this.CurrentlyDisplayedMosaic, this.currentDpiX, this.currentDpiY);
         }
 
         private bool canSaveImage(object obj)
         {
-            return this.currentlyDisplayedMosaic != null;
+            return this.CurrentlyDisplayedMosaic != null;
         }
 
         private void createMosaic(object obj)
         {
-
         }
 
         private bool canCreateMosaic(object obj)

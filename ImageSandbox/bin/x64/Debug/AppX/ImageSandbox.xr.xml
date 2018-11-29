@@ -3,6 +3,8 @@
   <Roots.PropertyPathNames>
     <RootPropertyPathName Name="CurrentlyDisplayedMosaic" />
     <RootPropertyPathName Name="CurrentlyDisplayedImage" />
+    <RootPropertyPathName Name="MosaicType" />
+    <RootPropertyPathName Name="CreateMosaicCommand" />
     <RootPropertyPathName Name="SaveImageCommand" />
     <RootPropertyPathName Name="LoadImageCommand" />
   </Roots.PropertyPathNames>
@@ -62,6 +64,23 @@
       <RootProperty Name="InputScope" />
       <RootProperty Name="PlaceholderText" />
     </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.Button">
+      <RootProperty Name="Content" />
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="Command" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.RadioButton">
+      <RootProperty Name="Content" />
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="GroupName" />
+      <RootProperty Name="IsChecked" />
+      <RootProperty Name="Command" />
+      <RootProperty Name="RenderTransformOrigin" />
+    </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.AppBarButton">
       <RootProperty Name="Icon" />
       <RootProperty Name="Label" />
@@ -69,16 +88,7 @@
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Command" />
     </RootType>
-    <RootType FullName="ImageSandbox.MainPage" />
-    <RootType FullName="Windows.UI.Xaml.Controls.RadioButton">
-      <RootProperty Name="Content" />
-      <RootProperty Name="HorizontalAlignment" />
-      <RootProperty Name="Margin" />
-      <RootProperty Name="VerticalAlignment" />
-      <RootProperty Name="IsChecked" />
-      <RootProperty Name="GroupName" />
-      <RootProperty Name="RenderTransformOrigin" />
-    </RootType>
+    <RootType FullName="ImageSandbox.View.MainPage" />
     <RootType FullName="ImageSandbox.view.SettingsPage" />
   </Roots.RootTypes>
 </Roots>
