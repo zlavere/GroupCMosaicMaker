@@ -51,10 +51,15 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" x:Name="originalImageLabel" Margin="10"  Text="Original Image"/>
-                <Image Grid.Column="0" Grid.Row="1"  x:Name="originalImage"  Margin="10"  MinWidth="50" MinHeight="50" Source="{Binding CurrentlyDisplayedImage}"/>
-                <TextBlock Grid.Column="1" Grid.Row="0" x:Name="outputImageLabel" Margin="10"   Text="Output Preview Image"/>
-                <Image Grid.Column="1" Grid.Row="1" x:Name="outputImage"  MinWidth="50" MinHeight="50" Margin="10" Source="{Binding CurrentlyDisplayedMosaic}" />
+                <TextBlock Grid.Column="0" Grid.Row="0"  x:Name="originalImageLabel" Text="Original Image"/>
+                <Grid x:Name="OriginalImageOverlay"  Grid.Column="0" Grid.Row="1" Margin="10" >
+                    <Image x:Name="originalImage" HorizontalAlignment="Left" MinWidth="100" MinHeight="100" MaxWidth="100" MaxHeight="100" Source="{Binding CurrentlyDisplayedImage}"/>
+                </Grid>
+                <TextBlock Grid.Column="1" Grid.Row="0" x:Name="outputImageLabel" Text="Output Preview Image" />
+                <Grid Grid.Row="1" Grid.Column="1" Margin="10">
+                    <Image Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" x:Name="outputImage"  MinWidth="50" MinHeight="50" Margin="10" Source="{Binding CurrentlyDisplayedMosaic}" />
+                </Grid>
+                
             </Grid>
         </Grid>
     </Grid>

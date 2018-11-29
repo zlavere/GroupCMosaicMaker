@@ -12,6 +12,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
+using ImageSandbox.Model;
 using ImageSandbox.ViewModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -31,7 +32,7 @@ namespace ImageSandbox
         private WriteableBitmap modifiedImage;
 
         public MainPageViewModel ViewModel { get; set; }
-
+        private GridFactory gridFactory;
         #endregion
 
         #region Constructors
@@ -42,11 +43,14 @@ namespace ImageSandbox
             this.ViewModel = new MainPageViewModel();
             DataContext = this.ViewModel;
 
+            this.gridFactory = new GridFactory();
+            
             ApplicationView.PreferredLaunchViewSize = new Size(1080, 720);
 
             this.modifiedImage = null;
             this.dpiX = 0;
             this.dpiY = 0;
+            this.OriginalImageOverlay.Children.Add(this.gridFactory.DrawGrid());
         }
 
         #endregion
