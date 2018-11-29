@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Imaging;
+using ImageSandbox.IO;
 using ImageSandbox.Utility;
 
 namespace ImageSandbox.ViewModel
@@ -18,6 +20,9 @@ namespace ImageSandbox.ViewModel
         private WriteableBitmap currentlyDisplayedMosaic;
 
         private int mosaicPixelSize;
+
+        private double currentDpiX;
+        private double currentDpiY;
 
         private bool mosaicType;
 
@@ -142,6 +147,11 @@ namespace ImageSandbox.ViewModel
         public MainPageViewModel()
         {
             this.loadCommands();
+            this.currentDpiX = 0;
+            this.currentDpiY = 0;
+            this.currentlyDisplayedImage = null;
+            this.currentlyDisplayedGridLines = null;
+            this.currentlyDisplayedMosaic = null;
         }
 
         #endregion
@@ -163,9 +173,15 @@ namespace ImageSandbox.ViewModel
             this.CreateMosaicCommand = new RelayCommand(this.createMosaic, this.canCreateMosaic);
         }
 
-        private void loadImage(object obj)
+        private async void loadImage(object obj)
         {
             //TODO
+            ImageReader readImage = new ImageReader();
+            var results = await readImage.OpenImage();
+            this.CurrentlyDisplayedImage = results;
+            this.currentDpiX = readImage.DpiX;
+            this.currentDpiY = readImage.DpiY;
+
         }
 
         private bool canLoadImage(object obj)

@@ -12,6 +12,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
+using ImageSandbox.ViewModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -29,6 +30,8 @@ namespace ImageSandbox
         private double dpiY;
         private WriteableBitmap modifiedImage;
 
+        public MainPageViewModel ViewModel { get; set; }
+
         #endregion
 
         #region Constructors
@@ -36,6 +39,8 @@ namespace ImageSandbox
         public MainPage()
         {
             this.InitializeComponent();
+            this.ViewModel = new MainPageViewModel();
+            DataContext = this.ViewModel;
 
             ApplicationView.PreferredLaunchViewSize = new Size(1080, 720);
 
@@ -82,40 +87,39 @@ namespace ImageSandbox
 
         private async void loadButton_Click(object sender, RoutedEventArgs e)
         {
-            var sourceImageFile = await this.selectSourceImageFile();
-            var copyBitmapImage = await this.MakeACopyOfTheFileToWorkOn(sourceImageFile);
+            //var sourceImageFile = await this.selectSourceImageFile();
+            //var copyBitmapImage = await this.MakeACopyOfTheFileToWorkOn(sourceImageFile);
 
-            using (var fileStream = await sourceImageFile.OpenAsync(FileAccessMode.Read))
-            {
-                var decoder = await BitmapDecoder.CreateAsync(fileStream);
-                var transform = new BitmapTransform
-                {
-                    ScaledWidth = Convert.ToUInt32(copyBitmapImage.PixelWidth),
-                    ScaledHeight = Convert.ToUInt32(copyBitmapImage.PixelHeight)
-                };
+            //using (var fileStream = await sourceImageFile.OpenAsync(FileAccessMode.Read))
+            //{
+            //    var decoder = await BitmapDecoder.CreateAsync(fileStream);
+            //    var transform = new BitmapTransform
+            //    {
+            //        ScaledWidth = Convert.ToUInt32(copyBitmapImage.PixelWidth),
+            //        ScaledHeight = Convert.ToUInt32(copyBitmapImage.PixelHeight)
+            //    };
 
-                this.dpiX = decoder.DpiX;
-                this.dpiY = decoder.DpiY;
+            //    this.dpiX = decoder.DpiX;
+            //    this.dpiY = decoder.DpiY;
 
-                var pixelData = await decoder.GetPixelDataAsync(
-                    BitmapPixelFormat.Bgra8,
-                    BitmapAlphaMode.Straight,
-                    transform,
-                    ExifOrientationMode.IgnoreExifOrientation,
-                    ColorManagementMode.DoNotColorManage
-                    );
+            //    var pixelData = await decoder.GetPixelDataAsync(
+            //        BitmapPixelFormat.Bgra8,
+            //        BitmapAlphaMode.Straight,
+            //        transform,
+            //        ExifOrientationMode.IgnoreExifOrientation,
+            //        ColorManagementMode.DoNotColorManage
+            //        );
 
-                var sourcePixels = pixelData.DetachPixelData();
+            //    var sourcePixels = pixelData.DetachPixelData();
 
-                //this.giveImageRedTint(sourcePixels, decoder.PixelWidth, decoder.PixelHeight);
+            //    this.modifiedImage = new WriteableBitmap((int)decoder.PixelWidth, (int)decoder.PixelHeight);
+            //    using (var writeStream = this.modifiedImage.PixelBuffer.AsStream())
+            //    {
+            //        await writeStream.WriteAsync(sourcePixels, 0, sourcePixels.Length);
+            //        this.outputImage.Source = this.modifiedImage;
+            //    }
+            //}
 
-                this.modifiedImage = new WriteableBitmap((int)decoder.PixelWidth, (int)decoder.PixelHeight);
-                using (var writeStream = this.modifiedImage.PixelBuffer.AsStream())
-                {
-                    await writeStream.WriteAsync(sourcePixels, 0, sourcePixels.Length);
-                    this.outputImage.Source = this.modifiedImage;
-                }
-            }
         }
 
         private void giveImageRedTint(byte[] sourcePixels, uint imageWidth, uint imageHeight)
