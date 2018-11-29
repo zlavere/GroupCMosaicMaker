@@ -126,6 +126,7 @@ namespace ImageSandbox.ViewModel
                 }
 
                 this.mosaicPixelSize = value;
+                this.CreateMosaicCommand.OnCanExecuteChanged();
                 this.OnPropertyChanged();
             }
         }
@@ -142,6 +143,7 @@ namespace ImageSandbox.ViewModel
             set
             {
                 this.mosaicType = value;
+                this.CreateMosaicCommand.OnCanExecuteChanged();
                 this.OnPropertyChanged();
             }
         }

@@ -14,8 +14,8 @@
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
         <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -39,8 +39,16 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="5" x:Name="GridSizeLabel" Text="Grid Size"/>
-                <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="5" x:Name="GridSizeInput" InputScope="Number" PlaceholderText="Size in Pixels" />
+                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="5" x:Name="gridSizeLabel" Text="Grid Size"/>
+                <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="5" x:Name="gridSizeInput" InputScope="Number" PlaceholderText="Size in Pixels" />
+                <Button x:Name="createMosaicButton" Content="Create Mosaic" HorizontalAlignment="Left" Margin="5,106,0,0" Grid.Row="1"
+                        Grid.Column="0" VerticalAlignment="Top" Command="{Binding CreateMosaicCommand}"/>
+                <RadioButton x:Name="solidMosaicRadio" Content="Solid" HorizontalAlignment="Left" Margin="10,32,0,0" Grid.Row="1"
+                             Grid.Column="0" VerticalAlignment="Top" GroupName="MosaicType" IsChecked="True" Command="{Binding MosaicType}"/>
+                <RadioButton x:Name="pictureMosaicRadio" Content="Picture" HorizontalAlignment="Left" Margin="10,69,0,0" Grid.Row="1"
+                             Grid.Column="0" VerticalAlignment="Top" GroupName="MosaicType" Command="{Binding MosaicType}"/>
+                <TextBlock x:Name="mosaicTypeBlock" HorizontalAlignment="Left" Margin="5,0,0,0" Grid.Row="1"
+                           Grid.Column="0" Text="Mosaic Type:" TextWrapping="Wrap" VerticalAlignment="Top"/>
             </Grid>
             <Grid Grid.Column="1" Margin="10">
                 <Grid.ColumnDefinitions>
