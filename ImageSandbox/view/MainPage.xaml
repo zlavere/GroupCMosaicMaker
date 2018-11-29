@@ -42,10 +42,9 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="5" x:Name="gridSizeLabel" Text="Grid Cell Size:"/>
-                <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="5" x:Name="gridSizeInput" InputScope="Number" PlaceholderText="Size in Pixels" />
+                <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="5" x:Name="gridSizeInput" InputScope="Number" Text="{Binding CellSideLength, Mode=TwoWay, Converter={StaticResource textInputToIntConverter}}" />
                 <Button x:Name="createMosaicButton" Content="Create Mosaic" HorizontalAlignment="Left" Margin="5" Grid.Row="2"
                         Grid.Column="0" VerticalAlignment="Top" Command="{Binding CreateMosaicCommand}"/>
-                <Button Grid.Row="2" Grid.Column="1" Content="Test" Click="Button_Click" />
                 <Image Grid.Column="0" Grid.Row="3" x:Name="testImage" />
                 <Grid Grid.Column="0" Grid.Row="1">
                     <Grid.RowDefinitions>
@@ -71,16 +70,25 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0"  x:Name="originalImageLabel" Text="Original Image"/>
+                </Grid.RowDefinitions>     
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0"  x:Name="originalImageLabel" Text="Original Image"/>
+                    <RadioButton Grid.Column="1" x:Name="showGrid" GroupName="OverlayGrid" Checked="checked_DisplayGrid" >Overlay Grid</RadioButton>
+                    <RadioButton Grid.Column="2" x:Name="hideGrid" GroupName="OverlayGrid" Checked="checked_HideGrid">Hide Grid</RadioButton>
+                </Grid>
+                
                 <Grid x:Name="originalImageOverlay"  Grid.Column="0" Grid.Row="1" Margin="10" >
-                    <Image x:Name="originalImage" HorizontalAlignment="Left" MinWidth="100" MinHeight="100" Source="{Binding CurrentlyDisplayedImage}"/>
+                    <Image x:Name="originalImage" HorizontalAlignment="Left"  Source="{Binding CurrentlyDisplayedImage}"/>
                 </Grid>
                 <TextBlock Grid.Column="1" Grid.Row="0" x:Name="outputImageLabel" Text="Output Preview Image" />
                 <Grid Grid.Row="1" Grid.Column="1" Margin="10">
-                    <Image Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" x:Name="outputImage"  MinWidth="50" MinHeight="50" Source="{Binding CurrentlyDisplayedMosaic}" />
+                    <Image Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" x:Name="outputImage"  Source="{Binding CurrentlyDisplayedMosaic}" />
                 </Grid>
-                
             </Grid>
         </Grid>
     </Grid>

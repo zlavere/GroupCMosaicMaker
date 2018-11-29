@@ -85,6 +85,7 @@ namespace ImageSandbox.Model
                 var current = this.createCell();
                 Grid.SetColumn(current, columnIndex);
                 Grid.SetRow(current, rowNumber);
+                grid.Name = "overlay";
                 grid.Children.Add(current);
             }
         }

@@ -95,11 +95,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converter\TextInputToIntConverter.cs" />
     <Compile Include="IO\ImageReader.cs" />
     <Compile Include="IO\ImageWriter.cs" />
     <Compile Include="IO\PaletteReader.cs" />
     <Compile Include="Model\GridFactory.cs" />
-    <Compile Include="Model\IMosaic.cs" />
     <Compile Include="Model\SolidMosaic.cs" />
     <Compile Include="Model\Mosaic.cs" />
     <Compile Include="Utility\BitmapUtilities.cs" />

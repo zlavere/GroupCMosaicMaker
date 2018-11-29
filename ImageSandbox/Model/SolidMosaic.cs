@@ -49,7 +49,7 @@ namespace ImageSandbox.Model
         {
             //TODO Get Average Color
             //BitmapDecoder decoder for imported image
-            this.GetCellOfImage(decoder, 0, 0);
+            //this.GetCellOfImage(decoder, 0, 0);
            
         }
     }

@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml.Media.Imaging;
 using ImageSandbox.IO;
+using ImageSandbox.Model;
 using ImageSandbox.Utility;
 
 namespace ImageSandbox.ViewModel
@@ -19,7 +20,7 @@ namespace ImageSandbox.ViewModel
         private WriteableBitmap currentlyDisplayedGridLines;
         private WriteableBitmap currentlyDisplayedMosaic;
 
-        private int mosaicPixelSize;
+        private int cellSideLength;
 
         private double currentDpiX;
         private double currentDpiY;
@@ -62,6 +63,8 @@ namespace ImageSandbox.ViewModel
         /// </value>
         public RelayCommand ToggleGridCommand { get; set; }
 
+        public RelayCommand ShowGridCommand { get; set; }
+
         /// <summary>
         ///     Gets or sets the currently displayed image.
         /// </summary>
@@ -79,6 +82,8 @@ namespace ImageSandbox.ViewModel
                 this.OnPropertyChanged();
             }
         }
+
+        public Mosaic Mosaic { get; set; }
 
         /// <summary>
         ///     Gets or sets the currently displayed grid lines.
@@ -123,9 +128,9 @@ namespace ImageSandbox.ViewModel
         ///     The size of the mosaic pixel.
         /// </value>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public int MosaicPixelSize
+        public int CellSideLength
         {
-            get => this.mosaicPixelSize;
+            get => this.cellSideLength;
             set
             {
                 if (value < 1)
@@ -133,7 +138,7 @@ namespace ImageSandbox.ViewModel
                     throw new ArgumentOutOfRangeException();
                 }
 
-                this.mosaicPixelSize = value;
+                this.cellSideLength = value;
                 this.CreateMosaicCommand.OnCanExecuteChanged();
                 this.OnPropertyChanged();
             }
@@ -222,11 +227,12 @@ namespace ImageSandbox.ViewModel
 
         private void createMosaic(object obj)
         {
+            
         }
 
         private bool canCreateMosaic(object obj)
         {
-            return this.currentlyDisplayedImage != null;
+            return this.currentlyDisplayedImage != null && this.CellSideLength > 0;
         }
 
         #endregion
