@@ -17,8 +17,8 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <CommandBar Grid.Column="0" Grid.Row="0">
-            <AppBarButton x:Name="openImageButton"  Icon="BrowsePhotos" Label="Open" Margin="0" VerticalAlignment="Top"  Command="{Binding LoadImageCommand}"/>
-            <AppBarButton x:Name="saveMosaicButton" Icon="SaveLocal" Label="Save Mosaic" Margin="0" VerticalAlignment="Top" Command="{Binding SaveImageCommand}" />
+            <AppBarButton x:Name="openImageButton"  Icon="BrowsePhotos" Label="Open" Margin="0" VerticalAlignment="Top"  Command="{Binding LoadImageCommand}" Click="loadButton_Click"/>
+            <AppBarButton x:Name="saveMosaicButton" Icon="SaveLocal" Label="Save Mosaic" Margin="0" VerticalAlignment="Top" Command="{Binding SaveImageCommand}" Click="saveButton_Click" />
             <AppBarButton x:Name="settingsButton"  Icon="Setting" Label="Settings" Margin="0" VerticalAlignment="Top" />
         </CommandBar>
         <Grid Grid.Row="1" Margin="0,10, 0, 0">

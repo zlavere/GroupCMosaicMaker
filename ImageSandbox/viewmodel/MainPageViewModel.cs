@@ -26,21 +26,7 @@ namespace ImageSandbox.ViewModel
 
         private bool mosaicType;
 
-        /// <summary>
-        /// Gets or sets the load image command.
-        /// </summary>
-        /// <value>
-        /// The load image command.
-        /// </value>
-        public RelayCommand LoadImageCommand { get; set; }
 
-        /// <summary>
-        /// Gets or sets the save image command.
-        /// </summary>
-        /// <value>
-        /// The save image command.
-        /// </value>
-        public RelayCommand SaveImageCommand { get; set; }
 
         /// <summary>
         /// Gets or sets the create mosaic command.
@@ -165,15 +151,15 @@ namespace ImageSandbox.ViewModel
 
         private void loadCommands()
         {
-            this.LoadImageCommand = new RelayCommand(this.loadImage, this.canLoadImage);
-            this.SaveImageCommand = new RelayCommand(this.saveImage, this.canSaveImage);
             this.CreateMosaicCommand = new RelayCommand(this.createMosaic, this.canCreateMosaic);
         }
 
-        private async void loadImage(object obj)
+        /// <summary>
+        /// Loads the image.
+        /// </summary>
+        public async void LoadImage()
         {
-            //TODO
-            ImageReader readImage = new ImageReader();
+            var readImage = new ImageReader();
             var results = await readImage.OpenImage();
             this.CurrentlyDisplayedImage = results;
             this.currentDpiX = readImage.DpiX;
@@ -181,20 +167,38 @@ namespace ImageSandbox.ViewModel
 
         }
 
+        private async void loadImage(object obj)
+        {
+            var readImage = new ImageReader();
+            var results = await readImage.OpenImage();
+            this.CurrentlyDisplayedImage = results;
+            this.currentDpiX = readImage.DpiX;
+            this.currentDpiY = readImage.DpiY;
+        }
+
         private bool canLoadImage(object obj)
         {
             return true;
         }
 
+        public void SaveImage()
+        {
+            var imageWriter = new ImageWriter();
+            imageWriter.SaveImage(this.CurrentlyDisplayedMosaic, this.currentDpiX, this.currentDpiY);
+            
+        }
+
         private void saveImage(object obj)
         {
-
+            var imageWriter = new ImageWriter();
+            imageWriter.SaveImage(this.CurrentlyDisplayedMosaic, this.currentDpiX, this.currentDpiY);
         }
 
         private bool canSaveImage(object obj)
         {
-            return this.currentlyDisplayedMosaic != null;
+            return this.CurrentlyDisplayedMosaic != null;
         }
+
 
         private void createMosaic(object obj)
         {
