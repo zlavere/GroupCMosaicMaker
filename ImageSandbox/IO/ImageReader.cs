@@ -85,8 +85,12 @@ namespace ImageSandbox.IO
             openPicker.FileTypeFilter.Add(".png");
             openPicker.FileTypeFilter.Add(".bmp");
 
-            var file = await openPicker.PickSingleFileAsync();
 
+            var file = await openPicker.PickSingleFileAsync();
+            if (file != null)
+            {
+
+            }
             return file;
         }
 
