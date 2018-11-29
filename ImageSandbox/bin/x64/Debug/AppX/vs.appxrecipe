@@ -19,7 +19,7 @@
     <DeployOptionalPackages>false</DeployOptionalPackages>
     <WindowsSdkPath>C:\Program Files %28x86%29\Windows Kits\10\</WindowsSdkPath>
     <LayoutDir>C:\Users\BrandonEugeneWalker\Source\Repos\GroupCMosaicMaker3\ImageSandbox\bin\x64\Debug\AppX</LayoutDir>
-    <RegisteredManifestChecksum>DFE0038F8E4FC508C962A467F7C3DBEB04CF0F2948E3A65EE133FB8D164834FF</RegisteredManifestChecksum>
+    <RegisteredManifestChecksum>F91811B63FEE6EA711DE7DD2A4FF2ED605511428BB4A61D3C1CFB16A13D61A78</RegisteredManifestChecksum>
     <RegisteredPackageMoniker>d9c85b68-72fb-4d23-a7f9-59307ad3d27b_1.0.0.0_x64__vpktpzvxd0r0j</RegisteredPackageMoniker>
     <RegisteredUserModeAppID>d9c85b68-72fb-4d23-a7f9-59307ad3d27b_vpktpzvxd0r0j!App</RegisteredUserModeAppID>
     <RegisteredPackageID>d9c85b68-72fb-4d23-a7f9-59307ad3d27b</RegisteredPackageID>
@@ -31,13 +31,13 @@
     <AppXManifest Include="C:\Users\BrandonEugeneWalker\Source\Repos\GroupCMosaicMaker3\ImageSandbox\bin\x64\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2018-11-29T02:03:01.765</Modified>
+      <Modified>2018-11-29T03:26:24.730</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\BrandonEugeneWalker\Source\Repos\GroupCMosaicMaker3\ImageSandbox\bin\x64\Debug\ImageSandbox.exe">
       <PackagePath>entrypoint\ImageSandbox.exe</PackagePath>
-      <Modified>2018-11-29T02:03:01.164</Modified>
+      <Modified>2018-11-29T03:26:24.495</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\microsoft.csharp\4.0.1\lib\netcore50\Microsoft.CSharp.dll">
       <PackagePath>Microsoft.CSharp.dll</PackagePath>
@@ -535,19 +535,19 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\BrandonEugeneWalker\Source\Repos\GroupCMosaicMaker3\ImageSandbox\bin\x64\Debug\ImageSandbox.xr.xml">
       <PackagePath>ImageSandbox.xr.xml</PackagePath>
-      <Modified>2018-11-29T02:03:00.964</Modified>
+      <Modified>2018-11-29T03:26:24.349</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\BrandonEugeneWalker\Source\Repos\GroupCMosaicMaker3\ImageSandbox\bin\x64\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
-      <Modified>2018-11-29T02:03:00.996</Modified>
+      <Modified>2018-11-29T03:26:24.357</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\BrandonEugeneWalker\Source\Repos\GroupCMosaicMaker3\ImageSandbox\bin\x64\Debug\View\MainPage.xbf">
       <PackagePath>View\MainPage.xbf</PackagePath>
-      <Modified>2018-11-29T02:03:00.995</Modified>
+      <Modified>2018-11-29T03:26:24.356</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\BrandonEugeneWalker\Source\Repos\GroupCMosaicMaker3\ImageSandbox\bin\x64\Debug\View\SettingsPage.xbf">
       <PackagePath>View\SettingsPage.xbf</PackagePath>
-      <Modified>2018-11-29T02:03:00.996</Modified>
+      <Modified>2018-11-29T03:26:24.357</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\10.0.17134.0\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
@@ -556,11 +556,11 @@
     <AppxPackagedFile Include="C:\Users\BrandonEugeneWalker\Source\Repos\GroupCMosaicMaker3\ImageSandbox\bin\x64\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2018-11-29T01:14:22.138</Modified>
+      <Modified>2018-11-29T03:21:32.329</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\BrandonEugeneWalker\Source\Repos\GroupCMosaicMaker3\ImageSandbox\bin\x64\Debug\Core\ImageSandbox.exe">
       <PackagePath>ImageSandbox.exe</PackagePath>
-      <Modified>2018-11-29T02:03:01.758</Modified>
+      <Modified>2018-11-29T03:26:24.726</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

@@ -100,6 +100,8 @@
     <Compile Include="IO\PaletteReader.cs" />
     <Compile Include="Model\GridFactory.cs" />
     <Compile Include="Model\IMosaic.cs" />
+    <Compile Include="Model\Mosaic.cs" />
+    <Compile Include="Utility\BitmapUtilities.cs" />
     <Compile Include="Utility\RelayCommand.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="View\MainPage.xaml.cs">

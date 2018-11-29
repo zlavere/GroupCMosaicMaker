@@ -52,10 +52,7 @@
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="MinWidth" />
       <RootProperty Name="MinHeight" />
-      <RootProperty Name="Margin" />
       <RootProperty Name="Source" />
-      <RootProperty Name="MaxWidth" />
-      <RootProperty Name="MaxHeight" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Data.Binding" />
     <RootType FullName="Windows.UI.Xaml.Controls.TextBox">

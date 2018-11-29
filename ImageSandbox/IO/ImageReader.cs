@@ -6,6 +6,7 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
+using ImageSandbox.Utility;
 
 namespace ImageSandbox.IO
 {
@@ -39,7 +40,7 @@ namespace ImageSandbox.IO
         public async Task<WriteableBitmap> OpenImage()
         {
             var sourceImageFile = await this.selectSourceImageFile();
-            var copyBitmapImage = await this.makeACopyOfTheFileToWorkOn(sourceImageFile);
+            var copyBitmapImage = await BitmapUtilities.CopyBitmapFromFile(sourceImageFile);
 
             using (var fileStream = await sourceImageFile.OpenAsync(FileAccessMode.Read))
             {
@@ -87,14 +88,6 @@ namespace ImageSandbox.IO
             }
 
             return file;
-        }
-
-        private async Task<BitmapImage> makeACopyOfTheFileToWorkOn(StorageFile imageFile)
-        {
-            IRandomAccessStream inputStream = await imageFile.OpenReadAsync();
-            var newImage = new BitmapImage();
-            newImage.SetSource(inputStream);
-            return newImage;
         }
 
         #endregion
