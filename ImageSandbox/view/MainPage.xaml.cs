@@ -2,6 +2,7 @@
 using Windows.UI.Notifications;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
 using ImageSandbox.Model;
 using ImageSandbox.ViewModel;
 
@@ -38,16 +39,20 @@ namespace ImageSandbox.View
         //TODO Move this to view model
         private void checked_DisplayGrid(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            var cellSize = int.TryParse(this.gridSizeInput.Text, out var result);
-
-            if (this.originalImage.Source != null)
+            var cellSizeParsed = int.TryParse(this.gridSizeInput.Text, out var result);
+ 
+            if (this.originalImage.Source != null && cellSizeParsed)
             {
+                var scale = this.originalImage.ActualHeight / ActiveImage.Image.PixelHeight;
+                var cellSizeScaled = result * scale;
+
                 var gridFactory = new GridFactory
                 {
-                    CellSideLength = result,
-                    GridHeight = (int)this.originalImage.ActualHeight,
-                    GridWidth = (int)this.originalImage.ActualWidth
+                    CellSideLength = (int) cellSizeScaled,
+                    GridHeight = (int) this.originalImage.ActualHeight,
+                    GridWidth = (int) this.originalImage.ActualWidth
                 };
+
                 if (result > 0 && gridFactory.GridHeight > 0 && gridFactory.GridWidth > 0)
                 {
                     this.originalImageOverlay.Children.Add(gridFactory.DrawGrid());

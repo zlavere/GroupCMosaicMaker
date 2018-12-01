@@ -78,6 +78,7 @@ namespace ImageSandbox.ViewModel
             set
             {
                 this.currentlyDisplayedImage = value ?? throw new ArgumentNullException();
+                ActiveImage.Image = this.currentlyDisplayedImage;
                 this.canCreateMosaic(true);
                 this.OnPropertyChanged();
             }

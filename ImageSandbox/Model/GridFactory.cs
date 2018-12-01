@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Store;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -15,10 +16,30 @@ namespace ImageSandbox.Model
     {
         private int numberOfRows;
         private int numberOfColumns;
+        private int lastRowHeight;
+        private int lastColumnWidth;
 
         public int GridWidth { get; set; }
         public int GridHeight { get; set; }
         public int CellSideLength { get; set; }
+
+        public int LastRowHeight
+        {
+            get
+            {
+                this.lastRowHeight = this.GridHeight % this.CellSideLength;
+                return this.lastRowHeight;
+            }
+        }
+
+        public int LastColumnWidth
+        {
+            get
+            {
+                this.lastColumnWidth = this.GridWidth % this.CellSideLength;
+                return this.lastColumnWidth;
+            }
+        }
 
         public int NumberOfRows
         {
@@ -37,11 +58,11 @@ namespace ImageSandbox.Model
             }
         }
 
-        private Rectangle createCell()
+        private Rectangle createCell(int width, int height)
         {
             var cell = new Rectangle {
-                Width = this.CellSideLength,
-                Height = this.CellSideLength,
+                Width = width,
+                Height = height,
                 Stroke = new SolidColorBrush(Color.FromArgb(100, 0, 0, 0)),
                 StrokeThickness = 1,
                 HorizontalAlignment = HorizontalAlignment.Left,
@@ -54,7 +75,7 @@ namespace ImageSandbox.Model
         {
             var grid = new Grid();
             
-            for (var i = 0; i < this.NumberOfRows; i++)
+            for (var i = 0; i <= this.NumberOfRows; i++)
             {
                 grid.RowDefinitions.Add(
                     new RowDefinition {
@@ -62,7 +83,7 @@ namespace ImageSandbox.Model
                 });
             }
 
-            for (var i = 0; i < this.NumberOfColumns; i++)
+            for (var i = 0; i <= this.NumberOfColumns; i++)
             {
                 grid.ColumnDefinitions.Add(
                     new ColumnDefinition {
@@ -70,7 +91,7 @@ namespace ImageSandbox.Model
                 });
             }
 
-            for (var rowIndex = 0; rowIndex < this.NumberOfRows; rowIndex++)
+            for (var rowIndex = 0; rowIndex <= this.NumberOfRows; rowIndex++)
             {
                 this.addRowToGrid(grid, rowIndex);
             }
@@ -80,13 +101,27 @@ namespace ImageSandbox.Model
 
         private void addRowToGrid(Grid grid, int rowNumber)
         {
-            for (var columnIndex = 0; columnIndex < this.NumberOfColumns; columnIndex++)
+            for (var columnIndex = 0; columnIndex <= this.NumberOfColumns; columnIndex++)
             {
-                var current = this.createCell();
-                Grid.SetColumn(current, columnIndex);
-                Grid.SetRow(current, rowNumber);
+                var currentWidth = this.CellSideLength;
+                var currentHeight = this.CellSideLength;
+
+                if (rowNumber == this.NumberOfRows)
+                {
+                    currentHeight = this.LastRowHeight;
+                }
+
+                if (columnIndex == this.NumberOfColumns)
+                {
+                    currentWidth = this.LastColumnWidth;
+                }
+               
+
+            var cell = this.createCell(currentWidth, currentHeight);
+                Grid.SetColumn(cell, columnIndex);
+                Grid.SetRow(cell, rowNumber);
                 grid.Name = "overlay";
-                grid.Children.Add(current);
+                grid.Children.Add(cell);
             }
         }
     }

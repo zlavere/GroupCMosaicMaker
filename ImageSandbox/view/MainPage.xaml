@@ -73,17 +73,18 @@
                 </Grid.RowDefinitions>     
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto"  />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Grid.Row="0"  x:Name="originalImageLabel" Text="Original Image"/>
-                    <RadioButton Grid.Column="1" x:Name="showGrid" GroupName="OverlayGrid" Checked="checked_DisplayGrid" >Overlay Grid</RadioButton>
-                    <RadioButton Grid.Column="2" x:Name="hideGrid" GroupName="OverlayGrid" Checked="checked_HideGrid">Hide Grid</RadioButton>
+                    <TextBlock Grid.Column="0" Grid.Row="0" Margin="0, 0, 50, 0" x:Name="originalImageLabel" Text="Original Image"/>
+
+                    <RadioButton Grid.Column="1"  HorizontalAlignment="Right" x:Name="showGrid" GroupName="OverlayGrid" Checked="checked_DisplayGrid" >Overlay Grid</RadioButton>
+                    <RadioButton Grid.Column="2" HorizontalAlignment="Right" x:Name="hideGrid" GroupName="OverlayGrid" Checked="checked_HideGrid">Hide Grid</RadioButton>
                 </Grid>
                 
                 <Grid x:Name="originalImageOverlay"  Grid.Column="0" Grid.Row="1" Margin="10" >
-                    <Image x:Name="originalImage" HorizontalAlignment="Left"  Source="{Binding CurrentlyDisplayedImage}"/>
+                    <Image x:Name="originalImage" HorizontalAlignment="Left" Stretch ="Uniform" Source="{Binding CurrentlyDisplayedImage}"/>
                 </Grid>
                 <TextBlock Grid.Column="1" Grid.Row="0" x:Name="outputImageLabel" Text="Output Preview Image" />
                 <Grid Grid.Row="1" Grid.Column="1" Margin="10">
