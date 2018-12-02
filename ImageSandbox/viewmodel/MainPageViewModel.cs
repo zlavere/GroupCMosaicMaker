@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.UI;
 using Windows.UI.Xaml.Media.Imaging;
+using ImageSandbox.Extensions;
 using ImageSandbox.IO;
 using ImageSandbox.Model;
 using ImageSandbox.Utility;
@@ -230,9 +234,33 @@ namespace ImageSandbox.ViewModel
             return this.MosaicImage != null;
         }
 
-        private void createMosaic(object obj)
+        private async void createMosaic(object obj)
         {
+            var colors = await this.MosaicImage.GetPixelColors();
+            var cells = new Color[this.GridFactory.NumberOfRows, this.GridFactory.NumberOfColumns];
+            var cellX = 0;
             
+            for (var xPoint = 0; xPoint < colors.Count; xPoint++)
+            {
+                if (xPoint == this.CellSideLength - 1)
+                {
+                    cellX++;
+                }
+
+                var cellY = 0;
+                for (var yPoint = 0; yPoint < this.MosaicImage.PixelWidth; yPoint++)
+                {
+                    if (yPoint == this.CellSideLength - 1)
+                    {
+                        cellY++;
+                    }
+
+                    if (yPoint == this.MosaicImage.PixelWidth - 1)
+                    {
+                        cellY = 0;
+                    }
+                }
+            }
         }
 
         private bool canCreateMosaic(object obj)

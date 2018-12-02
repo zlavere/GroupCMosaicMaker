@@ -96,9 +96,11 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converter\TextInputToIntConverter.cs" />
+    <Compile Include="Extensions\WriteableBitmapExtensions.cs" />
     <Compile Include="IO\ImageReader.cs" />
     <Compile Include="IO\ImageWriter.cs" />
     <Compile Include="IO\PaletteReader.cs" />
+    <Compile Include="Model\Cell.cs" />
     <Compile Include="Model\GridFactory.cs" />
     <Compile Include="Model\SolidMosaic.cs" />
     <Compile Include="Model\Mosaic.cs" />
@@ -151,7 +153,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controller\" />
-    <Folder Include="Extensions\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -1,56 +1,67 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
 using Windows.UI;
 using Windows.UI.Xaml.Media.Imaging;
+using ImageSandbox.Extensions;
 
 namespace ImageSandbox.Model
 {
     public class SolidMosaic:Mosaic
     {
-        private int numberOfColumns;
-        private int numberOfRows;
-        public int ImageWidth { get; set; }
-        public int ImageHeight { get; set; }
-        public BitmapImage Image { get; set; }
+        public SolidMosaic(WriteableBitmap sourceImage, WriteableBitmap mosaicImage, int cellSideLength,
+            GridFactory gridFactory)
+            : base(sourceImage, mosaicImage, cellSideLength, gridFactory){}
 
-        public int NumberOfColumns
+        public async void SetCellData()
         {
-            get
+            var colors = await this.SourceImage.GetPixelColors();
+            var cells = new List<Cell>();
+            var pixelIndex = 0;
+            var cellY = 0;
+            var cellX = 0;
+            var currentCell = new Cell();
+
+            for (var i = 0; i < this.SourceImage.PixelHeight; i++)
             {
-                this.numberOfColumns = this.ImageWidth / (int) this.CellSide;
-                return this.numberOfColumns;
+                if ((i + 1) % this.GridFactory.CellSideLength == 0 || (i + 1) >=
+                    this.GridFactory.CellSideLength * (this.GridFactory.NumberOfRows - 1))
+                {
+                    cellX = 0;
+                    cellY++;
+                    currentCell = new Cell {
+                        Y = cellY
+                    };
+                    cells.Add(currentCell);
+                }
+                for (var j = 0; j < this.SourceImage.PixelWidth; j++)
+                {
+                    if ((j + 1) % this.GridFactory.CellSideLength == 0 || (j + 1) >=
+                        this.GridFactory.CellSideLength * (this.GridFactory.NumberOfColumns - 1))
+                    {
+                        if (i + 1 % this.GridFactory.CellSideLength != 0 || !((i + 1) >=
+                            this.GridFactory.CellSideLength * (this.GridFactory.NumberOfRows- 1)))
+                        {
+                            currentCell = new Cell() {
+                                X = cellX
+                            };
+                            cells.Add(currentCell);
+                        }
+                        else
+                        {
+                            currentCell.X = cellX;
+                        }
+                    }
+                    currentCell.PixelIndexes.Add(pixelIndex);
+                    currentCell.Colors.Add(colors[pixelIndex]);
+                    pixelIndex++;
+
+                }
             }
-            set => this.numberOfColumns = value;
-        }
-
-        public int NumberOfRows
-        {
-            get
-            {
-                this.numberOfRows = this.ImageHeight / (int)this.CellSide;
-                return this.numberOfRows;
-            }
-            set => this.numberOfRows = value;
-        }
-
-        public SolidMosaic(uint cellSideLength, BitmapImage image) : base(cellSideLength)
-        {
-            this.Image = image;
-            this.ImageHeight = this.Image.PixelHeight;
-            this.ImageWidth = this.Image.PixelWidth;
-        }
-
-        //private Color getAverageColorOfCell() //TODO switch to this signature probably
-        private void getAverageColorOfCell()
-        {
-            //TODO Get Average Color
-            //BitmapDecoder decoder for imported image
-            //this.GetCellOfImage(decoder, 0, 0);
-           
         }
     }
-}
+  }

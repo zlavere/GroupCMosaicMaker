@@ -11,47 +11,24 @@ namespace ImageSandbox.Model
     {
         #region Properties
 
-        public uint CellSide { get; set; }
-
+        public int CellSideLength { get; set; }
+        public WriteableBitmap SourceImage { get; set; }
+        protected WriteableBitmap MosaicImage { get; set; }
+        protected GridFactory GridFactory { get; set; }
         #endregion
 
         #region Constructors
 
-        protected Mosaic(uint cellSideLength)
+        protected Mosaic(WriteableBitmap sourceImage, WriteableBitmap mosaicImage, int cellSideLength, GridFactory gridFactory)
         {
-            this.CellSide = cellSideLength;
+            this.SourceImage = sourceImage;
+            this.MosaicImage = mosaicImage;
+            this.CellSideLength = cellSideLength;
+            this.GridFactory = gridFactory;
         }
+ 
 
         #endregion
 
-        #region Methods
-
-        public async Task<BitmapImage> GetCellOfImage(BitmapDecoder decoder, uint xPoint, uint yPoint)
-        {
-            var ras = new InMemoryRandomAccessStream();
-            var encoder = await BitmapEncoder.CreateForTranscodingAsync(ras, decoder);
-            var bounds = new BitmapBounds
-            {
-                Height = this.CellSide,
-                Width = this.CellSide,
-                X = xPoint,
-                Y = yPoint
-            };
-            encoder.BitmapTransform.Bounds = bounds;
-            try
-            {
-                await encoder.FlushAsync();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-            var image = new BitmapImage();
-            image.SetSource(ras);
-
-            return image;
-        }
-
-        #endregion
     }
 }
