@@ -22,6 +22,8 @@
 *.ide-shm
 */.vs/*/v15/.suo
 */.suo
+*.ide-shm
+*.ide-wal
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
