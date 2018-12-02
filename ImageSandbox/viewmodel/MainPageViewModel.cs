@@ -93,7 +93,7 @@ namespace ImageSandbox.ViewModel
             {
                 this.sourceImage = value ?? throw new ArgumentNullException();
                 ActiveImage.Image = this.sourceImage;
-                this.SolidMosaic.SourceImage = value;
+                this.SolidMosaic.SourceImage = this.sourceImage;
                 this.canCreateMosaic(true);
                 this.OnPropertyChanged();
             }
@@ -250,9 +250,11 @@ namespace ImageSandbox.ViewModel
 
         private async void createMosaic(object obj)
         {
+            this.GridFactory.GridHeight = this.SourceImage.PixelHeight;
+            this.GridFactory.GridWidth = this.SourceImage.PixelWidth;
+            //this.MosaicImage = await this.SolidMosaic.ConstructMosaic();
             this.SolidMosaic.SetCellData();
-            this.MosaicImage = await this.SolidMosaic.ConstructMosaic();
-            
+
         }
 
         private bool canCreateMosaic(object obj)
@@ -263,7 +265,7 @@ namespace ImageSandbox.ViewModel
 
         private bool canOverlayGrid(object obj)
         {
-            return this.GridFactory.CellSideLength > 0 && this.SourceImage.PixelHeight >0;
+            return this.GridFactory.CellSideLength > 0 && this.SourceImage.PixelHeight > 0;
         }
 
         #endregion
