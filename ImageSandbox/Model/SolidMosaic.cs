@@ -74,7 +74,7 @@ namespace ImageSandbox.Model
             return this.Cells;
         }
 
-        public byte[] ByteArraySetup()
+        private byte[] byteArraySetup()
         {
             using (var stream = this.MosaicImage.PixelBuffer.AsStream())
             {
@@ -85,10 +85,11 @@ namespace ImageSandbox.Model
                     current.SetRbgLists();
                     foreach (var pixel in current.PixelIndexes)
                     {
-                        buffer[pixel] = current.AverageColor.A;
-                        buffer[pixel + 1] = current.AverageColor.R;
-                        buffer[pixel + 2] = current.AverageColor.G;
-                        buffer[pixel + 3] = current.AverageColor.B;
+                        buffer[pixel] = current.AverageColor.B;
+                        buffer[pixel+ 1] = current.AverageColor.G;
+                        buffer[pixel+ 2] = current.AverageColor.R;
+                        buffer[pixel + 3] = 0;
+
                     }
                 }
 
@@ -100,7 +101,7 @@ namespace ImageSandbox.Model
         public async Task<WriteableBitmap> ConstructMosaic()
         {
             var bitmap = new WriteableBitmap(this.SourceImage.PixelWidth, this.SourceImage.PixelHeight);
-            var pixelData = this.ByteArraySetup();
+            var pixelData = this.byteArraySetup();
             using (var stream = bitmap.PixelBuffer.AsStream())
             {
               await stream.WriteAsync(pixelData, 0, this.SourceImage.PixelHeight * this.SourceImage.PixelWidth);

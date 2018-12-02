@@ -248,10 +248,11 @@ namespace ImageSandbox.ViewModel
             return this.MosaicImage != null;
         }
 
-        private void createMosaic(object obj)
+        private async void createMosaic(object obj)
         {
             this.SolidMosaic.SetCellData();
-            this.MosaicImage = this.SolidMosaic.MosaicImage;
+            this.MosaicImage = await this.SolidMosaic.ConstructMosaic();
+            
         }
 
         private bool canCreateMosaic(object obj)
