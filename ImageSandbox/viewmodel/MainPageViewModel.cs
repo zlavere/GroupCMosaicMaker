@@ -24,6 +24,7 @@ namespace ImageSandbox.ViewModel
         private WriteableBitmap currentlyDisplayedGridLines;
         private WriteableBitmap mosaicImage;
         private int cellSideLength;
+        private SolidMosaic solidMosaic;
 
         private double currentDpiX;
         private double currentDpiY;
@@ -67,7 +68,17 @@ namespace ImageSandbox.ViewModel
         public RelayCommand ToggleGridCommand { get; set; }
 
         public RelayCommand ShowGridCommand { get; set; }
-        
+
+        public SolidMosaic SolidMosaic
+        {
+            get => this.solidMosaic;
+            set
+            {
+                this.solidMosaic = value;
+                
+            }
+        }
+
         /// <summary>
         ///     Gets or sets the currently displayed image.
         /// </summary>
@@ -82,6 +93,7 @@ namespace ImageSandbox.ViewModel
             {
                 this.sourceImage = value ?? throw new ArgumentNullException();
                 ActiveImage.Image = this.sourceImage;
+                this.SolidMosaic.SourceImage = value;
                 this.canCreateMosaic(true);
                 this.OnPropertyChanged();
             }
@@ -118,7 +130,8 @@ namespace ImageSandbox.ViewModel
             get => this.mosaicImage;
             set
             {
-                mosaicImage = value ?? throw new ArgumentNullException();
+                this.mosaicImage = value ?? throw new ArgumentNullException();
+                this.SolidMosaic.MosaicImage = this.mosaicImage;
                 this.CreateMosaicCommand.OnCanExecuteChanged();
                 this.SaveImageCommand.OnCanExecuteChanged();
                 this.OnPropertyChanged();
@@ -144,6 +157,7 @@ namespace ImageSandbox.ViewModel
 
                 this.cellSideLength = value;
                 this.CreateMosaicCommand.OnCanExecuteChanged();
+                this.canCreateMosaic(true);
                 this.OnPropertyChanged();
             }
         }
@@ -177,11 +191,10 @@ namespace ImageSandbox.ViewModel
         {
             this.loadCommands();
             this.GridFactory = new GridFactory();
+            this.SolidMosaic = new SolidMosaic(this.SourceImage, this.MosaicImage, this.CellSideLength,
+                this.GridFactory);
             this.currentDpiX = 0;
             this.currentDpiY = 0;
-            this.sourceImage = null;
-            this.currentlyDisplayedGridLines = null;
-            this.mosaicImage = null;
         }
 
         #endregion
@@ -199,7 +212,7 @@ namespace ImageSandbox.ViewModel
         {
             this.LoadImageCommand = new RelayCommand(this.loadImage, canAlwaysExecute);
             this.SaveImageCommand = new RelayCommand(this.saveImage, this.canSaveImage);
-            this.CreateMosaicCommand = new RelayCommand(this.createMosaic, this.canCreateMosaic);
+            this.CreateMosaicCommand = new RelayCommand(this.createMosaic, this.canCreateMosaic); //TODO fix the command
         }
 
         private async void loadImage(object obj)
@@ -210,6 +223,7 @@ namespace ImageSandbox.ViewModel
             this.MosaicImage = results;
             this.currentDpiX = readImage.DpiX;
             this.currentDpiY = readImage.DpiY;
+           
         }
 
         private static bool canAlwaysExecute(object obj)
@@ -234,43 +248,21 @@ namespace ImageSandbox.ViewModel
             return this.MosaicImage != null;
         }
 
-        private async void createMosaic(object obj)
+        private void createMosaic(object obj)
         {
-            var colors = await this.MosaicImage.GetPixelColors();
-            var cells = new Color[this.GridFactory.NumberOfRows, this.GridFactory.NumberOfColumns];
-            var cellX = 0;
-            
-            for (var xPoint = 0; xPoint < colors.Count; xPoint++)
-            {
-                if (xPoint == this.CellSideLength - 1)
-                {
-                    cellX++;
-                }
-
-                var cellY = 0;
-                for (var yPoint = 0; yPoint < this.MosaicImage.PixelWidth; yPoint++)
-                {
-                    if (yPoint == this.CellSideLength - 1)
-                    {
-                        cellY++;
-                    }
-
-                    if (yPoint == this.MosaicImage.PixelWidth - 1)
-                    {
-                        cellY = 0;
-                    }
-                }
-            }
+            this.SolidMosaic.SetCellData();
+            this.MosaicImage = this.SolidMosaic.MosaicImage;
         }
 
         private bool canCreateMosaic(object obj)
         {
-            return this.sourceImage != null && this.CellSideLength > 0;
+            return true;
+            //return this.CellSideLength > 0 && this.SourceImage.PixelHeight > 0;
         }
 
         private bool canOverlayGrid(object obj)
         {
-            return this.GridFactory.CellSideLength > 0 && this.SourceImage != null;
+            return this.GridFactory.CellSideLength > 0 && this.SourceImage.PixelHeight >0;
         }
 
         #endregion

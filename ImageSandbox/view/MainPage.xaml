@@ -83,11 +83,11 @@
                     <RadioButton Grid.Column="2" HorizontalAlignment="Right" x:Name="hideGrid" GroupName="OverlayGrid" Checked="checked_HideGrid">Hide Grid</RadioButton>
                 </Grid>
                 <Grid x:Name="originalImageOverlay"  Grid.Column="0" Grid.Row="1" Margin="10" >
-                    <Image x:Name="originalImage" HorizontalAlignment="Left" Stretch ="Uniform" Source="{Binding SourceImage}" ImageOpened="imageOpened_RemoveAndRecalculateGridOverlay"/>
+                    <Image x:Name="originalImage" HorizontalAlignment="Left" Stretch ="Uniform" Source="{Binding SourceImage, Mode=TwoWay}" ImageOpened="imageOpened_RemoveAndRecalculateGridOverlay"/>
                 </Grid>
                 <TextBlock Grid.Column="1" Grid.Row="0" x:Name="outputImageLabel" Text="Output Preview Image" />
                 <Grid Grid.Row="1" Grid.Column="1" Margin="10">
-                    <Image Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" x:Name="outputImage"  Source="{Binding MosaicImage}" />
+                    <Image Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" x:Name="outputImage"  Source="{Binding MosaicImage, Mode=TwoWay}" />
                 </Grid>
             </Grid>
         </Grid>

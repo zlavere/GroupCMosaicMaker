@@ -13,8 +13,8 @@ namespace ImageSandbox.Model
 
         public int CellSideLength { get; set; }
         public WriteableBitmap SourceImage { get; set; }
-        protected WriteableBitmap MosaicImage { get; set; }
-        protected GridFactory GridFactory { get; set; }
+        public WriteableBitmap MosaicImage { get; set; }
+        public GridFactory GridFactory { get; set; }
         #endregion
 
         #region Constructors
