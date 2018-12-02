@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml.Media.Imaging;
@@ -19,6 +21,7 @@ namespace ImageSandbox.ViewModel
         private WriteableBitmap currentlyDisplayedImage;
         private WriteableBitmap currentlyDisplayedGridLines;
         private WriteableBitmap currentlyDisplayedMosaic;
+        private ObservableCollection<WriteableBitmap> mosaicPalette;
 
         private int cellSideLength;
 
@@ -62,6 +65,14 @@ namespace ImageSandbox.ViewModel
         /// The toggle grid command.
         /// </value>
         public RelayCommand ToggleGridCommand { get; set; }
+
+        /// <summary>
+        /// Gets or sets the load palette command.
+        /// </summary>
+        /// <value>
+        /// The load palette command.
+        /// </value>
+        public RelayCommand LoadPaletteCommand { get; set; }
 
         public RelayCommand ShowGridCommand { get; set; }
 
@@ -161,6 +172,16 @@ namespace ImageSandbox.ViewModel
             }
         }
 
+        public ObservableCollection<WriteableBitmap> MosaicPalette
+        {
+            get => this.mosaicPalette;
+            set
+            {
+                this.mosaicPalette = value ?? throw new ArgumentNullException();
+                this.OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Constructors
@@ -191,6 +212,7 @@ namespace ImageSandbox.ViewModel
             this.LoadImageCommand = new RelayCommand(this.loadImage, canAlwaysExecute);
             this.SaveImageCommand = new RelayCommand(this.saveImage, this.canSaveImage);
             this.CreateMosaicCommand = new RelayCommand(this.createMosaic, this.canCreateMosaic);
+            this.LoadPaletteCommand = new RelayCommand(this.loadPalette, canAlwaysExecute);
         }
 
         private async void loadImage(object obj)
@@ -233,6 +255,13 @@ namespace ImageSandbox.ViewModel
         private bool canCreateMosaic(object obj)
         {
             return this.currentlyDisplayedImage != null && this.CellSideLength > 0;
+        }
+
+        private async void loadPalette(object obj)
+        {
+            PaletteReader newReader = new PaletteReader();
+            var results = await newReader.LoadPalette();
+            this.MosaicPalette = new ObservableCollection<WriteableBitmap>(results);
         }
 
         #endregion
