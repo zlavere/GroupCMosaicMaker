@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using ImageSandbox.IO;
 using ImageSandbox.Model;
@@ -21,7 +22,8 @@ namespace ImageSandbox.ViewModel
         private WriteableBitmap currentlyDisplayedImage;
         private WriteableBitmap currentlyDisplayedGridLines;
         private WriteableBitmap currentlyDisplayedMosaic;
-        private ObservableCollection<WriteableBitmap> mosaicPalette;
+        private ObservableCollection<Image> mosaicPalette;
+
 
         private int cellSideLength;
 
@@ -33,6 +35,14 @@ namespace ImageSandbox.ViewModel
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Gets or sets the current palette.
+        /// </summary>
+        /// <value>
+        /// The current palette.
+        /// </value>
+        public PaletteReader CurrentPalette { get; set; }
 
         /// <summary>
         ///     Gets or sets the load image command.
@@ -172,7 +182,7 @@ namespace ImageSandbox.ViewModel
             }
         }
 
-        public ObservableCollection<WriteableBitmap> MosaicPalette
+        public ObservableCollection<Image> MosaicPalette
         {
             get => this.mosaicPalette;
             set
@@ -194,6 +204,7 @@ namespace ImageSandbox.ViewModel
             this.currentlyDisplayedImage = null;
             this.currentlyDisplayedGridLines = null;
             this.currentlyDisplayedMosaic = null;
+            this.CurrentPalette = new PaletteReader();
         }
 
         #endregion
@@ -259,9 +270,9 @@ namespace ImageSandbox.ViewModel
 
         private async void loadPalette(object obj)
         {
-            PaletteReader newReader = new PaletteReader();
-            var results = await newReader.LoadPalette();
-            this.MosaicPalette = new ObservableCollection<WriteableBitmap>(results);
+            await this.CurrentPalette.LoadPalette();
+
+            this.MosaicPalette = new ObservableCollection<Image>(this.CurrentPalette.DisplayablePalette);
         }
 
         #endregion

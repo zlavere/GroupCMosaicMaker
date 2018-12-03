@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using ImageSandbox.Utility;
 
@@ -11,22 +12,41 @@ namespace ImageSandbox.IO
     /// </summary>
     public class PaletteReader
     {
-        //TODO Reads the images in a folder as the mosaic palette.
+        /// <summary>
+        /// Gets or sets the editable palette.
+        /// </summary>
+        /// <value>
+        /// The editable palette.
+        /// </value>
+        public List<WriteableBitmap> EditablePalette { get; set; }
 
-        public async  Task<List<WriteableBitmap>> LoadPalette()
+        /// <summary>
+        /// Gets or sets the displayable palette.
+        /// </summary>
+        /// <value>
+        /// The displayable palette.
+        /// </value>
+        public List<Image> DisplayablePalette { get; set; }
+
+        public async  Task LoadPalette()
         {
             var folderPicker = new Windows.Storage.Pickers.FolderPicker();
             folderPicker.FileTypeFilter.Add(".jpg");
             var folder = await folderPicker.PickSingleFolderAsync();
             var filesList = await folder.GetFilesAsync();
-            List<WriteableBitmap> imagePalette = new List<WriteableBitmap>();
+            List<WriteableBitmap> bitmapPalette = new List<WriteableBitmap>();
+            List<Image> imagePalette = new List<Image>();
             foreach (var currentFile in filesList)
             {
                 var newBitmap = await BitmapUtilities.DecodeStorageFileToBitmap(currentFile);
-                imagePalette.Add(newBitmap);
+                Image newImage = new Image {Source = newBitmap};
+                imagePalette.Add(newImage);
+                bitmapPalette.Add(newBitmap);
             }
 
-            return imagePalette;
+            this.EditablePalette = bitmapPalette;
+            this.DisplayablePalette = imagePalette;
+
         }
     }
 }

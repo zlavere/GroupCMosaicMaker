@@ -5,6 +5,7 @@
   </Roots.Interfaces>
   <Roots.PropertyPathNames>
     <RootPropertyPathName Name="MosaicPalette" />
+    <RootPropertyPathName Name="Source" />
     <RootPropertyPathName Name="CurrentlyDisplayedMosaic" />
     <RootPropertyPathName Name="CurrentlyDisplayedImage" />
     <RootPropertyPathName Name="MosaicType" />
@@ -66,12 +67,12 @@
       <RootProperty Name="Template" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Image">
+      <RootProperty Name="Stretch" />
+      <RootProperty Name="Source" />
       <RootProperty Name="Height" />
       <RootProperty Name="Width" />
-      <RootProperty Name="Stretch" />
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="VerticalAlignment" />
-      <RootProperty Name="Source" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ItemsPanelTemplate">
       <RootProperty Name="Template" />

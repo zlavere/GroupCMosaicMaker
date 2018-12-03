@@ -21,7 +21,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <CommandBar Grid.Column="0" Grid.Row="0">
-            <AppBarButton Icon="Accept" Label="Load Palette" VerticalAlignment="Top" Command="{Binding LoadPaletteCommand}"/>
+            <AppBarButton Icon="Folder" Label="Load Palette" VerticalAlignment="Top" Command="{Binding LoadPaletteCommand}"/>
             <AppBarButton x:Name="openImageButton"  Icon="BrowsePhotos" Label="Open" Margin="0" VerticalAlignment="Top"  Command="{Binding LoadImageCommand}" />
             <AppBarButton x:Name="saveMosaicButton" Icon="SaveLocal" Label="Save Mosaic" Margin="0" VerticalAlignment="Top" Command="{Binding SaveImageCommand}"  />
             <AppBarButton x:Name="settingsButton"  Icon="Setting" Label="Settings" Margin="0" VerticalAlignment="Top" />
@@ -93,10 +93,12 @@
             </Grid>
             <TextBlock HorizontalAlignment="Left" Margin="34,494,0,0" Text="Mosaic Palette" TextWrapping="Wrap" VerticalAlignment="Top"/>
         </Grid>
-        <GridView HorizontalAlignment="Left" Margin="281,488,0,0" Grid.Row="1" VerticalAlignment="Top" Width="1164" Height="424" x:Name="mosaicView" SelectionMode="None" ItemsSource="{Binding MosaicPalette, Mode=OneWay}">
+        <GridView HorizontalAlignment="Left" Margin="281,488,0,0" Grid.Row="1" VerticalAlignment="Top" Width="1164" Height="424" x:Name="mosaicView" SelectionMode="Multiple" ItemsSource="{Binding MosaicPalette, Mode=TwoWay}">
             <GridView.ItemTemplate>
-                <DataTemplate x:DataType="WriteableBitmap">
-                    <Image Height="180" Width="180" Stretch="UniformToFill"/>
+                <DataTemplate>
+                    <Grid>
+                        <Image Stretch="Fill" Height="160" Width="160" />
+                    </Grid>
                 </DataTemplate>
             </GridView.ItemTemplate>
             <GridView.ItemsPanel>
