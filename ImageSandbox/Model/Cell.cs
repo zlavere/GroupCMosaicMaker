@@ -20,7 +20,7 @@ namespace ImageSandbox.Model
         public int Y { get; set; }
         public List<Color> Colors { get; set; }
         public List<int> PixelIndexes { get; set; }
-
+        public List<int> PixelOffsetsInByteArray { get; set; }
         public List<byte> RedValues
         {
             get
@@ -70,6 +70,7 @@ namespace ImageSandbox.Model
             this.RedValues = new List<byte>();
             this.GreenValues = new List<byte>();
             this.BlueValues = new List<byte>();
+            this.PixelOffsetsInByteArray = new List<int>();
         }
     }
 }

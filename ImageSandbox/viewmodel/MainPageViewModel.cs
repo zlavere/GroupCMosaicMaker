@@ -152,7 +152,6 @@ namespace ImageSandbox.ViewModel
             get => this.currentlyDisplayedMosaic;
             set
             {
-                Debug.WriteLine("Mosaic Set");
                 this.currentlyDisplayedMosaic = value ?? throw new ArgumentNullException();
                 this.CreateMosaicCommand.OnCanExecuteChanged();
                 this.SaveImageCommand.OnCanExecuteChanged();
@@ -273,9 +272,9 @@ namespace ImageSandbox.ViewModel
             return this.CurrentlyDisplayedMosaic != null;
         }
 
-        private async void createMosaic(object obj)
+        private void createMosaic(object obj)
         {
-            this.CurrentlyDisplayedMosaic = await this.SolidMosaic.SetCellData();
+            this.SolidMosaic.SetCellData();
         }
 
         private bool canCreateMosaic(object obj)

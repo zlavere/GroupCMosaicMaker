@@ -1,23 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Xaml.Media.Imaging;
 using ImageSandbox.Extensions;
-using ImageSandbox.Utility;
 
 namespace ImageSandbox.Model
 {
     public class SolidMosaic : Mosaic
     {
         #region Properties
-        private int PixelIndex{ get; set; }
+
+        private int PixelIndex { get; set; }
         public List<Cell> Cells { get; set; }
         public List<Color> Colors { get; set; }
-        
 
         #endregion
 
@@ -33,105 +31,111 @@ namespace ImageSandbox.Model
 
         #region Methods
 
-        public async Task<WriteableBitmap> SetCellData()
+        public void SetCellData()
         {
-            this.Colors = this.SourceImage.GetPixelColors();
-            this.Cells =  this.calculateCellAttributes();
-            this.MosaicImage = await this.writeToBitmapAverageColor();
-            return this.MosaicImage;
+            this.Colors = SourceImage.GetPixelColors();
+            this.calculateCellAttributes();
+            this.writeToBitmapAverageColor();
         }
 
-        private List<Cell> calculateCellAttributes()
+        private void calculateCellAttributes()
         {
-            List<Cell> cells = new List<Cell>();
+            this.Cells = new List<Cell>();
             this.PixelIndex = 0;
-
-            for (var rowIndex = 0; rowIndex <= this.GridFactory.NumberOfRows; rowIndex++)
+            for (var rowIndex = 0; rowIndex <= GridFactory.NumberOfRows; rowIndex++)
             {
-                cells.AddRange(this.getRowOfCells(rowIndex));
+                this.Cells.AddRange(this.createRow(rowIndex));
             }
-
-            return cells;
         }
 
-        private List<Cell> getRowOfCells(int rowIndex)
+        private List<Cell> createRow(int rowIndex)
         {
-            var cells = new List<Cell>();
-            for (var columnIndex = 0; columnIndex <= this.GridFactory.NumberOfColumns; columnIndex++)
+            var rowOfCells = new List<Cell>();
+            for (var columnIndex = 0; columnIndex <= GridFactory.NumberOfColumns; columnIndex++)
             {
+                var cell = new Cell();
                 var currentHeight = 0;
                 var currentWidth = 0;
-                var cell = new Cell();
-                
-                if (columnIndex == this.GridFactory.NumberOfColumns)
+
+                if (columnIndex == GridFactory.NumberOfColumns)
                 {
-                    currentWidth = this.GridFactory.LastColumnWidth;
+                    currentWidth = GridFactory.LastColumnWidth;
                 }
                 else
                 {
-                    currentWidth = this.GridFactory.CellSideLength;
+                    currentWidth = GridFactory.CellSideLength;
                 }
 
-                if (rowIndex == this.GridFactory.NumberOfRows)
+                if (rowIndex == GridFactory.NumberOfRows)
                 {
-                    currentHeight = this.GridFactory.LastRowHeight;
+                    currentHeight = GridFactory.LastRowHeight;
                 }
                 else
                 {
-                    currentHeight = this.GridFactory.CellSideLength;
+                    currentHeight = GridFactory.CellSideLength;
                 }
 
-                for (var pixelRow = 0; pixelRow < currentHeight; pixelRow++)
-                {
-                    for (var pixelColumn = 0; pixelColumn < currentWidth; pixelColumn++)
-                    {
-                        cell.X = columnIndex;
-                        cell.Y = rowIndex;
-                        cell.Colors.Add(this.Colors[this.PixelIndex]);
-                        cell.PixelIndexes.Add(this.PixelIndex);
-                        this.PixelIndex++;
-                    }
-                }
-                cells.Add(cell);
+                cell = this.createCell(rowIndex, currentHeight, currentWidth, cell, columnIndex);
+                rowOfCells.Add(cell);
             }
-            return cells;
+
+            return rowOfCells;
         }
-        private async Task<WriteableBitmap> writeToBitmapAverageColor()
+
+        private Cell createCell(int rowIndex, int currentHeight, int currentWidth, Cell cell, int columnIndex)
         {
-            var sourcePixels = this.SourceImage.PixelWidth * this.SourceImage.PixelHeight;
-            var mosaic = new WriteableBitmap(this.SourceImage.PixelWidth, this.SourceImage.PixelHeight);
-            using (var stream = mosaic.PixelBuffer.AsStream())
+            for (var pixelY = 0; pixelY < currentHeight; pixelY++)
+            {
+                for (var pixelX = 0; pixelX < currentWidth; pixelX++)
+                {
+                    cell.X = columnIndex;
+                    cell.Y = rowIndex;
+                    cell.Colors.Add(this.Colors[this.PixelIndex]);
+                    cell.PixelIndexes.Add(this.PixelIndex);
+                    var byteOffset = (pixelY * SourceImage.PixelWidth + pixelX +
+                                      columnIndex * GridFactory.CellSideLength +
+                                      rowIndex * SourceImage.PixelWidth * GridFactory.CellSideLength) * 4;
+                    cell.PixelOffsetsInByteArray.Add(byteOffset);
+                    this.PixelIndex++;
+                }
+            }
+            
+            return cell;
+        }
+
+        private async void writeToBitmapAverageColor()
+        {
+            var sourcePixels = SourceImage.PixelWidth * SourceImage.PixelHeight;
+            var mosaic = new WriteableBitmap(SourceImage.PixelWidth, SourceImage.PixelHeight);
+            using (var stream = this.MosaicImage.PixelBuffer.AsStream())
             {
                 var buffer = this.setUpSolidMosaicPixelData();
-               
-                await stream.WriteAsync(buffer, 0, sourcePixels);
 
+                await stream.WriteAsync(buffer, 0, sourcePixels * 4);
                 await stream.FlushAsync();
-
-                return mosaic;
             }
         }
 
         private byte[] setUpSolidMosaicPixelData()
         {
-            var buffer = new byte[(this.SourceImage.PixelWidth * this.SourceImage.PixelHeight) * 4];
-            var currentPixel = 0;
+            var buffer = new byte[SourceImage.PixelWidth * SourceImage.PixelHeight * 4];
+
             foreach (var current in this.Cells)
             {
-                for (var i = 0; i < current.PixelIndexes.Count; i++)
+                foreach (var currentPixelStart in current.PixelOffsetsInByteArray)
                 {
-                    buffer[currentPixel] = current.AverageColor.B;
-                    buffer[currentPixel + 1] = current.AverageColor.G;
-                    buffer[currentPixel + 2] = current.AverageColor.R;
-                    buffer[currentPixel + 3] = 0; 
+                    buffer[currentPixelStart] = current.AverageColor.B;
+                    buffer[currentPixelStart + 1] = current.AverageColor.G;
+                    buffer[currentPixelStart + 2] = current.AverageColor.R;
+                    buffer[currentPixelStart + 3] = 0;
                 }
-
-                currentPixel = ((current.X) * ((int) this.SourceImage.PixelWidth) + (current.Y * this.GridFactory.CellSideLength)) * 4;
             }
 
+            var countWhere0 = buffer.Count(value => value == 0);
+            Debug.WriteLine(countWhere0);
             return buffer;
         }
-    }
- }
-        #endregion
 
+        #endregion
+    }
+}
