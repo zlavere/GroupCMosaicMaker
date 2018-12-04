@@ -37,7 +37,7 @@ namespace ImageSandbox.Model
         {
             this.Colors = this.SourceImage.GetPixelColors();
             this.Cells =  this.calculateCellAttributes();
-            await this.writeToBitmapAverageColor();
+            this.MosaicImage = await this.writeToBitmapAverageColor();
             return this.MosaicImage;
         }
 
@@ -105,6 +105,9 @@ namespace ImageSandbox.Model
                 var buffer = this.setUpSolidMosaicPixelData();
                
                 await stream.WriteAsync(buffer, 0, sourcePixels);
+
+                await stream.FlushAsync();
+
                 return mosaic;
             }
         }
@@ -112,87 +115,23 @@ namespace ImageSandbox.Model
         private byte[] setUpSolidMosaicPixelData()
         {
             var buffer = new byte[(this.SourceImage.PixelWidth * this.SourceImage.PixelHeight) * 4];
+            var currentPixel = 0;
             foreach (var current in this.Cells)
             {
-                Debug.WriteLine($"Pixels In Cell = {current.PixelIndexes.Count}");
-                foreach (var currentPixel in current.PixelIndexes)
+                for (var i = 0; i < current.PixelIndexes.Count; i++)
                 {
                     buffer[currentPixel] = current.AverageColor.B;
                     buffer[currentPixel + 1] = current.AverageColor.G;
                     buffer[currentPixel + 2] = current.AverageColor.R;
-                    buffer[currentPixel + 3] = 0;
-
-                    Debug.WriteLine($"Index = {currentPixel}----{Environment.NewLine}" +
-                                    $"RGB = {current.AverageColor.R}, {current.AverageColor.G}, {current.AverageColor.B}{Environment.NewLine}" +
-                                    $"Current Cell = ({current.X},{current.Y})");
+                    buffer[currentPixel + 3] = 0; 
                 }
+
+                currentPixel = ((current.X) * ((int) this.SourceImage.PixelWidth) + (current.Y * this.GridFactory.CellSideLength)) * 4;
             }
+
             return buffer;
         }
     }
-
-
-
-
-//            var pixelIndex = 0;
-//            var newCell = new Cell();
-//            var pixelIndexes = new List<int>();
-//            var cellSideLength = this.GridFactory.CellSideLength;
-//            var pixelsPerCell = cellSideLength * cellSideLength;
-//            Debug.WriteLine($"Pixel Width = {this.SourceImage.PixelWidth}");
-//            Debug.WriteLine($"Cell Side Length = {cellSideLength}");
-//            for (var i = 0; i < this.CellSideLength; i++)
-//            {
-//                for (var j = 0; j < this.CellSideLength; j++)
-//                {
-//                        Debug.WriteLine($"Pixel Index = {pixelIndex}{Environment.NewLine}" +
-//                                        $"   Pixel In Cell = ({j}, {i}){Environment.NewLine}" +
-//                                        $"      of Cell = {index}{Environment.NewLine}" +
-//                                        $"---");
-//                    pixelIndexes.Add(pixelIndex);
-//                    this.Cells.Add(newCell);
-//                   
-//                }
-//            }
-
-//            return pixelIndexes;
-        }
+ }
         #endregion
-    
-
-
-//        private byte[] byteArraySetup()
-//        {
-//            var cells = this.SetCellData();
-//            using (var stream = MosaicImage.PixelBuffer.AsStream())
-//            {
-//                var buffer = new byte[SourceImage.PixelWidth * SourceImage.PixelHeight * 4];
-//                Debug.WriteLine($"Count Cells: {cells.Count}");
-//                foreach (var current in cells)
-//                {
-//                    current.SetRbgLists();
-//                    foreach (var pixel in current.PixelIndexes)
-//                    {
-//                        buffer[pixel] = current.AverageColor.B;
-//                        buffer[pixel + 1] = current.AverageColor.G;
-//                        buffer[pixel + 2] = current.AverageColor.R;
-//                        buffer[pixel + 3] = 0;
-//                    }
-//                }
-//                stream.Read(buffer, 0, MosaicImage.PixelWidth * MosaicImage.PixelHeight);
-//                return buffer;
-//            }
-//        }
-
-//        public async Task<WriteableBitmap> ConstructMosaic()
-//        {
-//            var bitmap = new WriteableBitmap(SourceImage.PixelWidth, SourceImage.PixelHeight);
-//            var pixelData = this.byteArraySetup();
-//            using (var stream = bitmap.PixelBuffer.AsStream())
-//            {
-//                await stream.WriteAsync(pixelData, 0, SourceImage.PixelHeight * SourceImage.PixelWidth);
-//                MosaicImage = bitmap;
-//                return MosaicImage;
-//            }
-//        }
 
