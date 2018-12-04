@@ -4,14 +4,15 @@
     <RootInterface FullName="Windows.UI.Xaml.Data.IValueConverter" />
   </Roots.Interfaces>
   <Roots.PropertyPathNames>
-    <RootPropertyPathName Name="MosaicImage" />
-    <RootPropertyPathName Name="SourceImage" />
+    <RootPropertyPathName Name="MosaicPalette" />
+    <RootPropertyPathName Name="CurrentlyDisplayedMosaic" />
+    <RootPropertyPathName Name="CurrentlyDisplayedImage" />
     <RootPropertyPathName Name="MosaicType" />
     <RootPropertyPathName Name="CreateMosaicCommand" />
-    <RootPropertyPathName Name="GridFactory" />
     <RootPropertyPathName Name="CellSideLength" />
     <RootPropertyPathName Name="SaveImageCommand" />
     <RootPropertyPathName Name="LoadImageCommand" />
+    <RootPropertyPathName Name="LoadPaletteCommand" />
   </Roots.PropertyPathNames>
   <Roots.RootTypes>
     <RootType FullName="Windows.UI.Xaml.Application">
@@ -46,30 +47,52 @@
     <RootType FullName="Windows.UI.Xaml.Controls.CommandBar">
       <RootProperty Name="PrimaryCommands" />
     </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.TextBlock">
-      <RootProperty Name="Text" />
+    <RootType FullName="Windows.UI.Xaml.Controls.GridView">
+      <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="Margin" />
       <RootProperty Name="VerticalAlignment" />
-      <RootProperty Name="HorizontalAlignment" />
-      <RootProperty Name="TextWrapping" />
-      <RootProperty Name="FontSize" />
-      <RootProperty Name="FontWeight" />
-    </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.Image">
-      <RootProperty Name="HorizontalAlignment" />
-      <RootProperty Name="VerticalAlignment" />
-      <RootProperty Name="Source" />
-      <RootProperty Name="Stretch" />
-      <RootEvent Name="ImageOpened" />
+      <RootProperty Name="Width" />
+      <RootProperty Name="Height" />
+      <RootProperty Name="SelectionMode" />
+      <RootProperty Name="ItemsSource" />
+      <RootProperty Name="ItemTemplate" />
+      <RootProperty Name="ItemsPanel" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Data.Binding">
       <RootProperty Name="Mode" />
       <RootProperty Name="Converter" />
     </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.RadioButton">
+    <RootType FullName="Windows.UI.Xaml.DataTemplate">
+      <RootProperty Name="Template" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.Image">
+      <RootProperty Name="Height" />
+      <RootProperty Name="Width" />
+      <RootProperty Name="Stretch" />
       <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="Source" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.ItemsPanelTemplate">
+      <RootProperty Name="Template" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.ItemsWrapGrid">
+      <RootProperty Name="MaximumRowsOrColumns" />
+      <RootProperty Name="Orientation" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.TextBlock">
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="Text" />
+      <RootProperty Name="TextWrapping" />
+      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="FontSize" />
+      <RootProperty Name="FontWeight" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.RadioButton">
       <RootProperty Name="GroupName" />
       <RootProperty Name="Content" />
+      <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="Margin" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="IsChecked" />
@@ -82,7 +105,6 @@
       <RootProperty Name="Margin" />
       <RootProperty Name="InputScope" />
       <RootProperty Name="Text" />
-      <RootEvent Name="LostFocus" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Button">
       <RootProperty Name="Content" />
@@ -95,9 +117,9 @@
     <RootType FullName="Windows.UI.Xaml.Controls.AppBarButton">
       <RootProperty Name="Icon" />
       <RootProperty Name="Label" />
-      <RootProperty Name="Margin" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Command" />
+      <RootProperty Name="Margin" />
     </RootType>
     <RootType FullName="ImageSandbox.View.MainPage" />
     <RootType FullName="ImageSandbox.view.SettingsPage" />

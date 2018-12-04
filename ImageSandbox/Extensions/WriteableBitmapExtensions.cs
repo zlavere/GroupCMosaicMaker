@@ -30,6 +30,7 @@ namespace ImageSandbox.Extensions
                     var pixelRed = pixelBuffer[offsetPosition + 2];
 
                     colors.Add(Color.FromArgb(0, pixelRed, pixelGreen, pixelBlue));
+                    
                 }
 
                 return colors;

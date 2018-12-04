@@ -21,6 +21,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <CommandBar Grid.Column="0" Grid.Row="0">
+            <AppBarButton Icon="Accept" Label="Load Palette" VerticalAlignment="Top" Command="{Binding LoadPaletteCommand}"/>
             <AppBarButton x:Name="openImageButton"  Icon="BrowsePhotos" Label="Open" Margin="0" VerticalAlignment="Top"  Command="{Binding LoadImageCommand}" />
             <AppBarButton x:Name="saveMosaicButton" Icon="SaveLocal" Label="Save Mosaic" Margin="0" VerticalAlignment="Top" Command="{Binding SaveImageCommand}"  />
             <AppBarButton x:Name="settingsButton"  Icon="Setting" Label="Settings" Margin="0" VerticalAlignment="Top" />
@@ -42,7 +43,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="5" x:Name="gridSizeLabel" Text="Grid Cell Size:"/>
-                <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="5" x:Name="gridSizeInput" InputScope="Number" Text="{Binding GridFactory.CellSideLength, Mode=TwoWay, Converter={StaticResource textInputToIntConverter}}" LostFocus="lostFocus_UpdateGrid" />
+                <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="5" x:Name="gridSizeInput" InputScope="Number" Text="{Binding CellSideLength, Mode=TwoWay, Converter={StaticResource textInputToIntConverter}}" />
                 <Button x:Name="createMosaicButton" Content="Create Mosaic" HorizontalAlignment="Left" Margin="5" Grid.Row="2"
                         Grid.Column="0" VerticalAlignment="Top" Command="{Binding CreateMosaicCommand}"/>
                 <Image Grid.Column="0" Grid.Row="3" x:Name="testImage" />
@@ -60,7 +61,7 @@
                                  Grid.Column="0" VerticalAlignment="Top" GroupName="MosaicType" Command="{Binding MosaicType}"/>
                 </Grid>
 
-               
+
             </Grid>
             <Grid Grid.Column="1" Margin="10">
                 <Grid.ColumnDefinitions>
@@ -73,23 +74,36 @@
                 </Grid.RowDefinitions>
                 <Grid>
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto"  />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Grid.Row="0" Margin="0, 0, 50, 0" x:Name="originalImageLabel" Text="Original Image"/>
-
-                    <RadioButton Grid.Column="1"  HorizontalAlignment="Right" x:Name="showGrid" GroupName="OverlayGrid" Checked="checked_DisplayGrid">Overlay Grid</RadioButton>
-                    <RadioButton Grid.Column="2" HorizontalAlignment="Right" x:Name="hideGrid" GroupName="OverlayGrid" Checked="checked_HideGrid">Hide Grid</RadioButton>
+                    <TextBlock Grid.Column="0" Grid.Row="0"  x:Name="originalImageLabel" Text="Original Image"/>
+                    <RadioButton Grid.Column="1" x:Name="showGrid" GroupName="OverlayGrid" Checked="checked_DisplayGrid" >Overlay Grid</RadioButton>
+                    <RadioButton Grid.Column="2" x:Name="hideGrid" GroupName="OverlayGrid" Checked="checked_HideGrid">Hide Grid</RadioButton>
                 </Grid>
+
                 <Grid x:Name="originalImageOverlay"  Grid.Column="0" Grid.Row="1" Margin="10" >
-                    <Image x:Name="originalImage" HorizontalAlignment="Left" Stretch ="Uniform" Source="{Binding SourceImage, Mode=TwoWay}" ImageOpened="imageOpened_RemoveAndRecalculateGridOverlay"/>
+                    <Image x:Name="originalImage" HorizontalAlignment="Left"  Source="{Binding CurrentlyDisplayedImage, Mode =TwoWay}"/>
                 </Grid>
                 <TextBlock Grid.Column="1" Grid.Row="0" x:Name="outputImageLabel" Text="Output Preview Image" />
                 <Grid Grid.Row="1" Grid.Column="1" Margin="10">
-                    <Image Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" x:Name="outputImage"  Source="{Binding MosaicImage, Mode=TwoWay}" />
+                    <Image Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" x:Name="outputImage"  Source="{Binding CurrentlyDisplayedMosaic, Mode=TwoWay}" />
                 </Grid>
             </Grid>
+            <TextBlock HorizontalAlignment="Left" Margin="34,494,0,0" Text="Mosaic Palette" TextWrapping="Wrap" VerticalAlignment="Top"/>
         </Grid>
+        <GridView HorizontalAlignment="Left" Margin="281,488,0,0" Grid.Row="1" VerticalAlignment="Top" Width="1164" Height="424" x:Name="mosaicView" SelectionMode="None" ItemsSource="{Binding MosaicPalette, Mode=OneWay}">
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="WriteableBitmap">
+                    <Image Height="180" Width="180" Stretch="UniformToFill"/>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid MaximumRowsOrColumns="6" Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+        </GridView>
     </Grid>
 </Page>

@@ -13,7 +13,7 @@ namespace ImageSandbox.ViewModel
         private static WriteableBitmap image;
         public static WriteableBitmap Image
         {
-            get => image ?? throw new ArgumentNullException();
+            get => image; 
             set => image = value;
         }
     }
