@@ -24,7 +24,7 @@ namespace ImageSandbox.ViewModel
         private WriteableBitmap currentlyDisplayedGridLines;
         private WriteableBitmap currentlyDisplayedMosaic;
         private ObservableCollection<Image> mosaicPalette;
-
+        private SolidMosaic solidMosaic;
 
         private int cellSideLength;
         private GridFactory gridFactory;
@@ -101,7 +101,7 @@ namespace ImageSandbox.ViewModel
             set
             {
                 this.currentlyDisplayedImage = value ?? throw new ArgumentNullException();
-                ActiveImage.Image = value;
+                ActiveImage.Image = this.currentlyDisplayedImage;
                 this.canCreateMosaic(true);
                 this.OnPropertyChanged();
             }
@@ -238,12 +238,7 @@ namespace ImageSandbox.ViewModel
 
         #region Methods
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         private void loadCommands()
         {
@@ -285,9 +280,9 @@ namespace ImageSandbox.ViewModel
             return this.CurrentlyDisplayedMosaic != null;
         }
 
-        private void createMosaic(object obj)
+        private async void createMosaic(object obj)
         {
-            this.SolidMosaic.SetCellData();
+            this.CurrentlyDisplayedMosaic = await this.SolidMosaic.SetCellData();
         }
 
         private bool canCreateMosaic(object obj)
@@ -298,10 +293,16 @@ namespace ImageSandbox.ViewModel
         private async void loadPalette(object obj)
         {
             await this.CurrentPalette.LoadPalette();
-
             this.MosaicPalette = new ObservableCollection<Image>(this.CurrentPalette.DisplayablePalette);
         }
 
         #endregion
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

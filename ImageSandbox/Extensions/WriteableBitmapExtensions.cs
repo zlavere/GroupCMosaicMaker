@@ -17,22 +17,20 @@ namespace ImageSandbox.Extensions
             using (var stream = wb.PixelBuffer.AsStream())
             {
                 var pixelsCount = (wb.PixelWidth * wb.PixelHeight);
-                var pixelBuffer = new byte[stream.Length];
-                stream.Read(pixelBuffer, 0, (int)stream.Length);
+                var bytesCount = pixelsCount * 4;
+                var pixelBuffer = new byte[bytesCount];
+                stream.Read(pixelBuffer, 0, bytesCount);
                 var colors = new List<Color>();
 
                 for (var i = 0; i < pixelsCount; i++)
                 {
                     var offsetPosition = i * 4;
-
                     var pixelBlue = pixelBuffer[offsetPosition];
                     var pixelGreen = pixelBuffer[offsetPosition + 1];
                     var pixelRed = pixelBuffer[offsetPosition + 2];
 
-                    colors.Add(Color.FromArgb(0, pixelRed, pixelGreen, pixelBlue));
-                    
+                    colors.Add(Color.FromArgb(0, pixelRed, pixelGreen, pixelBlue));  
                 }
-
                 return colors;
             }
         } 

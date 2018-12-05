@@ -28,7 +28,14 @@ namespace ImageSandbox.Model
         {
             get
             {
-                this.lastRowHeight = this.GridHeight % this.CellSideLength;
+                if (this.GridHeight % this.CellSideLength != 0)
+                {
+                    this.lastRowHeight = this.GridHeight % this.CellSideLength;
+                }
+                else
+                {
+                    this.lastRowHeight = this.CellSideLength;
+                }
                 return this.lastRowHeight;
             }
         }
@@ -37,7 +44,15 @@ namespace ImageSandbox.Model
         {
             get
             {
-                this.lastColumnWidth = this.GridWidth % this.CellSideLength;
+                if (this.GridWidth % this.CellSideLength != 0)
+                {
+                    this.lastColumnWidth = this.GridWidth % this.CellSideLength;
+                }
+                else
+                {
+                    this.lastColumnWidth = this.CellSideLength;
+                }
+
                 return this.lastColumnWidth;
             }
         }
@@ -47,6 +62,10 @@ namespace ImageSandbox.Model
             get
             {
                 this.numberOfRows = this.GridHeight / this.CellSideLength;
+                if (this.GridHeight % this.CellSideLength != 0)
+                {
+                    this.numberOfRows++;
+                }
                 return this.numberOfRows;
             }
         }
@@ -55,6 +74,10 @@ namespace ImageSandbox.Model
             get
             {
                 this.numberOfColumns = this.GridWidth / this.CellSideLength;
+                if (this.GridWidth % this.CellSideLength != 0)
+                {
+                    this.numberOfRows++;
+                }
                 return this.numberOfColumns;
             }
         }
@@ -76,7 +99,7 @@ namespace ImageSandbox.Model
         {
             var grid = new Grid();
             
-            for (var i = 0; i <= this.NumberOfRows; i++)
+            for (var i = 0; i < this.NumberOfRows; i++)
             {
                 grid.RowDefinitions.Add(
                     new RowDefinition {
@@ -84,7 +107,7 @@ namespace ImageSandbox.Model
                 });
             }
 
-            for (var i = 0; i <= this.NumberOfColumns; i++)
+            for (var i = 0; i < this.NumberOfColumns; i++)
             {
                 grid.ColumnDefinitions.Add(
                     new ColumnDefinition {
@@ -92,7 +115,7 @@ namespace ImageSandbox.Model
                 });
             }
 
-            for (var rowIndex = 0; rowIndex <= this.NumberOfRows; rowIndex++)
+            for (var rowIndex = 0; rowIndex < this.NumberOfRows; rowIndex++)
             {
                 this.addRowToGrid(grid, rowIndex);
             }
@@ -100,21 +123,19 @@ namespace ImageSandbox.Model
             return grid;
         }
 
-        
-
         private void addRowToGrid(Grid grid, int rowNumber)
         {
-            for (var columnIndex = 0; columnIndex <= this.NumberOfColumns; columnIndex++)
+            for (var columnIndex = 0; columnIndex < this.NumberOfColumns; columnIndex++)
             {
                 var currentWidth = this.CellSideLength;
                 var currentHeight = this.CellSideLength;
 
-                if (rowNumber == this.NumberOfRows)
+                if (rowNumber == this.NumberOfRows - 1)
                 {
                     currentHeight = this.LastRowHeight;
                 }
 
-                if (columnIndex == this.NumberOfColumns)
+                if (columnIndex == this.NumberOfColumns - 1)
                 {
                     currentWidth = this.LastColumnWidth;
                 }

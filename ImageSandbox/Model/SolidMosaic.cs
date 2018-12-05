@@ -31,18 +31,18 @@ namespace ImageSandbox.Model
 
         #region Methods
 
-        public void SetCellData()
+        public async Task<WriteableBitmap> SetCellData()
         {
             this.Colors = SourceImage.GetPixelColors();
             this.calculateCellAttributes();
-            this.writeToBitmapAverageColor();
+            return await this.writeToBitmapAverageColor();
         }
 
         private void calculateCellAttributes()
         {
             this.Cells = new List<Cell>();
             this.PixelIndex = 0;
-            for (var rowIndex = 0; rowIndex <= GridFactory.NumberOfRows; rowIndex++)
+            for (var rowIndex = 0; rowIndex < GridFactory.NumberOfRows; rowIndex++)
             {
                 this.Cells.AddRange(this.createRow(rowIndex));
             }
@@ -51,7 +51,7 @@ namespace ImageSandbox.Model
         private List<Cell> createRow(int rowIndex)
         {
             var rowOfCells = new List<Cell>();
-            for (var columnIndex = 0; columnIndex <= GridFactory.NumberOfColumns; columnIndex++)
+            for (var columnIndex = 0; columnIndex < GridFactory.NumberOfColumns; columnIndex++)
             {
                 var cell = new Cell();
                 var currentHeight = 0;
@@ -85,14 +85,14 @@ namespace ImageSandbox.Model
         private Cell createCell(int rowIndex, int currentHeight, int currentWidth, Cell cell, int columnIndex)
         {
             for (var pixelY = 0; pixelY < currentHeight; pixelY++)
-            {
+            {   
                 for (var pixelX = 0; pixelX < currentWidth; pixelX++)
                 {
                     cell.X = columnIndex;
                     cell.Y = rowIndex;
                     cell.Colors.Add(this.Colors[this.PixelIndex]);
                     cell.PixelIndexes.Add(this.PixelIndex);
-                    var byteOffset = (pixelY * SourceImage.PixelWidth + pixelX +
+                    var byteOffset = ((pixelY * SourceImage.PixelWidth + pixelX) +
                                       columnIndex * GridFactory.CellSideLength +
                                       rowIndex * SourceImage.PixelWidth * GridFactory.CellSideLength) * 4;
                     cell.PixelOffsetsInByteArray.Add(byteOffset);
@@ -103,17 +103,18 @@ namespace ImageSandbox.Model
             return cell;
         }
 
-        private async void writeToBitmapAverageColor()
+        private async Task<WriteableBitmap> writeToBitmapAverageColor()
         {
             var sourcePixels = SourceImage.PixelWidth * SourceImage.PixelHeight;
             var mosaic = new WriteableBitmap(SourceImage.PixelWidth, SourceImage.PixelHeight);
-            using (var stream = this.MosaicImage.PixelBuffer.AsStream())
+            using (var stream = mosaic.PixelBuffer.AsStream())
             {
                 var buffer = this.setUpSolidMosaicPixelData();
 
                 await stream.WriteAsync(buffer, 0, sourcePixels * 4);
                 await stream.FlushAsync();
             }
+            return mosaic;
         }
 
         private byte[] setUpSolidMosaicPixelData()
