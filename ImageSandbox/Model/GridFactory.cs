@@ -153,6 +153,8 @@ namespace ImageSandbox.Model
         {
             var grid = new Grid();
             
+            for (var i = 0; i < this.NumberOfRows; i++)
+
             for (var i = 0; i <= this.NumberOfRows; i++)
             {
                 grid.RowDefinitions.Add(

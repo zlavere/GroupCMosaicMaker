@@ -240,7 +240,6 @@ namespace ImageSandbox.ViewModel
 
         #region Methods
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
 
         private void loadCommands()

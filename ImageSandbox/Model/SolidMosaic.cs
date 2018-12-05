@@ -51,7 +51,7 @@ namespace ImageSandbox.Model
 
         #region Methods
 
-        public void SetCellData()
+        public async Task<WriteableBitmap> SetCellData()
         {
             this.Colors = SourceImage.GetPixelColors();
             this.calculateCellAttributes();
@@ -127,7 +127,7 @@ namespace ImageSandbox.Model
         {
             var sourcePixels = SourceImage.PixelWidth * SourceImage.PixelHeight;
             var mosaic = new WriteableBitmap(SourceImage.PixelWidth, SourceImage.PixelHeight);
-            using (var stream = this.MosaicImage.PixelBuffer.AsStream())
+            using (var stream = mosaic.PixelBuffer.AsStream())
             {
                 var buffer = this.setUpSolidMosaicPixelData();
 
