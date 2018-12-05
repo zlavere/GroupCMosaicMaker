@@ -5,12 +5,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <RadioButton x:Name="solidRadio" Content="Solid Mosaic" HorizontalAlignment="Left" Margin="58,69,0,0" VerticalAlignment="Top" IsChecked="True" GroupName="MosaicType"/>
-        <RadioButton x:Name="pictureRadio" Content="Picture Mosaic" HorizontalAlignment="Left" Margin="58,106,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.531" GroupName="MosaicType"/>
-        <TextBlock HorizontalAlignment="Left" Margin="69,40,0,0" Text="Mosaic Type" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
+        <RadioButton x:Name="solidRadio" Content="Solid Mosaic" HorizontalAlignment="Left" Margin="58,69,0,0"
+                     VerticalAlignment="Top" IsChecked="True" GroupName="MosaicType" />
+        <RadioButton x:Name="pictureRadio" Content="Picture Mosaic" HorizontalAlignment="Left" Margin="58,106,0,0"
+                     VerticalAlignment="Top" RenderTransformOrigin="0.5,0.531" GroupName="MosaicType" />
+        <TextBlock HorizontalAlignment="Left" Margin="69,40,0,0" Text="Mosaic Type" TextWrapping="Wrap"
+                   VerticalAlignment="Top" FontSize="18" FontWeight="Bold" />
 
     </Grid>
 </Page>

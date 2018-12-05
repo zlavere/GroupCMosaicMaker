@@ -1,8 +1,7 @@
 ﻿using Windows.Foundation;
-using Windows.UI.Notifications;
 using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media.Imaging;
 using ImageSandbox.Model;
 using ImageSandbox.ViewModel;
 
@@ -14,7 +13,7 @@ namespace ImageSandbox.View
     /// <summary>
     ///     An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage
     {
         #region Properties
 
@@ -22,8 +21,9 @@ namespace ImageSandbox.View
         public RadioButton ShowGrid { get; set; }
         public RadioButton HideGrid { get; set; }
         public int CellSideLength { get; set; }
-        private Grid overlayGrid { get; set; }
-        private bool isGridChangedOrHidden { get; set; }
+        private Grid OverlayGrid { get; set; }
+        private bool IsGridChangedOrHidden { get; set; }
+
         #endregion
 
         #region Constructors
@@ -31,18 +31,21 @@ namespace ImageSandbox.View
         public MainPage()
         {
             this.InitializeComponent();
-            this.overlayGrid = new Grid();
+            this.OverlayGrid = new Grid();
             this.ViewModel = new MainPageViewModel();
             DataContext = this.ViewModel;
             this.ShowGrid = this.showGrid;
             this.HideGrid = this.hideGrid;
             ApplicationView.PreferredLaunchViewSize = new Size(1080, 720);
-            this.isGridChangedOrHidden = true;
+            this.IsGridChangedOrHidden = true;
         }
 
         #endregion
+
+        #region Methods
+
         //TODO Move this to view model
-        private void checked_DisplayGrid(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void checked_DisplayGrid(object sender, RoutedEventArgs e)
         {
             this.setGrid();
             this.showGridOverlay();
@@ -51,10 +54,10 @@ namespace ImageSandbox.View
         private void showGridOverlay()
         {
             var showGridChecked = this.ShowGrid.IsChecked ?? false;
-            if (showGridChecked && this.isGridChangedOrHidden)
+            if (showGridChecked && this.IsGridChangedOrHidden)
             {
-                this.originalImageOverlay.Children.Add(this.overlayGrid);
-                this.isGridChangedOrHidden = false;
+                this.originalImageOverlay.Children.Add(this.OverlayGrid);
+                this.IsGridChangedOrHidden = false;
             }
         }
 
@@ -73,11 +76,11 @@ namespace ImageSandbox.View
 
                 if (this.CellSideLength > 0 && gridFactory.GridHeight > 0 && gridFactory.GridWidth > 0)
                 {
-                    this.overlayGrid = gridFactory.DrawGrid();
+                    this.OverlayGrid = gridFactory.DrawGrid();
                 }
             }
 
-            return this.overlayGrid;
+            return this.OverlayGrid;
         }
 
         private bool canUpdateGrid()
@@ -92,13 +95,13 @@ namespace ImageSandbox.View
             if (isReadyForUpdate)
             {
                 this.CellSideLength = result;
-                this.isGridChangedOrHidden = true;
+                this.IsGridChangedOrHidden = true;
             }
 
             return isReadyForUpdate;
         }
 
-        private void checked_HideGrid(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void checked_HideGrid(object sender, RoutedEventArgs e)
         {
             this.hideGridOverlay();
         }
@@ -107,22 +110,25 @@ namespace ImageSandbox.View
         {
             for (var i = 1; i < this.originalImageOverlay.Children.Count; i++)
             {
-                this.originalImageOverlay.Children.RemoveAt(i);  
+                this.originalImageOverlay.Children.RemoveAt(i);
             }
-            this.isGridChangedOrHidden = true;
+
+            this.IsGridChangedOrHidden = true;
         }
 
-        private void lostFocus_UpdateGrid(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void lostFocus_UpdateGrid(object sender, RoutedEventArgs e)
         {
             this.setGrid();
             this.showGridOverlay();
         }
 
-        private void imageOpened_RemoveAndRecalculateGridOverlay(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void imageOpened_RemoveAndRecalculateGridOverlay(object sender, RoutedEventArgs e)
         {
-            this.isGridChangedOrHidden = true;
+            this.IsGridChangedOrHidden = true;
             this.setGrid();
             this.showGridOverlay();
         }
+
+        #endregion
     }
 }

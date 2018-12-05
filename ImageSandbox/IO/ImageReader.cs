@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media.Imaging;
 using ImageSandbox.Utility;
 
@@ -37,6 +36,12 @@ namespace ImageSandbox.IO
 
         #region Methods
 
+        /// <summary>
+        ///     Opens the image.
+        /// </summary>
+        /// <returns>
+        ///     A WriteableBitmap.
+        /// </returns>
         public async Task<WriteableBitmap> OpenImage()
         {
             var sourceImageFile = await this.selectSourceImageFile();
