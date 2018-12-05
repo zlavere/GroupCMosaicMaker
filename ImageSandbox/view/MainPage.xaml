@@ -70,6 +70,9 @@
                                  Grid.Column="0" VerticalAlignment="Top" GroupName="MosaicType"
                                  Command="{Binding MosaicType}" />
                 </Grid>
+                <TextBlock HorizontalAlignment="Center" Margin="0,319,0,0" Grid.Row="3" Grid.Column="0" Text="Size:" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Margin="93,319,0,0" Grid.Row="3" Text="{Binding PaletteSize}" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="2"
+                           Grid.Column="0" />
 
 
             </Grid>

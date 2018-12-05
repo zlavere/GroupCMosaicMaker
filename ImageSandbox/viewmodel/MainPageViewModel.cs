@@ -23,6 +23,7 @@ namespace ImageSandbox.ViewModel
         private WriteableBitmap currentlyDisplayedMosaic;
         private ObservableCollection<Image> mosaicPalette;
         private SolidMosaic solidMosaic;
+        private int paletteSize;
 
         private int cellSideLength;
         private GridFactory gridFactory;
@@ -43,6 +44,22 @@ namespace ImageSandbox.ViewModel
         ///     The current palette.
         /// </value>
         public PaletteReader CurrentPalette { get; set; }
+
+        public int PaletteSize
+        {
+            get => this.paletteSize;
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
+                this.paletteSize = value;
+                this.CreateMosaicCommand.OnCanExecuteChanged();
+                this.OnPropertyChanged();
+            }
+        }
 
         /// <summary>
         ///     Gets or sets the load image command.
@@ -234,6 +251,8 @@ namespace ImageSandbox.ViewModel
             this.currentlyDisplayedImage = null;
             this.currentlyDisplayedGridLines = null;
             this.currentlyDisplayedMosaic = null;
+            this.CurrentPalette = new PaletteReader();
+
         }
 
         #endregion
@@ -265,12 +284,6 @@ namespace ImageSandbox.ViewModel
             return true;
         }
 
-        public void SaveImage()
-        {
-            var imageWriter = new ImageWriter();
-            imageWriter.SaveImage(this.CurrentlyDisplayedMosaic, this.currentDpiX, this.currentDpiY);
-        }
-
         private void saveImage(object obj)
         {
             var imageWriter = new ImageWriter();
@@ -296,6 +309,7 @@ namespace ImageSandbox.ViewModel
         {
             await this.CurrentPalette.LoadPalette();
             this.MosaicPalette = new ObservableCollection<Image>(this.CurrentPalette.DisplayablePalette);
+            this.PaletteSize = this.MosaicPalette.Count;
         }
 
         #endregion
