@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -12,6 +7,15 @@ namespace ImageSandbox.Extensions
 {
     public static class WriteableBitmapExtensions
     {
+        #region Methods
+
+        /// <summary>
+        ///     Gets the pixel colors of a WriteableBitmap.
+        /// </summary>
+        /// <param name="wb">The wb.</param>
+        /// <returns>
+        ///     A List of colors in a WriteableBitmap.
+        /// </returns>
         public static List<Color> GetPixelColors(this WriteableBitmap wb)
         {
             using (var stream = wb.PixelBuffer.AsStream())
@@ -33,6 +37,8 @@ namespace ImageSandbox.Extensions
                 }
                 return colors;
             }
-        } 
+        }
+
+        #endregion
     }
 }

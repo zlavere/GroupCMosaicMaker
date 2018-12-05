@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
@@ -39,10 +37,10 @@ namespace ImageSandbox.ViewModel
         #region Properties
 
         /// <summary>
-        /// Gets or sets the current palette.
+        ///     Gets or sets the current palette.
         /// </summary>
         /// <value>
-        /// The current palette.
+        ///     The current palette.
         /// </value>
         public PaletteReader CurrentPalette { get; set; }
 
@@ -71,18 +69,18 @@ namespace ImageSandbox.ViewModel
         public RelayCommand CreateMosaicCommand { get; set; }
 
         /// <summary>
-        /// Toggles the grid.
+        ///     Toggles the grid.
         /// </summary>
         /// <value>
-        /// The toggle grid command.
+        ///     The toggle grid command.
         /// </value>
         public RelayCommand ToggleGridCommand { get; set; }
 
         /// <summary>
-        /// Gets or sets the load palette command.
+        ///     Gets or sets the load palette command.
         /// </summary>
         /// <value>
-        /// The load palette command.
+        ///     The load palette command.
         /// </value>
         public RelayCommand LoadPaletteCommand { get; set; }
 
@@ -117,12 +115,14 @@ namespace ImageSandbox.ViewModel
                 {
                     this.gridFactory = new GridFactory();
                 }
+
                 if (this.CurrentlyDisplayedImage != null)
                 {
                     this.gridFactory.GridWidth = this.currentlyDisplayedImage.PixelWidth;
                     this.gridFactory.GridHeight = this.currentlyDisplayedImage.PixelHeight;
                     this.gridFactory.CellSideLength = this.CellSideLength;
                 }
+
                 return this.gridFactory;
             }
             set
@@ -138,9 +138,11 @@ namespace ImageSandbox.ViewModel
             {
                 if (this.CurrentlyDisplayedImage != null)
                 {
-                    this.solidMosaic = new SolidMosaic(this.CurrentlyDisplayedImage,  this.CurrentlyDisplayedMosaic, this.CellSideLength,
+                    this.solidMosaic = new SolidMosaic(this.CurrentlyDisplayedImage, this.CurrentlyDisplayedMosaic,
+                        this.CellSideLength,
                         this.GridFactory);
                 }
+
                 return this.solidMosaic;
             }
             set
@@ -226,7 +228,7 @@ namespace ImageSandbox.ViewModel
         public MainPageViewModel()
         {
             this.loadCommands();
-            
+
             this.currentDpiX = 0;
             this.currentDpiY = 0;
             this.currentlyDisplayedImage = null;
@@ -238,6 +240,7 @@ namespace ImageSandbox.ViewModel
 
         #region Methods
 
+        public event PropertyChangedEventHandler PropertyChanged;
 
 
         private void loadCommands()

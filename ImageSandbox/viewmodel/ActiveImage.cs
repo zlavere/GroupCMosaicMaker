@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Notifications;
-using Windows.UI.Xaml.Media.Imaging;
+﻿using Windows.UI.Xaml.Media.Imaging;
 
 namespace ImageSandbox.ViewModel
 {
     public static class ActiveImage
     {
-        private static WriteableBitmap image;
-        public static WriteableBitmap Image
-        {
-            get => image; 
-            set => image = value;
-        }
+        #region Properties
+
+        /// <summary>
+        ///     Gets or sets the image.
+        /// </summary>
+        /// <value>
+        ///     The image.
+        /// </value>
+        public static WriteableBitmap Image { get; set; }
+
+        #endregion
     }
 }
