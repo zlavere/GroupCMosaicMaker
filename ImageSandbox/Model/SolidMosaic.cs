@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.UI;
@@ -54,7 +55,7 @@ namespace ImageSandbox.Model
 
         public async Task<WriteableBitmap> SetCellData()
         {
-            this.Colors = SourceImage.GetPixelColors();
+            this.Colors = await this.SourceImage.GetPixelColors();
             this.calculateCellAttributes();
             return await this.writeToBitmapAverageColor();
         }
@@ -111,16 +112,18 @@ namespace ImageSandbox.Model
                 {
                     cell.X = columnIndex;
                     cell.Y = rowIndex;
-                    cell.Colors.Add(this.Colors[this.PixelIndex]);
-                    cell.PixelIndexes.Add(this.PixelIndex);
+                    
+
                     var byteOffset = ((pixelY * SourceImage.PixelWidth + pixelX) +
                                       columnIndex * GridFactory.CellSideLength +
                                       rowIndex * SourceImage.PixelWidth * GridFactory.CellSideLength) * 4;
+                    cell.Colors.Add(this.Colors[byteOffset/4]);
                     cell.PixelOffsetsInByteArray.Add(byteOffset);
                     this.PixelIndex++;
+                    
                 }
             }
-
+            
             return cell;
         }
 
@@ -144,12 +147,12 @@ namespace ImageSandbox.Model
 
             foreach (var current in this.Cells)
             {
-                foreach (var currentPixelStart in current.PixelOffsetsInByteArray)
+                foreach (var offset in current.PixelOffsetsInByteArray)
                 {
-                    buffer[currentPixelStart] = current.AverageColor.B;
-                    buffer[currentPixelStart + 1] = current.AverageColor.G;
-                    buffer[currentPixelStart + 2] = current.AverageColor.R;
-                    buffer[currentPixelStart + 3] = 0;
+                    buffer[offset] = current.AverageColor.B;
+                    buffer[offset + 1] = current.AverageColor.G;
+                    buffer[offset + 2] = current.AverageColor.R;
+                    buffer[offset + 3] = 0;
                 }
             }
 
