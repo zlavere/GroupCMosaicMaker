@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using ImageSandbox.IO;
 using ImageSandbox.Model;
@@ -19,8 +21,11 @@ namespace ImageSandbox.ViewModel
         private WriteableBitmap currentlyDisplayedImage;
         private WriteableBitmap currentlyDisplayedGridLines;
         private WriteableBitmap currentlyDisplayedMosaic;
+        private ObservableCollection<Image> mosaicPalette;
+        private SolidMosaic solidMosaic;
 
         private int cellSideLength;
+        private GridFactory gridFactory;
 
         private double currentDpiX;
         private double currentDpiY;
@@ -30,6 +35,14 @@ namespace ImageSandbox.ViewModel
         #endregion
 
         #region Properties
+
+        /// <summary>
+        ///     Gets or sets the current palette.
+        /// </summary>
+        /// <value>
+        ///     The current palette.
+        /// </value>
+        public PaletteReader CurrentPalette { get; set; }
 
         /// <summary>
         ///     Gets or sets the load image command.
@@ -56,12 +69,20 @@ namespace ImageSandbox.ViewModel
         public RelayCommand CreateMosaicCommand { get; set; }
 
         /// <summary>
-        /// Toggles the grid.
+        ///     Toggles the grid.
         /// </summary>
         /// <value>
-        /// The toggle grid command.
+        ///     The toggle grid command.
         /// </value>
         public RelayCommand ToggleGridCommand { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the load palette command.
+        /// </summary>
+        /// <value>
+        ///     The load palette command.
+        /// </value>
+        public RelayCommand LoadPaletteCommand { get; set; }
 
         public RelayCommand ShowGridCommand { get; set; }
 
@@ -78,6 +99,7 @@ namespace ImageSandbox.ViewModel
             set
             {
                 this.currentlyDisplayedImage = value ?? throw new ArgumentNullException();
+                ActiveImage.Image = this.currentlyDisplayedImage;
                 this.canCreateMosaic(true);
                 this.OnPropertyChanged();
             }
@@ -85,19 +107,47 @@ namespace ImageSandbox.ViewModel
 
         public Mosaic Mosaic { get; set; }
 
-        /// <summary>
-        ///     Gets or sets the currently displayed grid lines.
-        /// </summary>
-        /// <value>
-        ///     The currently displayed grid lines.
-        /// </value>
-        /// <exception cref="ArgumentNullException"></exception>
-        public WriteableBitmap CurrentlyDisplayedGridLines
+        public GridFactory GridFactory
         {
-            get => this.currentlyDisplayedGridLines;
+            get
+            {
+                if (this.gridFactory == null)
+                {
+                    this.gridFactory = new GridFactory();
+                }
+
+                if (this.CurrentlyDisplayedImage != null)
+                {
+                    this.gridFactory.GridWidth = this.currentlyDisplayedImage.PixelWidth;
+                    this.gridFactory.GridHeight = this.currentlyDisplayedImage.PixelHeight;
+                    this.gridFactory.CellSideLength = this.CellSideLength;
+                }
+
+                return this.gridFactory;
+            }
             set
             {
-                this.currentlyDisplayedGridLines = value ?? throw new ArgumentNullException();
+                this.gridFactory = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public SolidMosaic SolidMosaic
+        {
+            get
+            {
+                if (this.CurrentlyDisplayedImage != null)
+                {
+                    this.solidMosaic = new SolidMosaic(this.CurrentlyDisplayedImage, this.CurrentlyDisplayedMosaic,
+                        this.CellSideLength,
+                        this.GridFactory);
+                }
+
+                return this.solidMosaic;
+            }
+            set
+            {
+                this.solidMosaic = value;
                 this.OnPropertyChanged();
             }
         }
@@ -161,6 +211,16 @@ namespace ImageSandbox.ViewModel
             }
         }
 
+        public ObservableCollection<Image> MosaicPalette
+        {
+            get => this.mosaicPalette;
+            set
+            {
+                this.mosaicPalette = value ?? throw new ArgumentNullException();
+                this.OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Constructors
@@ -168,6 +228,7 @@ namespace ImageSandbox.ViewModel
         public MainPageViewModel()
         {
             this.loadCommands();
+
             this.currentDpiX = 0;
             this.currentDpiY = 0;
             this.currentlyDisplayedImage = null;
@@ -179,18 +240,14 @@ namespace ImageSandbox.ViewModel
 
         #region Methods
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         private void loadCommands()
         {
             this.LoadImageCommand = new RelayCommand(this.loadImage, canAlwaysExecute);
             this.SaveImageCommand = new RelayCommand(this.saveImage, this.canSaveImage);
             this.CreateMosaicCommand = new RelayCommand(this.createMosaic, this.canCreateMosaic);
+            this.LoadPaletteCommand = new RelayCommand(this.loadPalette, canAlwaysExecute);
         }
 
         private async void loadImage(object obj)
@@ -225,16 +282,29 @@ namespace ImageSandbox.ViewModel
             return this.CurrentlyDisplayedMosaic != null;
         }
 
-        private void createMosaic(object obj)
+        private async void createMosaic(object obj)
         {
-            
+            this.CurrentlyDisplayedMosaic = await this.SolidMosaic.SetCellData();
         }
 
         private bool canCreateMosaic(object obj)
         {
-            return this.currentlyDisplayedImage != null && this.CellSideLength > 0;
+            return true;
+        }
+
+        private async void loadPalette(object obj)
+        {
+            await this.CurrentPalette.LoadPalette();
+            this.MosaicPalette = new ObservableCollection<Image>(this.CurrentPalette.DisplayablePalette);
         }
 
         #endregion
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

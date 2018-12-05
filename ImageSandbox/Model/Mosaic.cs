@@ -1,9 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using Windows.Graphics.Imaging;
-using Windows.Storage.Streams;
-using Windows.UI.Xaml.Media.Imaging;
+﻿using Windows.UI.Xaml.Media.Imaging;
 
 namespace ImageSandbox.Model
 {
@@ -11,45 +6,56 @@ namespace ImageSandbox.Model
     {
         #region Properties
 
-        public uint CellSide { get; set; }
+        /// <summary>
+        ///     Gets or sets the length of the cell side.
+        /// </summary>
+        /// <value>
+        ///     The length of the cell side.
+        /// </value>
+        public int CellSideLength { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the source image.
+        /// </summary>
+        /// <value>
+        ///     The source image.
+        /// </value>
+        public WriteableBitmap SourceImage { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the mosaic image.
+        /// </summary>
+        /// <value>
+        ///     The mosaic image.
+        /// </value>
+        public WriteableBitmap MosaicImage { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the grid factory.
+        /// </summary>
+        /// <value>
+        ///     The grid factory.
+        /// </value>
+        public GridFactory GridFactory { get; set; }
 
         #endregion
 
         #region Constructors
 
-        protected Mosaic(uint cellSideLength)
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="Mosaic" /> class.
+        /// </summary>
+        /// <param name="sourceImage">The source image.</param>
+        /// <param name="mosaicImage">The mosaic image.</param>
+        /// <param name="cellSideLength">Length of the cell side.</param>
+        /// <param name="gridFactory">The grid factory.</param>
+        protected Mosaic(WriteableBitmap sourceImage, WriteableBitmap mosaicImage, int cellSideLength,
+            GridFactory gridFactory)
         {
-            this.CellSide = cellSideLength;
-        }
-
-        #endregion
-
-        #region Methods
-
-        public async Task<BitmapImage> GetCellOfImage(BitmapDecoder decoder, uint xPoint, uint yPoint)
-        {
-            var ras = new InMemoryRandomAccessStream();
-            var encoder = await BitmapEncoder.CreateForTranscodingAsync(ras, decoder);
-            var bounds = new BitmapBounds
-            {
-                Height = this.CellSide,
-                Width = this.CellSide,
-                X = xPoint,
-                Y = yPoint
-            };
-            encoder.BitmapTransform.Bounds = bounds;
-            try
-            {
-                await encoder.FlushAsync();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-            var image = new BitmapImage();
-            image.SetSource(ras);
-
-            return image;
+            this.SourceImage = sourceImage;
+            this.MosaicImage = mosaicImage;
+            this.CellSideLength = cellSideLength;
+            this.GridFactory = gridFactory;
         }
 
         #endregion

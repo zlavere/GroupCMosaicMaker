@@ -6,7 +6,7 @@ namespace ImageSandbox.Utility
     /// <summary>
     ///     Handles the relaying of commands for the MVVM structure.
     /// </summary>
-    public class RelayCommand:ICommand
+    public class RelayCommand : ICommand
     {
         #region Data members
 
