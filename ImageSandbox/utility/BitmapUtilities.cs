@@ -59,7 +59,6 @@ namespace ImageSandbox.Utility
         /// <returns></returns>
         public static Color GetAveragePixelColor(byte[] pixels, uint width, uint height)
         {
-            new List<Color>();
             var totalPixels = width * height;
             var currentColor = 0;
             var totalR = 0;
