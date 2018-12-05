@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -16,16 +17,15 @@ namespace ImageSandbox.Extensions
         /// <returns>
         ///     A List of colors in a WriteableBitmap.
         /// </returns>
-        public static List<Color> GetPixelColors(this WriteableBitmap wb)
+        public static async Task<List<Color>> GetPixelColors(this WriteableBitmap wb)
         {
             using (var stream = wb.PixelBuffer.AsStream())
             {
                 var pixelsCount = (wb.PixelWidth * wb.PixelHeight);
                 var bytesCount = pixelsCount * 4;
                 var pixelBuffer = new byte[bytesCount];
-                stream.Read(pixelBuffer, 0, bytesCount);
+                await stream.ReadAsync(pixelBuffer, 0, bytesCount);
                 var colors = new List<Color>();
-
                 for (var i = 0; i < pixelsCount; i++)
                 {
                     var offsetPosition = i * 4;
