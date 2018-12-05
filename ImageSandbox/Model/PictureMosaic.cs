@@ -18,6 +18,7 @@ namespace ImageSandbox.Model
         public WriteableBitmap CreatePictureMosaic(WriteableBitmap originalImage, List<WriteableBitmap> palette, int blockSize)
         {
             //TODO
+            return originalImage;
         }
 
         private void calculateAverageColorOfPaletteImages()
@@ -69,6 +70,7 @@ namespace ImageSandbox.Model
         private WriteableBitmap writePictureMosaicToBitmap(List<byte[]> selectedImages, int width, int height)
         {
             //TODO
+            return new WriteableBitmap(width, height);
         }
 
 

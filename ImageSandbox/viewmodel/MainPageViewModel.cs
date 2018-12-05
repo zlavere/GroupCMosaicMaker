@@ -19,6 +19,7 @@ namespace ImageSandbox.ViewModel
         #region Data members
 
         private WriteableBitmap currentlyDisplayedImage;
+        private WriteableBitmap previouslyDisplayedImage;
         private WriteableBitmap currentlyDisplayedGridLines;
         private WriteableBitmap currentlyDisplayedMosaic;
         private ObservableCollection<Image> mosaicPalette;
@@ -274,7 +275,6 @@ namespace ImageSandbox.ViewModel
             var readImage = new ImageReader();
             var results = await readImage.OpenImage();
             this.CurrentlyDisplayedImage = results;
-            this.CurrentlyDisplayedMosaic = results;
             this.currentDpiX = readImage.DpiX;
             this.currentDpiY = readImage.DpiY;
         }
@@ -297,12 +297,18 @@ namespace ImageSandbox.ViewModel
 
         private async void createMosaic(object obj)
         {
-            this.CurrentlyDisplayedMosaic = await this.SolidMosaic.SetCellData();
+            var newImageToDisplay = await this.SolidMosaic.SetCellData();
+            this.CurrentlyDisplayedMosaic = newImageToDisplay;
         }
 
         private bool canCreateMosaic(object obj)
         {
-            return true;
+            bool isBaseImage = this.CurrentlyDisplayedImage != null;
+            return isBaseImage;
+
+            //TODO
+            //Check on mosaic type, if a palette is not loaded the create mosaic button should grey out if the image mosaic type is selected.
+
         }
 
         private async void loadPalette(object obj)
