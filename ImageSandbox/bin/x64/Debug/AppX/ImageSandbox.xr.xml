@@ -6,7 +6,6 @@
   <Roots.PropertyPathNames>
     <RootPropertyPathName Name="MosaicPalette" />
     <RootPropertyPathName Name="CurrentlyDisplayedMosaic" />
-    <RootPropertyPathName Name="CurrentlyDisplayedImage" />
     <RootPropertyPathName Name="PaletteSize" />
     <RootPropertyPathName Name="MosaicType" />
     <RootPropertyPathName Name="CreateMosaicCommand" />
