@@ -120,7 +120,7 @@ namespace ImageSandbox.Model
                 this.numberOfColumns = this.GridWidth / this.CellSideLength;
                 if (this.GridWidth % this.CellSideLength != 0)
                 {
-                    this.numberOfRows++;
+                    this.numberOfColumns++;
                 }
                 return this.numberOfColumns;
             }

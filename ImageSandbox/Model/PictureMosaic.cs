@@ -15,15 +15,15 @@ namespace ImageSandbox.Model
 
         public List<Cell> Cells { get; set; }
 
-        public WriteableBitmap CreatePictureMosaic(WriteableBitmap originalImage, List<WriteableBitmap> palette, int blockSize)
-        {
-            //TODO
-        }
-
-        private void calculateAverageColorOfPaletteImages()
-        {
-            //TODO
-        }
+//        public WriteableBitmap CreatePictureMosaic(WriteableBitmap originalImage, List<WriteableBitmap> palette, int blockSize)
+//        {
+//            //TODO
+//        }
+//
+//        private void calculateAverageColorOfPaletteImages()
+//        {
+//            //TODO
+//        }
 
 
         public static WriteableBitmap ResizeImage(WriteableBitmap sourceImage, int blockSize)
@@ -61,15 +61,15 @@ namespace ImageSandbox.Model
             return averageColors;
         }
 
-        private void SelectImageForEachBlock(List<Color> averageColors, List<Color> colorsOfBlocks)
-        {
-            //TODO
-        }
-
-        private WriteableBitmap writePictureMosaicToBitmap(List<byte[]> selectedImages, int width, int height)
-        {
-            //TODO
-        }
+//        private void SelectImageForEachBlock(List<Color> averageColors, List<Color> colorsOfBlocks)
+//        {
+//            //TODO
+//        }
+//
+//        private WriteableBitmap writePictureMosaicToBitmap(List<byte[]> selectedImages, int width, int height)
+//        {
+//            //TODO
+//        }
 
 
 

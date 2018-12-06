@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -79,7 +80,7 @@ namespace ImageSandbox.Model
                 int currentHeight;
                 int currentWidth;
 
-                if (columnIndex == GridFactory.NumberOfColumns)
+                if (columnIndex == GridFactory.NumberOfColumns -1)
                 {
                     currentWidth = GridFactory.LastColumnWidth;
                 }
@@ -88,7 +89,7 @@ namespace ImageSandbox.Model
                     currentWidth = GridFactory.CellSideLength;
                 }
 
-                if (rowIndex == GridFactory.NumberOfRows)
+                if (rowIndex == GridFactory.NumberOfRows -1)
                 {
                     currentHeight = GridFactory.LastRowHeight;
                 }
@@ -112,14 +113,22 @@ namespace ImageSandbox.Model
                 {
                     cell.X = columnIndex;
                     cell.Y = rowIndex;
-                    
-
-                    var byteOffset = ((pixelY * SourceImage.PixelWidth + pixelX) +
-                                      columnIndex * GridFactory.CellSideLength +
+                    var byteOffset = (((pixelY * SourceImage.PixelWidth) + pixelX) +
+                                      (columnIndex * GridFactory.CellSideLength) +
                                       rowIndex * SourceImage.PixelWidth * GridFactory.CellSideLength) * 4;
-                    cell.Colors.Add(this.Colors[byteOffset/4]);
-                    cell.PixelOffsetsInByteArray.Add(byteOffset);
-                    this.PixelIndex++;
+                    var colorIndex = Convert.ToInt32(byteOffset / 4);
+
+                    try
+                    {
+                        
+                        cell.Colors.Add(this.Colors[colorIndex]);
+                        cell.PixelOffsetsInByteArray.Add(byteOffset);
+                        this.PixelIndex++;
+                    }
+                    catch (Exception)
+                    {
+                        Debug.WriteLine(Convert.ToInt32(byteOffset / 4));
+                    }
                     
                 }
             }
@@ -138,6 +147,7 @@ namespace ImageSandbox.Model
                 await stream.WriteAsync(buffer, 0, sourcePixels * 4);
                 await stream.FlushAsync();
             }
+
             return mosaic;
         }
 
@@ -145,19 +155,17 @@ namespace ImageSandbox.Model
         {
             var buffer = new byte[SourceImage.PixelWidth * SourceImage.PixelHeight * 4];
 
-            foreach (var current in this.Cells)
-            {
-                foreach (var offset in current.PixelOffsetsInByteArray)
+                Parallel.ForEach(this.Cells, cell =>
                 {
-                    buffer[offset] = current.AverageColor.B;
-                    buffer[offset + 1] = current.AverageColor.G;
-                    buffer[offset + 2] = current.AverageColor.R;
-                    buffer[offset + 3] = 0;
-                }
-            }
+                    Parallel.ForEach(cell.PixelOffsetsInByteArray, offset =>
+                    {
+                        buffer[offset] = cell.AverageColor.B;
+                        buffer[offset + 1] = cell.AverageColor.G;
+                        buffer[offset + 2] = cell.AverageColor.R;
+                        buffer[offset + 3] = 0;
+                    }); 
+                });
 
-            var countWhere0 = buffer.Count(value => value == 0);
-            Debug.WriteLine(countWhere0);
             return buffer;
         }
 

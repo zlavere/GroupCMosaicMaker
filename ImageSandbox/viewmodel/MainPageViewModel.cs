@@ -19,7 +19,6 @@ namespace ImageSandbox.ViewModel
         #region Data members
 
         private WriteableBitmap currentlyDisplayedImage;
-        private WriteableBitmap currentlyDisplayedGridLines;
         private WriteableBitmap currentlyDisplayedMosaic;
         private ObservableCollection<Image> mosaicPalette;
         private SolidMosaic solidMosaic;
@@ -117,7 +116,7 @@ namespace ImageSandbox.ViewModel
             {
                 this.currentlyDisplayedImage = value ?? throw new ArgumentNullException();
                 ActiveImage.Image = this.currentlyDisplayedImage;
-                this.canCreateMosaic(true);
+                this.CreateMosaicCommand.OnCanExecuteChanged();
                 this.OnPropertyChanged();
             }
         }
@@ -151,17 +150,7 @@ namespace ImageSandbox.ViewModel
 
         public SolidMosaic SolidMosaic
         {
-            get
-            {
-                if (this.CurrentlyDisplayedImage != null)
-                {
-                    this.solidMosaic = new SolidMosaic(this.CurrentlyDisplayedImage, this.CurrentlyDisplayedMosaic,
-                        this.CellSideLength,
-                        this.GridFactory);
-                }
-
-                return this.solidMosaic;
-            }
+            get => this.solidMosaic;
             set
             {
                 this.solidMosaic = value;
@@ -181,7 +170,7 @@ namespace ImageSandbox.ViewModel
             get => this.currentlyDisplayedMosaic;
             set
             {
-                this.currentlyDisplayedMosaic = value ?? throw new ArgumentNullException();
+                this.currentlyDisplayedMosaic = value;
                 this.CreateMosaicCommand.OnCanExecuteChanged();
                 this.SaveImageCommand.OnCanExecuteChanged();
                 this.OnPropertyChanged();
@@ -204,7 +193,6 @@ namespace ImageSandbox.ViewModel
                 {
                     throw new ArgumentOutOfRangeException();
                 }
-
                 this.cellSideLength = value;
                 this.CreateMosaicCommand.OnCanExecuteChanged();
                 this.OnPropertyChanged();
@@ -249,7 +237,6 @@ namespace ImageSandbox.ViewModel
             this.currentDpiX = 0;
             this.currentDpiY = 0;
             this.currentlyDisplayedImage = null;
-            this.currentlyDisplayedGridLines = null;
             this.currentlyDisplayedMosaic = null;
             this.CurrentPalette = new PaletteReader();
 
@@ -274,7 +261,6 @@ namespace ImageSandbox.ViewModel
             var readImage = new ImageReader();
             var results = await readImage.OpenImage();
             this.CurrentlyDisplayedImage = results;
-            this.CurrentlyDisplayedMosaic = results;
             this.currentDpiX = readImage.DpiX;
             this.currentDpiY = readImage.DpiY;
         }
@@ -297,12 +283,14 @@ namespace ImageSandbox.ViewModel
 
         private async void createMosaic(object obj)
         {
-            this.CurrentlyDisplayedMosaic = await this.SolidMosaic.SetCellData();
+            this.SolidMosaic = new SolidMosaic(this.CurrentlyDisplayedImage, this.CurrentlyDisplayedMosaic, this.CellSideLength, this.GridFactory);
+            var mosaic = await this.SolidMosaic.SetCellData();
+            this.CurrentlyDisplayedMosaic = mosaic;
         }
 
         private bool canCreateMosaic(object obj)
         {
-            return true;
+            return this.CurrentlyDisplayedImage != null;
         }
 
         private async void loadPalette(object obj)

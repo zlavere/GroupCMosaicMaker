@@ -106,7 +106,7 @@
                 <TextBlock Grid.Column="1" Grid.Row="0" x:Name="outputImageLabel" Text="Output Preview Image" />
                 <Grid Grid.Row="1" Grid.Column="1" Margin="10">
                     <Image Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0"
-                           x:Name="outputImage" Source="{Binding CurrentlyDisplayedMosaic, Mode=TwoWay}" />
+                           x:Name="outputImage" Source="{Binding CurrentlyDisplayedMosaic, Mode=OneWay}" />
                 </Grid>
             </Grid>
             <TextBlock Grid.Column="0" HorizontalAlignment="Left" Margin="34,494,0,0" Text="Mosaic Palette"
