@@ -26,7 +26,6 @@
                           Command="{Binding LoadImageCommand}" />
             <AppBarButton x:Name="saveMosaicButton" Icon="SaveLocal" Label="Save Mosaic" Margin="0"
                           VerticalAlignment="Top" Command="{Binding SaveImageCommand}" />
-            <AppBarButton x:Name="settingsButton" Icon="Setting" Label="Settings" Margin="0" VerticalAlignment="Top" />
         </CommandBar>
         <Grid Grid.Row="1" Margin="0,10, 0, 0">
             <Grid.ColumnDefinitions>
@@ -52,7 +51,6 @@
                 <Button x:Name="createMosaicButton" Content="Create Mosaic" HorizontalAlignment="Left" Margin="5"
                         Grid.Row="2"
                         Grid.Column="0" VerticalAlignment="Top" Command="{Binding CreateMosaicCommand}" />
-                <Image Grid.Column="0" Grid.Row="3" x:Name="testImage" />
                 <Grid Grid.Column="0" Grid.Row="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -100,13 +98,18 @@
                 </Grid>
 
                 <Grid x:Name="originalImageOverlay" Grid.Column="0" Grid.Row="1" Margin="10">
-                    <Image x:Name="originalImage" HorizontalAlignment="Left"
-                           Source="{Binding CurrentlyDisplayedImage, Mode=OneWay}" />
+                    <Border BorderThickness="3" BorderBrush="{ThemeResource SystemControlHighlightBaseHighBrush}" Background="Transparent">
+                        <Image x:Name="originalImage" HorizontalAlignment="Left"
+                               Source="{Binding CurrentlyDisplayedImage, Mode=OneWay}" />
+                    </Border>
                 </Grid>
                 <TextBlock Grid.Column="1" Grid.Row="0" x:Name="outputImageLabel" Text="Output Preview Image" />
                 <Grid Grid.Row="1" Grid.Column="1" Margin="10">
-                    <Image Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0"
+                    <Border BorderThickness="3" BorderBrush="{ThemeResource SystemControlHighlightBaseHighBrush}">
+                        <Image Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0"
                            x:Name="outputImage" Source="{Binding CurrentlyDisplayedMosaic, Mode=OneWay}" />
+                    </Border>
+
                 </Grid>
             </Grid>
             <TextBlock Grid.Column="0" HorizontalAlignment="Left" Margin="34,494,0,0" Text="Mosaic Palette"
