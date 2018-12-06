@@ -10,20 +10,27 @@ using Windows.UI;
 
 namespace ImageSandbox.Model
 {
-    public class PictureMosaic
+    public class PictureMosaic:Mosaic
     {
+
 
         public List<Cell> Cells { get; set; }
 
-//        public WriteableBitmap CreatePictureMosaic(WriteableBitmap originalImage, List<WriteableBitmap> palette, int blockSize)
-//        {
-//            //TODO
-//        }
-//
-//        private void calculateAverageColorOfPaletteImages()
-//        {
-//            //TODO
-//        }
+        //TODO In SolidMosaic class we need to move the method up to the point at which it sets the values of the cells to the Mosaic part class at which point we will not need to pass cells as a param here
+        //TODO In Mosaic we only need to pass GridFactory - GridFactory holds the most recent WriteableBitmaps
+        public PictureMosaic(WriteableBitmap sourceImage, WriteableBitmap mosaicImage, int cellSideLength, GridFactory gridFactory, List<Cell> cells) : base(sourceImage, mosaicImage, cellSideLength, gridFactory)
+        {
+            this.Cells = cells;
+        }
+        //        public WriteableBitmap CreatePictureMosaic(WriteableBitmap originalImage, List<WriteableBitmap> palette, int blockSize)
+        //        {
+        //            //TODO
+        //        }
+        //
+        //        private void calculateAverageColorOfPaletteImages()
+        //        {
+        //            //TODO
+        //        }
 
 
         public static WriteableBitmap ResizeImage(WriteableBitmap sourceImage, int blockSize)
