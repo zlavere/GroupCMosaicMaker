@@ -20,7 +20,7 @@ namespace ImageSandbox.Model
         //TODO In Mosaic we only need to pass GridFactory - GridFactory holds the most recent WriteableBitmaps
         public PictureMosaic(WriteableBitmap sourceImage, WriteableBitmap mosaicImage, int cellSideLength, GridFactory gridFactory, List<Cell> cells) : base(sourceImage, mosaicImage, cellSideLength, gridFactory)
         {
-            this.Cells = cells;
+            //TODO
         }
         //        public WriteableBitmap CreatePictureMosaic(WriteableBitmap originalImage, List<WriteableBitmap> palette, int blockSize)
         //        {

@@ -101,7 +101,7 @@
 
                 <Grid x:Name="originalImageOverlay" Grid.Column="0" Grid.Row="1" Margin="10">
                     <Image x:Name="originalImage" HorizontalAlignment="Left"
-                           Source="{Binding CurrentlyDisplayedImage, Mode =TwoWay}" />
+                           Source="{Binding CurrentlyDisplayedImage, Mode=OneWay}" />
                 </Grid>
                 <TextBlock Grid.Column="1" Grid.Row="0" x:Name="outputImageLabel" Text="Output Preview Image" />
                 <Grid Grid.Row="1" Grid.Column="1" Margin="10">

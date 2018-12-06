@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using ImageSandbox.IO;
 using ImageSandbox.Model;
@@ -20,7 +22,8 @@ namespace ImageSandbox.ViewModel
 
         private WriteableBitmap currentlyDisplayedImage;
         private WriteableBitmap currentlyDisplayedMosaic;
-        private ObservableCollection<Image> mosaicPalette;
+        private ObservableCollection<WriteableBitmap> mosaicPalette;
+        private List<ImageSource> paletteSources;
         private SolidMosaic solidMosaic;
         private int paletteSize;
 
@@ -114,7 +117,7 @@ namespace ImageSandbox.ViewModel
             get => this.currentlyDisplayedImage;
             set
             {
-                this.currentlyDisplayedImage = value ?? throw new ArgumentNullException();
+                this.currentlyDisplayedImage = value;
                 ActiveImage.Image = this.currentlyDisplayedImage;
                 this.CreateMosaicCommand.OnCanExecuteChanged();
                 this.OnPropertyChanged();
@@ -216,7 +219,7 @@ namespace ImageSandbox.ViewModel
             }
         }
 
-        public ObservableCollection<Image> MosaicPalette
+        public ObservableCollection<WriteableBitmap> MosaicPalette
         {
             get => this.mosaicPalette;
             set
@@ -239,7 +242,6 @@ namespace ImageSandbox.ViewModel
             this.currentlyDisplayedImage = null;
             this.currentlyDisplayedMosaic = null;
             this.CurrentPalette = new PaletteReader();
-
         }
 
         #endregion
@@ -273,7 +275,7 @@ namespace ImageSandbox.ViewModel
         private void saveImage(object obj)
         {
             var imageWriter = new ImageWriter();
-            imageWriter.SaveImage(this.CurrentlyDisplayedMosaic, this.currentDpiX, this.currentDpiY);
+            imageWriter.SaveImage(this.currentlyDisplayedMosaic, this.currentDpiX, this.currentDpiY);
         }
 
         private bool canSaveImage(object obj)
@@ -296,7 +298,7 @@ namespace ImageSandbox.ViewModel
         private async void loadPalette(object obj)
         {
             await this.CurrentPalette.LoadPalette();
-            this.MosaicPalette = new ObservableCollection<Image>(this.CurrentPalette.DisplayablePalette);
+            this.MosaicPalette = new ObservableCollection<WriteableBitmap>(this.CurrentPalette.EditablePalette);
             this.PaletteSize = this.MosaicPalette.Count;
         }
 
