@@ -118,7 +118,7 @@
             <GridView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
-                        <Image Stretch="Fill" Height="160" Width="160" />
+                        <Image Source="{Binding}" Stretch="Fill" Height="160" Width="160" />
                     </Grid>
                 </DataTemplate>
             </GridView.ItemTemplate>

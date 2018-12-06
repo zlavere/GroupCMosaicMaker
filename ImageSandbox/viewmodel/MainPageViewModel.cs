@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -23,7 +24,6 @@ namespace ImageSandbox.ViewModel
         private WriteableBitmap currentlyDisplayedImage;
         private WriteableBitmap currentlyDisplayedMosaic;
         private ObservableCollection<WriteableBitmap> mosaicPalette;
-        private List<ImageSource> paletteSources;
         private SolidMosaic solidMosaic;
         private int paletteSize;
 
@@ -261,10 +261,18 @@ namespace ImageSandbox.ViewModel
         private async void loadImage(object obj)
         {
             var readImage = new ImageReader();
-            var results = await readImage.OpenImage();
-            this.CurrentlyDisplayedImage = results;
-            this.currentDpiX = readImage.DpiX;
-            this.currentDpiY = readImage.DpiY;
+            try
+            {
+                var results = await readImage.OpenImage();
+                this.CurrentlyDisplayedImage = results;
+                this.currentDpiX = readImage.DpiX;
+                this.currentDpiY = readImage.DpiY;
+            }
+            catch (NullReferenceException)
+            {
+                //TODO
+            }
+
         }
 
         private static bool canAlwaysExecute(object obj)
@@ -297,9 +305,17 @@ namespace ImageSandbox.ViewModel
 
         private async void loadPalette(object obj)
         {
-            await this.CurrentPalette.LoadPalette();
-            this.MosaicPalette = new ObservableCollection<WriteableBitmap>(this.CurrentPalette.EditablePalette);
-            this.PaletteSize = this.MosaicPalette.Count;
+            try
+            {
+                await this.CurrentPalette.LoadPalette();
+                this.MosaicPalette = new ObservableCollection<WriteableBitmap>(this.CurrentPalette.EditablePalette);
+                this.PaletteSize = this.MosaicPalette.Count;
+            }
+            catch (NullReferenceException)
+            {
+                //TODO does nothing.
+            }
+
         }
 
         #endregion
