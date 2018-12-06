@@ -20,7 +20,7 @@
 *.userosscache
 *.sln.docstates
 *.ide-shm
-*/.vs/*/v15/.suo
+*/.vs/*
 */.suo
 *.ide-shm
 *.ide-wal
