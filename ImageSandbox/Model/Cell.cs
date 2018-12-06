@@ -121,7 +121,7 @@ namespace ImageSandbox.Model
                 var averageRed = (int)this.RedValues.Average(value => value);
                 var averageGreen = (int)this.GreenValues.Average(value => value);
                 var averageBlue = (int)this.BlueValues.Average(value => value);
-                this.averageColor = Color.FromArgb(1, (byte)averageRed, (byte)averageGreen, (byte)averageBlue);
+                this.averageColor = Color.FromArgb(255, (byte)averageRed, (byte)averageGreen, (byte)averageBlue);
                 return this.averageColor;
             }
         }

@@ -162,7 +162,7 @@ namespace ImageSandbox.Model
                         buffer[offset] = cell.AverageColor.B;
                         buffer[offset + 1] = cell.AverageColor.G;
                         buffer[offset + 2] = cell.AverageColor.R;
-                        buffer[offset + 3] = 0;
+                        buffer[offset + 3] = 255;
                     }); 
                 });
 
