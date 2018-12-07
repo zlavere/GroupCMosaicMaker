@@ -8,7 +8,6 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using ImageSandbox.Utility;
 using Windows.UI;
-using System.Linq;
 
 namespace ImageSandbox.Model
 {
