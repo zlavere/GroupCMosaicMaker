@@ -5,6 +5,7 @@
   </Roots.Interfaces>
   <Roots.PropertyPathNames>
     <RootPropertyPathName Name="MosaicPalette" />
+    <RootPropertyPathName Name="PaletteSize" />
     <RootPropertyPathName Name="CurrentlyDisplayedMosaic" />
     <RootPropertyPathName Name="CurrentlyDisplayedImage" />
     <RootPropertyPathName Name="MosaicType" />
@@ -65,6 +66,7 @@
     <RootType FullName="Windows.UI.Xaml.Controls.ScrollViewer">
       <RootProperty Name="Margin" />
       <RootProperty Name="MaxHeight" />
+      <RootProperty Name="MinHeight" />
       <RootProperty Name="Content" />
       <RootMethod Name="GetVerticalScrollMode" />
       <RootMethod Name="SetVerticalScrollMode" />
@@ -91,6 +93,7 @@
       <RootProperty Name="Width" />
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="MaxHeight" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ItemsPanelTemplate">
       <RootProperty Name="Template" />

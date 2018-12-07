@@ -69,9 +69,8 @@
                                  Grid.Column="0" VerticalAlignment="Top" GroupName="MosaicType"
                                  Command="{Binding MosaicType}" />
                 </Grid>
-                
             </Grid>
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="1" MaxHeight="800">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -79,7 +78,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Grid Grid.Column="0" Grid.Row="0" VerticalAlignment="Stretch" Background="{ThemeResource SystemControlAccentAcrylicElementAccentMediumHighBrush}"  Padding="10">
+                <Grid Grid.Column="0" Grid.Row="0" VerticalAlignment="Stretch" Background="{ThemeResource SystemControlHighlightAltListAccentMediumBrush}"  Padding="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
@@ -99,17 +98,17 @@
                     </Grid>
                     <Grid x:Name="originalImageOverlay" Margin="10" Grid.Row="1">
                         <Image x:Name="originalImage" HorizontalAlignment="Left"
-                               Source="{Binding CurrentlyDisplayedImage, Mode=OneWay}" />
+                               Source="{Binding CurrentlyDisplayedImage, Mode=OneWay}" MaxHeight="600" Stretch="Uniform" />
                     </Grid>
                 </Grid>
-                <Grid  Grid.Column="1" Grid.Row="0" Padding="10" Background="#66AE0028">
+                <Grid  Grid.Column="1" Grid.Row="0" Padding="10" Background="{ThemeResource SystemControlHighlightAltListAccentLowBrush}" MaxHeight="800">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <TextBlock x:Name="outputImageLabel" Text="Output Preview Image" FontWeight="Bold"/>
                     <Image Grid.Column="0" Grid.Row="1"  HorizontalAlignment="Left" VerticalAlignment="Center" 
-                               x:Name="outputImage" Source="{Binding CurrentlyDisplayedMosaic, Mode=OneWay}" />
+                               x:Name="outputImage" Source="{Binding CurrentlyDisplayedMosaic, Mode=OneWay}" MaxHeight="600" Stretch="Uniform"/>
                 </Grid>
             </Grid>
         </Grid>
@@ -120,8 +119,8 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <TextBlock Text="Picture Palette" Grid.Row="0"  HorizontalAlignment="Center" FontWeight="Bold" />
-            <TextBlock HorizontalAlignment="Center"  Grid.Row="1" Grid.Column="0" Text="Size:" TextWrapping="Wrap" VerticalAlignment="Top"/>
-            <ScrollViewer Grid.Row="2" Margin="10" MaxHeight="300">
+            <TextBlock HorizontalAlignment="Center"  Grid.Row="1" Grid.Column="0" Text="{Binding PaletteSize}" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <ScrollViewer Grid.Row="2" Margin="10" MaxHeight="300" MinHeight="300">
                 <GridView HorizontalAlignment="Center" VerticalAlignment="Top" 
                           x:Name="mosaicView" SelectionMode="Multiple"
                           ItemsSource="{Binding MosaicPalette, Mode=TwoWay}" ScrollViewer.VerticalScrollMode ="Auto">
