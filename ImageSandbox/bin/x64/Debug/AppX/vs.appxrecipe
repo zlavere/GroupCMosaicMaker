@@ -30,13 +30,13 @@
     <AppXManifest Include="C:\Users\zach\GroupCMosaicMaker\ImageSandbox\bin\x64\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2018-12-07T03:36:16.929</Modified>
+      <Modified>2018-12-07T03:47:12.221</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\zach\GroupCMosaicMaker\ImageSandbox\bin\x64\Debug\ImageSandbox.exe">
       <PackagePath>entrypoint\ImageSandbox.exe</PackagePath>
-      <Modified>2018-12-07T03:36:16.214</Modified>
+      <Modified>2018-12-07T03:47:11.492</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\zach\.nuget\packages\runtime.win10-x64.microsoft.netcore.universalwindowsplatform\6.1.7\runtimes\win10-x64\nativeassets\uap10.0.15138\clrcompression.dll">
       <PackagePath>clrcompression.dll</PackagePath>
@@ -738,15 +738,15 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\zach\GroupCMosaicMaker\ImageSandbox\bin\x64\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
-      <Modified>2018-12-07T03:36:15.856</Modified>
+      <Modified>2018-12-07T03:47:11.079</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\zach\GroupCMosaicMaker\ImageSandbox\bin\x64\Debug\View\MainPage.xbf">
       <PackagePath>View\MainPage.xbf</PackagePath>
-      <Modified>2018-12-07T03:36:15.855</Modified>
+      <Modified>2018-12-07T03:47:11.078</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\zach\GroupCMosaicMaker\ImageSandbox\bin\x64\Debug\View\SettingsPage.xbf">
       <PackagePath>View\SettingsPage.xbf</PackagePath>
-      <Modified>2018-12-07T03:36:15.859</Modified>
+      <Modified>2018-12-07T03:47:11.081</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\10.0.17134.0\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
@@ -758,7 +758,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\zach\GroupCMosaicMaker\ImageSandbox\bin\x64\Debug\Core\ImageSandbox.exe">
       <PackagePath>ImageSandbox.exe</PackagePath>
-      <Modified>2018-12-07T03:36:16.918</Modified>
+      <Modified>2018-12-07T03:47:12.211</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

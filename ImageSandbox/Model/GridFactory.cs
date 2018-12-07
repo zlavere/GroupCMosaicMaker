@@ -135,7 +135,7 @@ namespace ImageSandbox.Model
             var cell = new Rectangle {
                 Width = width,
                 Height = height,
-                Stroke = new SolidColorBrush(Color.FromArgb(100, 0, 0, 0)),
+                Stroke = new SolidColorBrush(Color.FromArgb(100, 255, 255, 255)),
                 StrokeThickness = 1,
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Top
