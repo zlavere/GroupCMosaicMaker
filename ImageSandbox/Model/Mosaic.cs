@@ -28,7 +28,20 @@ namespace ImageSandbox.Model
         /// </value>
         public GridFactory GridFactory { get; set; }
 
+        /// <summary>
+        /// Gets or sets the index of the pixel.
+        /// </summary>
+        /// <value>
+        /// The index of the pixel.
+        /// </value>
         public int PixelIndex { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the colors.
+        /// </summary>
+        /// <value>
+        /// The colors.
+        /// </value>
         public List<Color> Colors { get; set; }
 
         /// <summary>

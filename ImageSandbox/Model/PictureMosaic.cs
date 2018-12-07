@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using ImageSandbox.Utility;
 using Windows.UI;
+using System.Linq;
 
 namespace ImageSandbox.Model
 {
@@ -16,7 +18,7 @@ namespace ImageSandbox.Model
 
         public PictureMosaic(WriteableBitmap sourceImage, GridFactory gridFactory, Palette palette) : base(sourceImage, gridFactory)
         {
-            this.Palette = palette;
+            this.Palette = new Palette();
         }
         //        public WriteableBitmap CreatePictureMosaic(WriteableBitmap originalImage, List<WriteableBitmap> palette, int blockSize)
         //        {
@@ -39,9 +41,9 @@ namespace ImageSandbox.Model
             var newHeight = (int) (origHeight * ratio);
             var newWidth = (int) (origWidth * ratio);
 
-            WriteableBitmap newBitmap = new WriteableBitmap(newWidth, newHeight);
+            var newBitmap = new WriteableBitmap(newWidth, newHeight);
 
-            IRandomAccessStream source = sourceImage.PixelBuffer.AsStream().AsRandomAccessStream();
+            var source = sourceImage.PixelBuffer.AsStream().AsRandomAccessStream();
             newBitmap.SetSource(source);
 
             return newBitmap;
@@ -49,10 +51,11 @@ namespace ImageSandbox.Model
 
 
 
-//        private void SelectImageForEachBlock(List<Color> averageColors, List<Color> colorsOfBlocks)
-//        {
-//            //TODO
-//        }
+        private void findClosestImageToCellColor(List<Color> averageColors, List<Color> colorsOfBlocks)
+        {
+
+            var closest = this.Palette.findImageWithClosestColor(Color.FromArgb(0,0,0,0)); //TODO Add color from cell
+        }
 //
 //        private WriteableBitmap writePictureMosaicToBitmap(List<byte[]> selectedImages, int width, int height)
 //        {
