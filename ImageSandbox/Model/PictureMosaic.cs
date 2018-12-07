@@ -12,15 +12,11 @@ namespace ImageSandbox.Model
 {
     public class PictureMosaic:Mosaic
     {
+        private Palette Palette { get; set; }
 
-
-        public List<Cell> Cells { get; set; }
-
-        //TODO In SolidMosaic class we need to move the method up to the point at which it sets the values of the cells to the Mosaic part class at which point we will not need to pass cells as a param here
-        //TODO In Mosaic we only need to pass GridFactory - GridFactory holds the most recent WriteableBitmaps
-        public PictureMosaic(WriteableBitmap sourceImage, WriteableBitmap mosaicImage, int cellSideLength, GridFactory gridFactory, List<Cell> cells) : base(sourceImage, mosaicImage, cellSideLength, gridFactory)
+        public PictureMosaic(WriteableBitmap sourceImage, GridFactory gridFactory, Palette palette) : base(sourceImage, gridFactory)
         {
-            //TODO
+            this.Palette = palette;
         }
         //        public WriteableBitmap CreatePictureMosaic(WriteableBitmap originalImage, List<WriteableBitmap> palette, int blockSize)
         //        {
@@ -51,22 +47,7 @@ namespace ImageSandbox.Model
             return newBitmap;
         }
 
-        private List<Color> GetAverageColorsOfPaletteImages(List<WriteableBitmap> palette)
-        {
-            List<Color> averageColors = new List<Color>();
-            foreach (WriteableBitmap currentBitmap in palette)
-            {
-                var currentBitmapAsBytes = currentBitmap.PixelBuffer.ToArray();
-                var imageWidth = (uint)currentBitmap.PixelWidth;
-                var imageHeight = (uint)currentBitmap.PixelHeight;
 
-                Color averagePixelColor =
-                    BitmapUtilities.GetAveragePixelColor(currentBitmapAsBytes, imageWidth, imageHeight);
-                averageColors.Add(averagePixelColor);
-            }
-
-            return averageColors;
-        }
 
 //        private void SelectImageForEachBlock(List<Color> averageColors, List<Color> colorsOfBlocks)
 //        {

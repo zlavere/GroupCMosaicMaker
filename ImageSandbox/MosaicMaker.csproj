@@ -103,6 +103,7 @@
     <Compile Include="IO\PaletteReader.cs" />
     <Compile Include="Model\Cell.cs" />
     <Compile Include="Model\GridFactory.cs" />
+    <Compile Include="Model\Palette.cs" />
     <Compile Include="Model\PictureMosaic.cs" />
     <Compile Include="Model\SolidMosaic.cs" />
     <Compile Include="Model\Mosaic.cs" />

@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
+using ImageSandbox.Extensions;
 using ImageSandbox.IO;
 using ImageSandbox.Model;
 using ImageSandbox.Utility;
@@ -45,7 +46,7 @@ namespace ImageSandbox.ViewModel
         /// <value>
         ///     The current palette.
         /// </value>
-        public PaletteReader CurrentPalette { get; set; }
+        public PaletteReader PaletteReader { get; set; }
 
         public int PaletteSize
         {
@@ -62,6 +63,8 @@ namespace ImageSandbox.ViewModel
                 this.OnPropertyChanged();
             }
         }
+
+        public Palette Palette { get; set; }
 
         /// <summary>
         ///     Gets or sets the load image command.
@@ -241,7 +244,8 @@ namespace ImageSandbox.ViewModel
             this.currentDpiY = 0;
             this.currentlyDisplayedImage = null;
             this.currentlyDisplayedMosaic = null;
-            this.CurrentPalette = new PaletteReader();
+            this.PaletteReader = new PaletteReader();
+            this.Palette = new Palette();
         }
 
         #endregion
@@ -293,7 +297,7 @@ namespace ImageSandbox.ViewModel
 
         private async void createMosaic(object obj)
         {
-            this.SolidMosaic = new SolidMosaic(this.CurrentlyDisplayedImage, this.CurrentlyDisplayedMosaic, this.CellSideLength, this.GridFactory);
+            this.SolidMosaic = new SolidMosaic(this.CurrentlyDisplayedImage, this.GridFactory);
             var mosaic = await this.SolidMosaic.SetCellData();
             this.CurrentlyDisplayedMosaic = mosaic;
         }
@@ -307,15 +311,15 @@ namespace ImageSandbox.ViewModel
         {
             try
             {
-                await this.CurrentPalette.LoadPalette();
-                this.MosaicPalette = new ObservableCollection<WriteableBitmap>(this.CurrentPalette.EditablePalette);
+                await this.PaletteReader.LoadPalette();
+                this.Palette.PaletteImages = this.PaletteReader.EditablePalette;
+                this.MosaicPalette = this.Palette.PaletteImages.ToObservableCollection();
                 this.PaletteSize = this.MosaicPalette.Count;
             }
-            catch (NullReferenceException)
+            catch (Exception)
             {
                 //TODO does nothing.
             }
-
         }
 
         #endregion
