@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
@@ -152,6 +152,58 @@ namespace ImageSandbox.Utility
                     return returnImage;
                 }
             }
+        }
+
+        public static WriteableBitmap ConvertToBlackAndWhite(WriteableBitmap sourceBitmap)
+        {
+            var height = (uint) sourceBitmap.PixelHeight;
+            var width = (uint) sourceBitmap.PixelWidth;
+            //var x = 0;
+            //var y = 0;
+            var imageAsArray = sourceBitmap.PixelBuffer.ToArray();
+
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    var currentColor = GetPixelBgra8(imageAsArray, x, y, width, height);
+                    var changedColor = toBlackOrWhite(currentColor);
+                    SetPixelBgra8(imageAsArray, x, y, changedColor, width, height);
+                    y++;
+                }
+
+                x++;
+            }
+            var returnBitmap = new WriteableBitmap(sourceBitmap.PixelWidth, sourceBitmap.PixelHeight);
+            returnBitmap.SetSource(imageAsArray.AsBuffer().AsStream().AsRandomAccessStream());
+            return returnBitmap;
+        }
+
+        private static Color toBlackOrWhite(Color baseColor)
+        {
+            var white = 255;
+            var black = 0;
+            int blue = baseColor.B;
+            int green = baseColor.G;
+            int red = baseColor.R;
+            var total = blue + green + red;
+            var returnColor = new Color();
+            if (total > 382)
+            {
+                returnColor.B = (byte) white;
+                returnColor.G = (byte) white;
+                returnColor.R = (byte) white;
+                returnColor.A = 255;
+            }
+            else
+            {
+                returnColor.B = (byte) black;
+                returnColor.G = (byte) black;
+                returnColor.R = (byte) black;
+                returnColor.A = 255;
+            }
+
+            return returnColor;
         }
 
         #endregion
