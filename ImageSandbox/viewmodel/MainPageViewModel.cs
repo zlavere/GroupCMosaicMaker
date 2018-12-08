@@ -256,8 +256,6 @@ namespace ImageSandbox.ViewModel
 
         #region Methods
 
-
-
         private void loadCommands()
         {
             this.LoadImageCommand = new RelayCommand(this.loadImage, canAlwaysExecute);
@@ -301,9 +299,12 @@ namespace ImageSandbox.ViewModel
 
         private async void createMosaic(object obj)
         {
-            this.Mosaic = new SolidMosaic(this.CurrentlyDisplayedImage, this.GridFactory);
-            var mosaic = await this.Mosaic.SetCellData();
-            this.CurrentlyDisplayedMosaic = mosaic;
+            if (this.Palette.PaletteImages.Count > 0)
+            {
+                this.Mosaic = new PictureMosaic(this.CurrentlyDisplayedImage, this.GridFactory, this.Palette);
+                var mosaic = await this.Mosaic.SetCellData();
+                this.CurrentlyDisplayedMosaic = mosaic;
+            }
         }
 
         private bool canCreateMosaic(object obj)
