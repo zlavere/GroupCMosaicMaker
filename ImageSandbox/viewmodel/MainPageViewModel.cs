@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using ImageSandbox.Extensions;
 using ImageSandbox.IO;
@@ -274,9 +270,10 @@ namespace ImageSandbox.ViewModel
             }
             catch (NullReferenceException)
             {
-                //TODO
+                this.CurrentlyDisplayedImage = null;
             }
 
+            this.CurrentlyDisplayedMosaic = null;
         }
 
         private static bool canAlwaysExecute(object obj)
