@@ -393,7 +393,7 @@ namespace ImageSandbox.ViewModel
             }
         }
 
-        private void changeToBlackAndWhite(WriteableBitmap mosaic)
+        private async void changeToBlackAndWhite(WriteableBitmap mosaic)
         {
             this.BlackAndWhiteMosaic = BitmapUtilities.ConvertToBlackAndWhite(mosaic);
         }

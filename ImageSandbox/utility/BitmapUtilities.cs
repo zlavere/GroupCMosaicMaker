@@ -7,6 +7,7 @@ using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI;
 using Windows.UI.Xaml.Media.Imaging;
+using ImageSandbox.Extensions;
 
 namespace ImageSandbox.Utility
 {
@@ -43,7 +44,7 @@ namespace ImageSandbox.Utility
         /// </returns>
         public static Color GetPixelBgra8(byte[] pixels, int x, int y, uint width, uint height)
         {
-            var offset = (x * (int) width + y) * 4;
+            var offset = ((y * width) + x) * 4;
             var r = pixels[offset + 2];
             var g = pixels[offset + 1];
             var b = pixels[offset + 0];
@@ -109,7 +110,7 @@ namespace ImageSandbox.Utility
         /// <param name="height">The height.</param>
         public static void SetPixelBgra8(byte[] pixels, int x, int y, Color color, uint width, uint height)
         {
-            var offset = (x * (int) width + y) * 4;
+            var offset = ((y * width) + x) * 4;
             pixels[offset + 2] = color.R;
             pixels[offset + 1] = color.G;
             pixels[offset + 0] = color.B;
@@ -131,9 +132,6 @@ namespace ImageSandbox.Utility
                     ScaledWidth = Convert.ToUInt32(copyBitmapImage.PixelWidth),
                     ScaledHeight = Convert.ToUInt32(copyBitmapImage.PixelHeight)
                 };
-
-                //this.DpiX = decoder.DpiX;
-                //this.DpiY = decoder.DpiY;
 
                 var pixelData = await decoder.GetPixelDataAsync(
                     BitmapPixelFormat.Bgra8,
@@ -158,10 +156,8 @@ namespace ImageSandbox.Utility
         {
             var height = (uint) sourceBitmap.PixelHeight;
             var width = (uint) sourceBitmap.PixelWidth;
-            //var x = 0;
-            //var y = 0;
             var imageAsArray = sourceBitmap.PixelBuffer.ToArray();
-
+            
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
