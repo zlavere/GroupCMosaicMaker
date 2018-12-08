@@ -262,6 +262,17 @@ namespace ImageSandbox.ViewModel
             }
         }
 
+        public WriteableBitmap BlackAndWhiteMosaic
+        {
+            get => this.blackAndWhiteMosaic;
+            set
+            {
+                this.blackAndWhiteMosaic = value;
+                this.OnPropertyChanged();
+                this.ToggleBlackAndWhiteCommand.OnCanExecuteChanged();
+            }
+        }
+
         #endregion
 
         #region Constructors
@@ -277,6 +288,7 @@ namespace ImageSandbox.ViewModel
             this.PaletteReader = new PaletteReader();
             this.Palette = new Palette();
             this.MaxImageHeight = 800;
+            this.IsBlackAndWhite = false;
         }
 
         #endregion
@@ -309,6 +321,9 @@ namespace ImageSandbox.ViewModel
             {
                 this.CurrentlyDisplayedImage = null;
             }
+
+            this.BlackAndWhiteMosaic = null;
+            this.normalMosaic = null;
             this.CurrentlyDisplayedMosaic = null;
         }
 
@@ -336,7 +351,7 @@ namespace ImageSandbox.ViewModel
             this.blackAndWhiteMosaic = null;
             this.CurrentlyDisplayedMosaic = mosaic;
             //Parallel.Invoke(() => this.changeToBlackAndWhite(mosaic));
-            //this.changeToBlackAndWhite(mosaic);
+            this.changeToBlackAndWhite(mosaic);
         }
 
         private bool canCreateMosaic(object obj)
@@ -361,22 +376,24 @@ namespace ImageSandbox.ViewModel
 
         private void changeDisplayedMosaic(object obj)
         {
-            if (this.isBlackAndWhite && this.blackAndWhiteMosaic != null)
+            if (!this.isBlackAndWhite && this.blackAndWhiteMosaic != null)
             {
                 this.CurrentlyDisplayedMosaic = this.blackAndWhiteMosaic;
+                this.IsBlackAndWhite = true;
             }
             else
             {
                 if (this.normalMosaic != null)
                 {
-                    this.currentlyDisplayedMosaic = this.normalMosaic;
+                    this.CurrentlyDisplayedMosaic = this.normalMosaic;
+                    this.IsBlackAndWhite = false;
                 }
             }
         }
 
         private void changeToBlackAndWhite(WriteableBitmap mosaic)
         {
-            this.blackAndWhiteMosaic = BitmapUtilities.ConvertToBlackAndWhite(mosaic);
+            this.BlackAndWhiteMosaic = BitmapUtilities.ConvertToBlackAndWhite(mosaic);
         }
 
         private bool canChangeDisplayedMosaic(object obj)

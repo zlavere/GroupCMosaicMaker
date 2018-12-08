@@ -172,7 +172,11 @@ namespace ImageSandbox.Utility
                 }
             }
             var returnBitmap = new WriteableBitmap(sourceBitmap.PixelWidth, sourceBitmap.PixelHeight);
-            returnBitmap.SetSource(imageAsArray.AsBuffer().AsStream().AsRandomAccessStream());
+            var pixelBufferStream = returnBitmap.PixelBuffer.AsStream();
+            foreach (var currentByte in imageAsArray)
+            {
+                pixelBufferStream.WriteByte(currentByte);
+            }
             return returnBitmap;
         }
 

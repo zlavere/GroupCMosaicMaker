@@ -24,21 +24,30 @@ namespace ImageSandbox.IO
         /// <param name="dpiY">The dpi y.</param>
         public async void SaveImage(WriteableBitmap imageToSave, double dpiX, double dpiY)
         {
-            var saveFile = await this.selectSaveFile();
-            if (saveFile.FileType == ".bmp")
+            try
             {
-                await this.saveAsBmp(saveFile, imageToSave, dpiX, dpiY);
+                var saveFile = await this.selectSaveFile();
+                if (saveFile.FileType == ".bmp")
+                {
+                    await this.saveAsBmp(saveFile, imageToSave, dpiX, dpiY);
+                }
+
+                if (saveFile.FileType == ".jpg")
+                {
+                    await this.saveAsJpg(saveFile, imageToSave, dpiX, dpiY);
+                }
+
+                if (saveFile.FileType == ".png")
+                {
+                    await this.saveAsPng(saveFile, imageToSave, dpiX, dpiY);
+                }
+            }
+            catch (NullReferenceException)
+            {
+                //TODO Nothing happens.
             }
 
-            if (saveFile.FileType == ".jpg")
-            {
-                await this.saveAsJpg(saveFile, imageToSave, dpiX, dpiY);
-            }
 
-            if (saveFile.FileType == ".png")
-            {
-                await this.saveAsPng(saveFile, imageToSave, dpiX, dpiY);
-            }
         }
 
         private async Task saveAsBmp(StorageFile saveFile, WriteableBitmap imageToSave, double dpiX, double dpiY)
