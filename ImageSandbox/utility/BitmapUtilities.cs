@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
@@ -7,6 +7,7 @@ using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI;
 using Windows.UI.Xaml.Media.Imaging;
+using ImageSandbox.Extensions;
 
 namespace ImageSandbox.Utility
 {
@@ -43,7 +44,7 @@ namespace ImageSandbox.Utility
         /// </returns>
         public static Color GetPixelBgra8(byte[] pixels, int x, int y, uint width, uint height)
         {
-            var offset = (x * (int) width + y) * 4;
+            var offset = ((y * width) + x) * 4;
             var r = pixels[offset + 2];
             var g = pixels[offset + 1];
             var b = pixels[offset + 0];
@@ -109,7 +110,7 @@ namespace ImageSandbox.Utility
         /// <param name="height">The height.</param>
         public static void SetPixelBgra8(byte[] pixels, int x, int y, Color color, uint width, uint height)
         {
-            var offset = (x * (int) width + y) * 4;
+            var offset = ((y * width) + x) * 4;
             pixels[offset + 2] = color.R;
             pixels[offset + 1] = color.G;
             pixels[offset + 0] = color.B;
@@ -132,9 +133,6 @@ namespace ImageSandbox.Utility
                     ScaledHeight = Convert.ToUInt32(copyBitmapImage.PixelHeight)
                 };
 
-                //this.DpiX = decoder.DpiX;
-                //this.DpiY = decoder.DpiY;
-
                 var pixelData = await decoder.GetPixelDataAsync(
                     BitmapPixelFormat.Bgra8,
                     BitmapAlphaMode.Straight,
@@ -152,6 +150,57 @@ namespace ImageSandbox.Utility
                     return returnImage;
                 }
             }
+        }
+
+        public static WriteableBitmap ConvertToBlackAndWhite(WriteableBitmap sourceBitmap)
+        {
+            var height = (uint) sourceBitmap.PixelHeight;
+            var width = (uint) sourceBitmap.PixelWidth;
+            var imageAsArray = sourceBitmap.PixelBuffer.ToArray();
+            
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    var currentColor = GetPixelBgra8(imageAsArray, x, y, width, height);
+                    var changedColor = toBlackOrWhite(currentColor);
+                    SetPixelBgra8(imageAsArray, x, y, changedColor, width, height);
+                }
+            }
+            var returnBitmap = new WriteableBitmap(sourceBitmap.PixelWidth, sourceBitmap.PixelHeight);
+            var pixelBufferStream = returnBitmap.PixelBuffer.AsStream();
+            foreach (var currentByte in imageAsArray)
+            {
+                pixelBufferStream.WriteByte(currentByte);
+            }
+            return returnBitmap;
+        }
+
+        private static Color toBlackOrWhite(Color baseColor)
+        {
+            var white = 255;
+            var black = 0;
+            int blue = baseColor.B;
+            int green = baseColor.G;
+            int red = baseColor.R;
+            var total = blue + green + red;
+            var returnColor = new Color();
+            if (total > 382)
+            {
+                returnColor.B = (byte) white;
+                returnColor.G = (byte) white;
+                returnColor.R = (byte) white;
+                returnColor.A = 255;
+            }
+            else
+            {
+                returnColor.B = (byte) black;
+                returnColor.G = (byte) black;
+                returnColor.R = (byte) black;
+                returnColor.A = 255;
+            }
+
+            return returnColor;
         }
 
         #endregion

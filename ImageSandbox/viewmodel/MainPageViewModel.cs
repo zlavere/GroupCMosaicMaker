@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
+using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Imaging;
 using ImageSandbox.Extensions;
 using ImageSandbox.IO;
@@ -28,6 +26,11 @@ namespace ImageSandbox.ViewModel
         private ObservableCollection<WriteableBitmap> mosaicPalette;
         private Mosaic mosaic;
         private int paletteSize;
+        private int maxHeight;
+        private WriteableBitmap blackAndWhiteMosaic;
+        private WriteableBitmap normalMosaic;
+        private bool isBlackAndWhite;
+        private string originalImageFileType;
 
         private int cellSideLength;
         private GridFactory gridFactory;
@@ -109,6 +112,8 @@ namespace ImageSandbox.ViewModel
         public RelayCommand LoadPaletteCommand { get; set; }
 
         public RelayCommand ShowGridCommand { get; set; }
+
+        public RelayCommand ToggleBlackAndWhiteCommand { get; set; }
 
         /// <summary>
         ///     Gets or sets the currently displayed image.
@@ -254,6 +259,44 @@ namespace ImageSandbox.ViewModel
             }
         }
 
+        public int MaxImageHeight
+        {
+            get => this.maxHeight;
+            set
+            {
+                if (value < 800 || this.CurrentlyDisplayedImage == null)
+                {
+                    this.maxHeight = 800;
+                }
+                else
+                {
+                    this.maxHeight = this.CurrentlyDisplayedImage.PixelHeight;
+                }
+            }
+        }
+
+        public bool IsBlackAndWhite
+        {
+            get => this.isBlackAndWhite;
+            set
+            {
+                this.isBlackAndWhite = value;
+                this.OnPropertyChanged();
+                this.ToggleBlackAndWhiteCommand.OnCanExecuteChanged();
+            }
+        }
+
+        public WriteableBitmap BlackAndWhiteMosaic
+        {
+            get => this.blackAndWhiteMosaic;
+            set
+            {
+                this.blackAndWhiteMosaic = value;
+                this.OnPropertyChanged();
+                this.ToggleBlackAndWhiteCommand.OnCanExecuteChanged();
+            }
+        }
+
         #endregion
 
         #region Constructors
@@ -269,6 +312,8 @@ namespace ImageSandbox.ViewModel
             this.PaletteReader = new PaletteReader();
             this.Palette = new Palette();
             this.SolidMosaicType = true;
+            this.MaxImageHeight = 800;
+            this.IsBlackAndWhite = false;
         }
 
         #endregion
@@ -281,7 +326,9 @@ namespace ImageSandbox.ViewModel
             this.SaveImageCommand = new RelayCommand(this.saveImage, this.canSaveImage);
             this.CreateMosaicCommand = new RelayCommand(this.createMosaic, this.canCreateMosaic);
             this.LoadPaletteCommand = new RelayCommand(this.loadPalette, canAlwaysExecute);
+            this.ToggleBlackAndWhiteCommand = new RelayCommand(this.changeDisplayedMosaic, this.canChangeDisplayedMosaic);
         }
+
 
         private async void loadImage(object obj)
         {
@@ -292,12 +339,16 @@ namespace ImageSandbox.ViewModel
                 this.CurrentlyDisplayedImage = results;
                 this.currentDpiX = readImage.DpiX;
                 this.currentDpiY = readImage.DpiY;
+                this.originalImageFileType = readImage.FileType;
             }
             catch (NullReferenceException e)
             {
-                Debug.WriteLine(e.StackTrace);
+                this.CurrentlyDisplayedImage = null;
             }
 
+            this.BlackAndWhiteMosaic = null;
+            this.normalMosaic = null;
+            this.CurrentlyDisplayedMosaic = null;
         }
 
         private static bool canAlwaysExecute(object obj)
@@ -308,7 +359,7 @@ namespace ImageSandbox.ViewModel
         private void saveImage(object obj)
         {
             var imageWriter = new ImageWriter();
-            imageWriter.SaveImage(this.currentlyDisplayedMosaic, this.currentDpiX, this.currentDpiY);
+            imageWriter.SaveImage(this.currentlyDisplayedMosaic, this.currentDpiX, this.currentDpiY, this.originalImageFileType);
         }
 
         private bool canSaveImage(object obj)
@@ -346,10 +397,37 @@ namespace ImageSandbox.ViewModel
                 this.MosaicPalette = this.Palette.PaletteImages.ToObservableCollection();
                 this.PaletteSize = this.MosaicPalette.Count;
             }
-            catch (Exception)
+            catch (NullReferenceException)
             {
                 //TODO does nothing.
             }
+        }
+
+        private void changeDisplayedMosaic(object obj)
+        {
+            if (!this.isBlackAndWhite && this.blackAndWhiteMosaic != null)
+            {
+                this.CurrentlyDisplayedMosaic = this.blackAndWhiteMosaic;
+                this.IsBlackAndWhite = true;
+            }
+            else
+            {
+                if (this.normalMosaic != null)
+                {
+                    this.CurrentlyDisplayedMosaic = this.normalMosaic;
+                    this.IsBlackAndWhite = false;
+                }
+            }
+        }
+
+        private async void changeToBlackAndWhite(WriteableBitmap mosaic)
+        {
+            this.BlackAndWhiteMosaic = BitmapUtilities.ConvertToBlackAndWhite(mosaic);
+        }
+
+        private bool canChangeDisplayedMosaic(object obj)
+        {
+            return this.blackAndWhiteMosaic != null;
         }
 
         #endregion

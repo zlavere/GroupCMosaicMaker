@@ -5,10 +5,12 @@
   </Roots.Interfaces>
   <Roots.PropertyPathNames>
     <RootPropertyPathName Name="MosaicPalette" />
+    <RootPropertyPathName Name="PaletteSize" />
     <RootPropertyPathName Name="CurrentlyDisplayedMosaic" />
+    <RootPropertyPathName Name="MaxImageHeight" />
     <RootPropertyPathName Name="CurrentlyDisplayedImage" />
-    <RootPropertyPathName Name="PictureMosaicType" />
-    <RootPropertyPathName Name="SolidMosaicType" />
+    <RootPropertyPathName Name="ToggleBlackAndWhiteCommand" />
+    <RootPropertyPathName Name="MosaicType" />
     <RootPropertyPathName Name="CreateMosaicCommand" />
     <RootPropertyPathName Name="CellSideLength" />
     <RootPropertyPathName Name="SaveImageCommand" />
@@ -27,6 +29,14 @@
     </RootType>
     <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.ThemeResourceExtension" />
     <RootType FullName="ImageSandbox.ViewModel.MainPageViewModel" />
+    <RootType FullName="Windows.UI.Xaml.Controls.ScrollViewer">
+      <RootProperty Name="Content" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="MaxHeight" />
+      <RootProperty Name="MinHeight" />
+      <RootMethod Name="GetVerticalScrollMode" />
+      <RootMethod Name="SetVerticalScrollMode" />
+    </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Grid">
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="VerticalAlignment" />
@@ -55,20 +65,20 @@
       <RootProperty Name="PrimaryCommands" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.TextBlock">
-      <RootProperty Name="Text" />
       <RootProperty Name="HorizontalAlignment" />
-      <RootProperty Name="FontWeight" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="Text" />
       <RootProperty Name="TextWrapping" />
       <RootProperty Name="VerticalAlignment" />
-      <RootProperty Name="Margin" />
+      <RootProperty Name="FontWeight" />
       <RootProperty Name="FontSize" />
     </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.ScrollViewer">
-      <RootProperty Name="Margin" />
-      <RootProperty Name="MaxHeight" />
+    <RootType FullName="Windows.UI.Xaml.Controls.CheckBox">
       <RootProperty Name="Content" />
-      <RootMethod Name="GetVerticalScrollMode" />
-      <RootMethod Name="SetVerticalScrollMode" />
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="Command" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.GridView">
       <RootProperty Name="HorizontalAlignment" />
@@ -92,6 +102,7 @@
       <RootProperty Name="Width" />
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="MaxHeight" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ItemsPanelTemplate">
       <RootProperty Name="Template" />
@@ -107,6 +118,7 @@
       <RootProperty Name="Margin" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="IsChecked" />
+      <RootProperty Name="Command" />
       <RootProperty Name="RenderTransformOrigin" />
       <RootEvent Name="Checked" />
     </RootType>
