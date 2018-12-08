@@ -7,6 +7,7 @@
     <RootPropertyPathName Name="MosaicPalette" />
     <RootPropertyPathName Name="PaletteSize" />
     <RootPropertyPathName Name="CurrentlyDisplayedMosaic" />
+    <RootPropertyPathName Name="MaxImageHeight" />
     <RootPropertyPathName Name="CurrentlyDisplayedImage" />
     <RootPropertyPathName Name="MosaicType" />
     <RootPropertyPathName Name="CreateMosaicCommand" />
@@ -27,6 +28,14 @@
     </RootType>
     <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.ThemeResourceExtension" />
     <RootType FullName="ImageSandbox.ViewModel.MainPageViewModel" />
+    <RootType FullName="Windows.UI.Xaml.Controls.ScrollViewer">
+      <RootProperty Name="Content" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="MaxHeight" />
+      <RootProperty Name="MinHeight" />
+      <RootMethod Name="GetVerticalScrollMode" />
+      <RootMethod Name="SetVerticalScrollMode" />
+    </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Grid">
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="VerticalAlignment" />
@@ -62,14 +71,6 @@
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Margin" />
       <RootProperty Name="FontSize" />
-    </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.ScrollViewer">
-      <RootProperty Name="Margin" />
-      <RootProperty Name="MaxHeight" />
-      <RootProperty Name="MinHeight" />
-      <RootProperty Name="Content" />
-      <RootMethod Name="GetVerticalScrollMode" />
-      <RootMethod Name="SetVerticalScrollMode" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.GridView">
       <RootProperty Name="HorizontalAlignment" />

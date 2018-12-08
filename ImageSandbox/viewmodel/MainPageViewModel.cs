@@ -23,6 +23,7 @@ namespace ImageSandbox.ViewModel
         private ObservableCollection<WriteableBitmap> mosaicPalette;
         private SolidMosaic solidMosaic;
         private int paletteSize;
+        private int maxHeight;
 
         private int cellSideLength;
         private GridFactory gridFactory;
@@ -228,6 +229,22 @@ namespace ImageSandbox.ViewModel
             }
         }
 
+        public int MaxImageHeight
+        {
+            get => this.maxHeight;
+            set
+            {
+                if (value < 800 || this.CurrentlyDisplayedImage == null)
+                {
+                    this.maxHeight = 800;
+                }
+                else
+                {
+                    this.maxHeight = this.CurrentlyDisplayedImage.PixelHeight;
+                }
+            }
+        }
+
         #endregion
 
         #region Constructors
@@ -242,6 +259,7 @@ namespace ImageSandbox.ViewModel
             this.currentlyDisplayedMosaic = null;
             this.PaletteReader = new PaletteReader();
             this.Palette = new Palette();
+            this.MaxImageHeight = 800;
         }
 
         #endregion
