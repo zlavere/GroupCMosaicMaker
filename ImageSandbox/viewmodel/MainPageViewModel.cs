@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Imaging;
 using ImageSandbox.Extensions;
@@ -314,6 +315,7 @@ namespace ImageSandbox.ViewModel
             this.SolidMosaicType = true;
             this.MaxImageHeight = 800;
             this.IsBlackAndWhite = false;
+            this.PaletteSize = 0;
         }
 
         #endregion
@@ -374,18 +376,37 @@ namespace ImageSandbox.ViewModel
                 this.Mosaic = new PictureMosaic(this.CurrentlyDisplayedImage, this.GridFactory, this.Palette);
                 var mosaic = await this.Mosaic.SetCellData();
                 this.CurrentlyDisplayedMosaic = mosaic;
+                this.normalMosaic = mosaic;
+                this.changeToBlackAndWhite(mosaic);
             }
             else if(this.SolidMosaicType)
             {
                 this.Mosaic = new SolidMosaic(this.CurrentlyDisplayedImage, this.GridFactory);
                 var mosaic = await this.Mosaic.SetCellData();
                 this.CurrentlyDisplayedMosaic = mosaic;
+                this.normalMosaic = mosaic;
+                this.changeToBlackAndWhite(mosaic);
             }
         }
 
         private bool canCreateMosaic(object obj)
         {
-            return this.CurrentlyDisplayedImage != null;
+            if (this.PictureMosaicType && this.PaletteSize != 0)
+            {
+                return this.CurrentlyDisplayedImage != null;
+            }
+            else
+            {
+                if (this.SolidMosaicType)
+                {
+                    return this.CurrentlyDisplayedImage != null;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            
         }
 
         private async void loadPalette(object obj)
@@ -420,7 +441,7 @@ namespace ImageSandbox.ViewModel
             }
         }
 
-        private async void changeToBlackAndWhite(WriteableBitmap mosaic)
+        private void changeToBlackAndWhite(WriteableBitmap mosaic)
         {
             this.BlackAndWhiteMosaic = BitmapUtilities.ConvertToBlackAndWhite(mosaic);
         }

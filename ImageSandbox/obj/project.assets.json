@@ -3409,7 +3409,7 @@
       ]
     },
     "Microsoft.NETCore.Platforms/2.0.0": {
-      "sha512": "5BdAWDgMNwf90L0J+C/eh6kfHDa37ViL1cBL1nv5zPA4TB2cGV51YiQyvzCEy9DBE0LwwMI4+PkUpIekKyocSA==",
+      "sha512": "VdLJOCXhZaEMY7Hm2GKiULmn7IEPFE4XC5LPSfBVCUIA8YLZVh846gtfBJalsPQF2PlzdD7ecX7DZEulJ402ZQ==",
       "type": "package",
       "path": "microsoft.netcore.platforms/2.0.0",
       "files": [
@@ -3426,7 +3426,7 @@
       ]
     },
     "Microsoft.NETCore.UniversalWindowsPlatform/6.1.7": {
-      "sha512": "Yl7UU5EP5E0FVV5pAfVnO2FNRPWPWPskW8M6fz0laPE+QPM/na83UDHKtXErV4yGj839auCjWOxuRz7mIfVpjg==",
+      "sha512": "DYM3wy4Hzlegxq6VKisHWHwrA8V9Fk1AF+pV5c0Jna/kWPK8kuD9xrr0bjQUIi1RoJYYl+sqy4etjSfuWmkHCg==",
       "type": "package",
       "path": "microsoft.netcore.universalwindowsplatform/6.1.7",
       "files": [
@@ -3844,7 +3844,7 @@
       ]
     },
     "runtime.win10-arm-aot.Microsoft.NETCore.UniversalWindowsPlatform/6.1.7": {
-      "sha512": "KiGfGE6tfIkGSdTDuFOZlDuQr6f93FCaDKlbj0iMxb8hr/nnlEgjhuib192BAJ+LCtsThUGisvppGbpdMLJAkg==",
+      "sha512": "hq+o5JOofIXeN0MPkJ+DoF7a4bRjx85DZsYN7yKrviKpIoCT41Omfv3XXViwtujacDGM89CP1Vdm3gxoyNI9gw==",
       "type": "package",
       "path": "runtime.win10-arm-aot.microsoft.netcore.universalwindowsplatform/6.1.7",
       "files": [
@@ -4736,7 +4736,7 @@
       ]
     },
     "runtime.win10-arm.Microsoft.NETCore.UniversalWindowsPlatform/6.1.7": {
-      "sha512": "mGRVNh1YnRawebaYVtJZuYFqX69QSLQgTgWzftEPGeYKt3FZATbgkpYQ8j33hEsqJ+sdC1XByISwvIz00+5eIw==",
+      "sha512": "yFZ3Ldh3mNjjKlS0q4Ivx+L7e6MX7UmfNavM5KJ2osF3NppmwALH8EbYh/na75EjNTesNIPMDr4mZknQ4JHXFw==",
       "type": "package",
       "path": "runtime.win10-arm.microsoft.netcore.universalwindowsplatform/6.1.7",
       "files": [
@@ -4914,7 +4914,7 @@
       ]
     },
     "runtime.win10-x64-aot.Microsoft.NETCore.UniversalWindowsPlatform/6.1.7": {
-      "sha512": "5uD9CymLkTC1vfpEWy7fsE2xkmGKefKzuITI8IKx9oDiRJFarwhr2iGn2TeMHyGqwLK82oxHLz1YOvB/kByOrw==",
+      "sha512": "6weIi+KNlBTo5jdcx2zfIcvY4rYbZ5frPYG+oJhDEuc4MYzDGw2V9SpBwtgmKKh5i8xTyx8doYh6EgFNhrwAXA==",
       "type": "package",
       "path": "runtime.win10-x64-aot.microsoft.netcore.universalwindowsplatform/6.1.7",
       "files": [
@@ -5800,7 +5800,7 @@
       ]
     },
     "runtime.win10-x64.Microsoft.NETCore.UniversalWindowsPlatform/6.1.7": {
-      "sha512": "GgZz+qCyXB9ayDvm1Y4+2RWVsZwX6opg2YbNQAVMMHJWT8nUJ9eivdX1LSq+mQ/JdJC8kFA/wBTiu7mIDdz91g==",
+      "sha512": "Quw6VyX2QGAbpTWL9N0S+U7WJeyauAD0i/yOutd61thRKHf8rs59dH0dsz4pUe5vnFE7SlPDz2BB39TBQxkl4w==",
       "type": "package",
       "path": "runtime.win10-x64.microsoft.netcore.universalwindowsplatform/6.1.7",
       "files": [
@@ -5978,7 +5978,7 @@
       ]
     },
     "runtime.win10-x86-aot.Microsoft.NETCore.UniversalWindowsPlatform/6.1.7": {
-      "sha512": "aamKyWHE2rR/csz12n5U+KEQWAda2fTwK5NbcbGEuPtLGNLGZl2QsKNTgvyCve9ae8DqypZ1vW5j47j/MeBY1w==",
+      "sha512": "lquVtrIRasFS4P7JckNexE0wd1VYIE6AH7YEAQITSzsQcN0pIhCjJrA8zDLGVsB4r+cF7BRsWL6bePoLCQGd2Q==",
       "type": "package",
       "path": "runtime.win10-x86-aot.microsoft.netcore.universalwindowsplatform/6.1.7",
       "files": [
@@ -6864,7 +6864,7 @@
       ]
     },
     "runtime.win10-x86.Microsoft.NETCore.UniversalWindowsPlatform/6.1.7": {
-      "sha512": "OOqKBLyVOffzjLH+dOk9xscSoEgv2KQFfdU19fHomdagRHBIr3LeRz25809fpWM4WdqqN89gD1Pxs1pXSMS7tA==",
+      "sha512": "3zYUGH5ilx0gRsQ2vDWRgeOdjgLjpl95mgx3g+MtOKrsxLjUUUgMc8XCjV/oHOwmE/7ap69DApEfgsiRPmKTew==",
       "type": "package",
       "path": "runtime.win10-x86.microsoft.netcore.universalwindowsplatform/6.1.7",
       "files": [
@@ -7048,24 +7048,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\zach\\.nuget\\packages\\": {},
+    "C:\\Users\\BrandonEugeneWalker\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\zach\\GroupCMosaicMaker\\ImageSandbox\\MosaicMaker.csproj",
+      "projectUniqueName": "C:\\Users\\BrandonEugeneWalker\\Source\\Repos\\GroupCMosaicMaker2\\ImageSandbox\\MosaicMaker.csproj",
       "projectName": "MosaicMaker",
-      "projectPath": "C:\\Users\\zach\\GroupCMosaicMaker\\ImageSandbox\\MosaicMaker.csproj",
-      "packagesPath": "C:\\Users\\zach\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\zach\\GroupCMosaicMaker\\ImageSandbox\\obj\\",
+      "projectPath": "C:\\Users\\BrandonEugeneWalker\\Source\\Repos\\GroupCMosaicMaker2\\ImageSandbox\\MosaicMaker.csproj",
+      "packagesPath": "C:\\Users\\BrandonEugeneWalker\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\BrandonEugeneWalker\\Source\\Repos\\GroupCMosaicMaker2\\ImageSandbox\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\zach\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\BrandonEugeneWalker\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
