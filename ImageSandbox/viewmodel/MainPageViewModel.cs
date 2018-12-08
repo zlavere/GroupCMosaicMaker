@@ -35,7 +35,8 @@ namespace ImageSandbox.ViewModel
         private double currentDpiX;
         private double currentDpiY;
 
-        private bool mosaicType;
+        private bool solidMosaicType;
+        private bool pictureMosaicType;
 
         #endregion
 
@@ -215,12 +216,29 @@ namespace ImageSandbox.ViewModel
         /// <value>
         ///     <c>true</c> if [mosaic type]; otherwise, <c>false</c>.
         /// </value>
-        public bool MosaicType
+        public bool SolidMosaicType
         {
-            get => this.mosaicType;
+            get => this.solidMosaicType;
             set
             {
-                this.mosaicType = value;
+                this.solidMosaicType = value;
+                this.CreateMosaicCommand.OnCanExecuteChanged();
+                this.OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether [mosaic type].
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if [mosaic type]; otherwise, <c>false</c>.
+        /// </value>
+        public bool PictureMosaicType
+        {
+            get => this.pictureMosaicType;
+            set
+            {
+                this.pictureMosaicType = value;
                 this.CreateMosaicCommand.OnCanExecuteChanged();
                 this.OnPropertyChanged();
             }
@@ -250,6 +268,7 @@ namespace ImageSandbox.ViewModel
             this.currentlyDisplayedMosaic = null;
             this.PaletteReader = new PaletteReader();
             this.Palette = new Palette();
+            this.SolidMosaicType = true;
         }
 
         #endregion
@@ -299,9 +318,15 @@ namespace ImageSandbox.ViewModel
 
         private async void createMosaic(object obj)
         {
-            if (this.Palette.PaletteImages.Count > 0)
+            if (this.PictureMosaicType && this.Palette.PaletteImages.Count > 0)
             {
                 this.Mosaic = new PictureMosaic(this.CurrentlyDisplayedImage, this.GridFactory, this.Palette);
+                var mosaic = await this.Mosaic.SetCellData();
+                this.CurrentlyDisplayedMosaic = mosaic;
+            }
+            else if(this.SolidMosaicType)
+            {
+                this.Mosaic = new SolidMosaic(this.CurrentlyDisplayedImage, this.GridFactory);
                 var mosaic = await this.Mosaic.SetCellData();
                 this.CurrentlyDisplayedMosaic = mosaic;
             }

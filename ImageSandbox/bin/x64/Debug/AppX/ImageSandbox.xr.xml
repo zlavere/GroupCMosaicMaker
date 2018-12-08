@@ -7,7 +7,8 @@
     <RootPropertyPathName Name="MosaicPalette" />
     <RootPropertyPathName Name="CurrentlyDisplayedMosaic" />
     <RootPropertyPathName Name="CurrentlyDisplayedImage" />
-    <RootPropertyPathName Name="MosaicType" />
+    <RootPropertyPathName Name="PictureMosaicType" />
+    <RootPropertyPathName Name="SolidMosaicType" />
     <RootPropertyPathName Name="CreateMosaicCommand" />
     <RootPropertyPathName Name="CellSideLength" />
     <RootPropertyPathName Name="SaveImageCommand" />
@@ -106,7 +107,6 @@
       <RootProperty Name="Margin" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="IsChecked" />
-      <RootProperty Name="Command" />
       <RootProperty Name="RenderTransformOrigin" />
       <RootEvent Name="Checked" />
     </RootType>

@@ -62,12 +62,12 @@
                                Grid.Column="0" Text="Mosaic Type:" TextWrapping="Wrap" VerticalAlignment="Top" />
                     <RadioButton x:Name="solidMosaicRadio" Content="Solid" HorizontalAlignment="Left"
                                  Grid.Row="1"
-                                 Grid.Column="0" Margin="5" VerticalAlignment="Top" GroupName="MosaicType" IsChecked="True"
-                                 Command="{Binding MosaicType}" />
+                                 Grid.Column="0" Margin="5" VerticalAlignment="Top" GroupName="SolidMosaicType" IsChecked="{Binding SolidMosaicType, Mode=TwoWay}"
+                                  />
                     <RadioButton x:Name="pictureMosaicRadio" Content="Picture" HorizontalAlignment="Left" Margin="5"
                                  Grid.Row="2"
-                                 Grid.Column="0" VerticalAlignment="Top" GroupName="MosaicType"
-                                 Command="{Binding MosaicType}" />
+                                 Grid.Column="0" VerticalAlignment="Top" GroupName="SolidMosaicType"
+                                 IsChecked="{Binding PictureMosaicType, Mode=TwoWay}" />
                 </Grid>
                 
             </Grid>
