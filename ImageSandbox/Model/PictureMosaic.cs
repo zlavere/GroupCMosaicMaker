@@ -50,6 +50,11 @@ namespace ImageSandbox.Model
             return newBitmap;
         }
 
+        protected override byte[] SetUpPixelData()
+        {
+            throw new NotImplementedException();
+        }
+
         public override async Task<WriteableBitmap> SetCellData()
         {
             return new WriteableBitmap(10,10);

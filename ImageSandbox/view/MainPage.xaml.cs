@@ -17,7 +17,6 @@ namespace ImageSandbox.View
     {
         #region Properties
 
-        public MainPageViewModel ViewModel { get; set; }
         public RadioButton ShowGrid { get; set; }
         public RadioButton HideGrid { get; set; }
         public int CellSideLength { get; set; }
@@ -32,8 +31,6 @@ namespace ImageSandbox.View
         {
             this.InitializeComponent();
             this.OverlayGrid = new Grid();
-            this.ViewModel = new MainPageViewModel();
-            DataContext = this.ViewModel;
             this.ShowGrid = this.showGrid;
             this.HideGrid = this.hideGrid;
             ApplicationView.PreferredLaunchViewSize = new Size(1080, 720);
@@ -73,7 +70,6 @@ namespace ImageSandbox.View
                     GridHeight = (int) this.originalImage.ActualHeight,
                     GridWidth = (int) this.originalImage.ActualWidth
                 };
-
                 if (this.CellSideLength > 0 && gridFactory.GridHeight > 0 && gridFactory.GridWidth > 0)
                 {
                     this.OverlayGrid = gridFactory.DrawGrid();
@@ -97,7 +93,7 @@ namespace ImageSandbox.View
                 this.CellSideLength = result;
                 this.IsGridChangedOrHidden = true;
             }
-
+            
             return isReadyForUpdate;
         }
 

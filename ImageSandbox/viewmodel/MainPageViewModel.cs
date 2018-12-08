@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml.Controls;
@@ -122,6 +123,8 @@ namespace ImageSandbox.ViewModel
             {
                 this.currentlyDisplayedImage = value;
                 ActiveImage.Image = this.currentlyDisplayedImage;
+                this.GridFactory.CellSideLength = this.cellSideLength;
+                this.GridFactory.Mosaic = new SolidMosaic(this.currentlyDisplayedImage, this.GridFactory);
                 this.CreateMosaicCommand.OnCanExecuteChanged();
                 this.OnPropertyChanged();
             }
@@ -129,7 +132,15 @@ namespace ImageSandbox.ViewModel
 
         public Mosaic Mosaic
         {
-            get => this.mosaic;
+            get
+            {
+                if (this.mosaic == null)
+                {
+                    this.mosaic = new SolidMosaic(this.CurrentlyDisplayedImage, this.GridFactory);
+                }
+
+                return this.mosaic;
+            }
             set
             {
                 this.mosaic = value;
@@ -144,13 +155,6 @@ namespace ImageSandbox.ViewModel
                 if (this.gridFactory == null)
                 {
                     this.gridFactory = new GridFactory();
-                }
-
-                if (this.CurrentlyDisplayedImage != null)
-                {
-                    this.gridFactory.GridWidth = this.currentlyDisplayedImage.PixelWidth;
-                    this.gridFactory.GridHeight = this.currentlyDisplayedImage.PixelHeight;
-                    this.gridFactory.CellSideLength = this.CellSideLength;
                 }
 
                 return this.gridFactory;
@@ -194,11 +198,12 @@ namespace ImageSandbox.ViewModel
             get => this.cellSideLength;
             set
             {
-                if (value < 1)
+                if (value < 5)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
                 this.cellSideLength = value;
+                this.GridFactory.CellSideLength = this.cellSideLength;
                 this.CreateMosaicCommand.OnCanExecuteChanged();
                 this.OnPropertyChanged();
             }
@@ -271,9 +276,9 @@ namespace ImageSandbox.ViewModel
                 this.currentDpiX = readImage.DpiX;
                 this.currentDpiY = readImage.DpiY;
             }
-            catch (NullReferenceException)
+            catch (NullReferenceException e)
             {
-                //TODO
+                Debug.WriteLine(e.StackTrace);
             }
 
         }

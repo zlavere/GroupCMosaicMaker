@@ -1,4 +1,7 @@
-﻿using Windows.UI;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -14,10 +17,14 @@ namespace ImageSandbox.Model
         private int numberOfColumns;
         private int lastRowHeight;
         private int lastColumnWidth;
+        private int gridHeight;
+        private int gridWidth;
 
         #endregion
 
         #region Properties
+
+        public Mosaic Mosaic { get; set; }
 
         /// <summary>
         ///     Gets or sets the width of the grid.
@@ -25,7 +32,35 @@ namespace ImageSandbox.Model
         /// <value>
         ///     The width of the grid.
         /// </value>
-        public int GridWidth { get; set; }
+        public int GridWidth
+        {
+            get
+            {
+                if (this.Mosaic != null)
+                {
+                    this.gridWidth = this.Mosaic.SourceImage.PixelWidth;
+                }
+
+                return this.gridWidth;
+            }
+            set => this.gridWidth = value;
+        }
+
+        /// <summary>
+        ///     Gets or sets the cells.
+        /// </summary>
+        /// <value>
+        ///     The cells.
+        /// </value>
+        public List<Cell> Cells { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the index of the pixel.
+        /// </summary>
+        /// <value>
+        ///     The index of the pixel.
+        /// </value>
+        public int PixelIndex { get; set; }
 
         /// <summary>
         ///     Gets or sets the height of the grid.
@@ -33,7 +68,19 @@ namespace ImageSandbox.Model
         /// <value>
         ///     The height of the grid.
         /// </value>
-        public int GridHeight { get; set; }
+        public int GridHeight
+        {
+            get
+            {
+                if (this.Mosaic != null)
+                {
+                    this.gridHeight = this.Mosaic.SourceImage.PixelHeight;
+                }
+
+                return this.gridHeight;
+            }
+            set => this.gridHeight = value;
+        }
 
         /// <summary>
         ///     Gets or sets the length of the cell side.
@@ -61,6 +108,7 @@ namespace ImageSandbox.Model
                 {
                     this.lastRowHeight = this.CellSideLength;
                 }
+
                 return this.lastRowHeight;
             }
         }
@@ -103,6 +151,7 @@ namespace ImageSandbox.Model
                 {
                     this.numberOfRows++;
                 }
+
                 return this.numberOfRows;
             }
         }
@@ -122,6 +171,7 @@ namespace ImageSandbox.Model
                 {
                     this.numberOfColumns++;
                 }
+
                 return this.numberOfColumns;
             }
         }
@@ -181,18 +231,9 @@ namespace ImageSandbox.Model
         {
             for (var columnIndex = 0; columnIndex < this.NumberOfColumns; columnIndex++)
             {
-                var currentWidth = this.CellSideLength;
-                var currentHeight = this.CellSideLength;
+                var currentWidth = this.getCurrentColumnWidth(columnIndex);
 
-                if (rowNumber == this.NumberOfRows - 1)
-                {
-                    currentHeight = this.LastRowHeight;
-                }
-
-                if (columnIndex == this.NumberOfColumns - 1)
-                {
-                    currentWidth = this.LastColumnWidth;
-                }
+                var currentHeight = this.getCurrentRowHeight(rowNumber);
 
                 var cell = this.createCell(currentWidth, currentHeight);
                 Grid.SetColumn(cell, columnIndex);
@@ -200,6 +241,83 @@ namespace ImageSandbox.Model
                 grid.Name = "overlay";
                 grid.Children.Add(cell);
             }
+        }
+
+        public void CalculateCellAttributes()
+        {
+            this.Cells = new List<Cell>();
+            this.PixelIndex = 0;
+            for (var rowIndex = 0; rowIndex < this.NumberOfRows; rowIndex++)
+            {
+                this.Cells.AddRange(this.CreateRow(rowIndex));
+            }
+        }
+
+        protected IEnumerable<Cell> CreateRow(int rowIndex)
+        {
+            var rowOfCells = new List<Cell>();
+            for (var columnIndex = 0; columnIndex < this.NumberOfColumns; columnIndex++)
+            {
+                var cell = new Cell();
+                var currentWidth = this.getCurrentColumnWidth(columnIndex);
+                var currentHeight = this.getCurrentRowHeight(rowIndex);
+
+                cell = this.CreateCell(rowIndex, currentHeight, currentWidth, cell, columnIndex);
+                rowOfCells.Add(cell);
+            }
+
+            return rowOfCells;
+        }
+
+        protected Cell CreateCell(int rowIndex, int currentHeight, int currentWidth, Cell cell, int columnIndex)
+        {
+            for (var pixelY = 0; pixelY < currentHeight; pixelY++)
+            {
+                for (var pixelX = 0; pixelX < currentWidth; pixelX++)
+                {
+                    cell.X = columnIndex;
+                    cell.Y = rowIndex;
+                    var byteOffset = (pixelY * this.GridWidth + pixelX +
+                                      columnIndex * this.CellSideLength +
+                                      rowIndex * this.GridWidth * this.CellSideLength) * 4;
+                    var colorIndex = Convert.ToInt32(byteOffset / 4);
+
+                    try
+                    {
+                        cell.Colors.Add(this.Mosaic.Colors[colorIndex]);
+                        cell.PixelOffsetsInByteArray.Add(byteOffset);
+                        this.PixelIndex++;
+                    }
+                    catch (Exception)
+                    {
+                        Debug.WriteLine(Convert.ToInt32(byteOffset / 4));
+                    }
+                }
+            }
+
+            return cell;
+        }
+
+        private int getCurrentRowHeight(int rowNumber)
+        {
+            var currentHeight = this.CellSideLength;
+            if (rowNumber == this.NumberOfRows - 1)
+            {
+                currentHeight = this.LastRowHeight;
+            }
+
+            return currentHeight;
+        }
+
+        private int getCurrentColumnWidth(int columnIndex)
+        {
+            var currentWidth = this.CellSideLength;
+            if (columnIndex == this.NumberOfColumns - 1)
+            {
+                currentWidth = this.LastColumnWidth;
+            }
+
+            return currentWidth;
         }
 
         #endregion
