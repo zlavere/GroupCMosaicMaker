@@ -69,6 +69,7 @@
                                      Grid.Row="2"
                                      Grid.Column="0" VerticalAlignment="Top" GroupName="MosaicType"
                                      Command="{Binding MosaicType}" />
+                        <CheckBox Content="Black and White" HorizontalAlignment="Left" Margin="5,37,0,0" Grid.Row="2" VerticalAlignment="Top" Command="{Binding ToggleBlackAndWhiteCommand}"/>
                     </Grid>
                 </Grid>
                 <Grid Grid.Column="1" MaxHeight="800">

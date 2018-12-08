@@ -169,10 +169,7 @@ namespace ImageSandbox.Utility
                     var currentColor = GetPixelBgra8(imageAsArray, x, y, width, height);
                     var changedColor = toBlackOrWhite(currentColor);
                     SetPixelBgra8(imageAsArray, x, y, changedColor, width, height);
-                    y++;
                 }
-
-                x++;
             }
             var returnBitmap = new WriteableBitmap(sourceBitmap.PixelWidth, sourceBitmap.PixelHeight);
             returnBitmap.SetSource(imageAsArray.AsBuffer().AsStream().AsRandomAccessStream());
