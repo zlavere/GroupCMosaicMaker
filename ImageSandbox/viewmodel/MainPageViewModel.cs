@@ -25,7 +25,7 @@ namespace ImageSandbox.ViewModel
         private WriteableBitmap currentlyDisplayedImage;
         private WriteableBitmap currentlyDisplayedMosaic;
         private ObservableCollection<WriteableBitmap> mosaicPalette;
-        private SolidMosaic solidMosaic;
+        private Mosaic mosaic;
         private int paletteSize;
 
         private int cellSideLength;
@@ -127,7 +127,15 @@ namespace ImageSandbox.ViewModel
             }
         }
 
-        public Mosaic Mosaic { get; set; }
+        public Mosaic Mosaic
+        {
+            get => this.mosaic;
+            set
+            {
+                this.mosaic = value;
+                this.OnPropertyChanged();
+            }
+        }
 
         public GridFactory GridFactory
         {
@@ -154,15 +162,6 @@ namespace ImageSandbox.ViewModel
             }
         }
 
-        public SolidMosaic SolidMosaic
-        {
-            get => this.solidMosaic;
-            set
-            {
-                this.solidMosaic = value;
-                this.OnPropertyChanged();
-            }
-        }
 
         /// <summary>
         ///     Gets or sets the currently displayed mosaic.
@@ -297,8 +296,8 @@ namespace ImageSandbox.ViewModel
 
         private async void createMosaic(object obj)
         {
-            this.SolidMosaic = new SolidMosaic(this.CurrentlyDisplayedImage, this.GridFactory);
-            var mosaic = await this.SolidMosaic.SetCellData();
+            this.Mosaic = new SolidMosaic(this.CurrentlyDisplayedImage, this.GridFactory);
+            var mosaic = await this.Mosaic.SetCellData();
             this.CurrentlyDisplayedMosaic = mosaic;
         }
 

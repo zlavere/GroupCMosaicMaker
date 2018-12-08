@@ -9,6 +9,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using ImageSandbox.Utility;
 using Windows.UI;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ImageSandbox.Model
 {
@@ -49,7 +50,10 @@ namespace ImageSandbox.Model
             return newBitmap;
         }
 
-
+        public override async Task<WriteableBitmap> SetCellData()
+        {
+            return new WriteableBitmap(10,10);
+        }
 
         private void findClosestImageToCellColor(List<Color> averageColors, List<Color> colorsOfBlocks)
         {

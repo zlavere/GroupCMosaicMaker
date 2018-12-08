@@ -15,10 +15,6 @@ namespace ImageSandbox.Model
     {
         #region Properties
 
-
-
-
-
         #endregion
 
         #region Constructors
@@ -40,7 +36,7 @@ namespace ImageSandbox.Model
 
         #region Methods
 
-        public async Task<WriteableBitmap> SetCellData()
+        public override async Task<WriteableBitmap> SetCellData()
         {
             this.Colors = await this.SourceImage.GetPixelColors();
             this.calculateCellAttributes();

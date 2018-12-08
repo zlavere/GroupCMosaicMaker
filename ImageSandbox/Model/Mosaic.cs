@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -57,7 +58,7 @@ namespace ImageSandbox.Model
         #region Constructors
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="Mosaic" /> class.
+        ///     Initializes a new instance of the <see cref="ImageSandbox.Model.Mosaic" /> class.
         /// </summary>
         /// <param name="sourceImage">The source image.</param>
         /// <param name="gridFactory">The grid factory.</param>
@@ -67,6 +68,8 @@ namespace ImageSandbox.Model
             this.SourceImage = sourceImage;
             this.GridFactory = gridFactory;
         }
+
+        public abstract Task<WriteableBitmap> SetCellData();
 
         protected IEnumerable<Cell> CreateRow(int rowIndex)
         {
