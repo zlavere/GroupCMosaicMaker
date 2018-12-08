@@ -141,6 +141,9 @@
                     </GridView>
                 </ScrollViewer>
             </Grid>
+            <TextBlock HorizontalAlignment="Left" Margin="10,237,0,0" Grid.Row="2" Text="Palette Options:" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <CheckBox Content="Prevent Image Repetition" HorizontalAlignment="Left" Margin="10,262,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+            <CheckBox Content="Use Each Image" HorizontalAlignment="Left" Margin="10,299,0,0" Grid.Row="2" VerticalAlignment="Top"/>
 
         </Grid>
     </ScrollViewer>

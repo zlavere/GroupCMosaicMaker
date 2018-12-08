@@ -17,16 +17,17 @@ namespace ImageSandbox.IO
         #region Methods
 
         /// <summary>
-        ///     Saves the image.
+        /// Saves the image.
         /// </summary>
         /// <param name="imageToSave">The image to save.</param>
         /// <param name="dpiX">The dpi x.</param>
         /// <param name="dpiY">The dpi y.</param>
-        public async void SaveImage(WriteableBitmap imageToSave, double dpiX, double dpiY)
+        /// <param name="initialExtension">The initial extension.</param>
+        public async void SaveImage(WriteableBitmap imageToSave, double dpiX, double dpiY, string initialExtension)
         {
             try
             {
-                var saveFile = await this.selectSaveFile();
+                var saveFile = await this.selectSaveFile(initialExtension);
                 if (saveFile.FileType == ".bmp")
                 {
                     await this.saveAsBmp(saveFile, imageToSave, dpiX, dpiY);
@@ -110,14 +111,15 @@ namespace ImageSandbox.IO
             }
         }
 
-        private async Task<StorageFile> selectSaveFile()
+        private async Task<StorageFile> selectSaveFile(string initialExtension)
         {
             var savePicker = new FileSavePicker {
-                SuggestedStartLocation = PickerLocationId.PicturesLibrary
+                SuggestedStartLocation = PickerLocationId.PicturesLibrary,
+                DefaultFileExtension = initialExtension
             };
-            savePicker.FileTypeChoices.Add("JPG", new List<string> {".jpg"});
-            savePicker.FileTypeChoices.Add("PNG", new List<string> {".png"});
-            savePicker.FileTypeChoices.Add("BMP", new List<string> {".bmp"});
+            savePicker.FileTypeChoices.Add(".jpg", new List<string> {".jpg"});
+            savePicker.FileTypeChoices.Add(".png", new List<string> {".png"});
+            savePicker.FileTypeChoices.Add(".bmp", new List<string> {".bmp"});
             savePicker.FileTypeChoices.Add("All Types", new List<string> {".jpg", ".png", ".bmp"});
 
             var file = await savePicker.PickSaveFileAsync();

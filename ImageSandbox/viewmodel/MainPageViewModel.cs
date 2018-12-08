@@ -28,6 +28,7 @@ namespace ImageSandbox.ViewModel
         private WriteableBitmap blackAndWhiteMosaic;
         private WriteableBitmap normalMosaic;
         private bool isBlackAndWhite;
+        private string originalImageFileType;
 
         private int cellSideLength;
         private GridFactory gridFactory;
@@ -316,6 +317,7 @@ namespace ImageSandbox.ViewModel
                 this.CurrentlyDisplayedImage = results;
                 this.currentDpiX = readImage.DpiX;
                 this.currentDpiY = readImage.DpiY;
+                this.originalImageFileType = readImage.FileType;
             }
             catch (NullReferenceException)
             {
@@ -335,7 +337,7 @@ namespace ImageSandbox.ViewModel
         private void saveImage(object obj)
         {
             var imageWriter = new ImageWriter();
-            imageWriter.SaveImage(this.currentlyDisplayedMosaic, this.currentDpiX, this.currentDpiY);
+            imageWriter.SaveImage(this.currentlyDisplayedMosaic, this.currentDpiX, this.currentDpiY, this.originalImageFileType);
         }
 
         private bool canSaveImage(object obj)
