@@ -7,7 +7,6 @@
     <RootPropertyPathName Name="MosaicPalette" />
     <RootPropertyPathName Name="PaletteSize" />
     <RootPropertyPathName Name="CurrentlyDisplayedMosaic" />
-    <RootPropertyPathName Name="MaxImageHeight" />
     <RootPropertyPathName Name="CurrentlyDisplayedImage" />
     <RootPropertyPathName Name="ToggleBlackAndWhiteCommand" />
     <RootPropertyPathName Name="PictureMosaicType" />
@@ -70,6 +69,8 @@
       <RootProperty Name="Margin" />
       <RootProperty Name="MaxHeight" />
       <RootProperty Name="Content" />
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="ZoomMode" />
       <RootProperty Name="HorizontalScrollBarVisibility" />
       <RootProperty Name="VerticalScrollBarVisibility" />
@@ -106,6 +107,7 @@
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="MaxHeight" />
+      <RootProperty Name="MaxWidth" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ItemsPanelTemplate">
       <RootProperty Name="Template" />
