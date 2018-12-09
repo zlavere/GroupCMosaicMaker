@@ -5,7 +5,7 @@ using Windows.UI;
 namespace ImageSandbox.Model
 {
     /// <summary>
-    ///     A cell is a subsection of an image used for
+    ///     A cell is a subsection of an image used for computations.
     /// </summary>
     public class Cell
     {
@@ -118,10 +118,10 @@ namespace ImageSandbox.Model
         {
             get
             {
-                var averageRed = (int)this.RedValues.Average(value => value);
-                var averageGreen = (int)this.GreenValues.Average(value => value);
-                var averageBlue = (int)this.BlueValues.Average(value => value);
-                this.averageColor = Color.FromArgb(255, (byte)averageRed, (byte)averageGreen, (byte)averageBlue);
+                var averageRed = (int) this.RedValues.Average(value => value);
+                var averageGreen = (int) this.GreenValues.Average(value => value);
+                var averageBlue = (int) this.BlueValues.Average(value => value);
+                this.averageColor = Color.FromArgb(255, (byte) averageRed, (byte) averageGreen, (byte) averageBlue);
                 return this.averageColor;
             }
         }

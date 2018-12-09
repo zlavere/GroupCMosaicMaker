@@ -50,6 +50,13 @@ namespace ImageSandbox.ViewModel
         /// </value>
         public PaletteReader PaletteReader { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the size of the palette.
+        /// </summary>
+        /// <value>
+        ///     The size of the palette.
+        /// </value>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public int PaletteSize
         {
             get => this.paletteSize;
@@ -66,6 +73,12 @@ namespace ImageSandbox.ViewModel
             }
         }
 
+        /// <summary>
+        ///     Gets or sets the palette.
+        /// </summary>
+        /// <value>
+        ///     The palette.
+        /// </value>
         public Palette Palette { get; set; }
 
         /// <summary>
@@ -108,8 +121,20 @@ namespace ImageSandbox.ViewModel
         /// </value>
         public RelayCommand LoadPaletteCommand { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the show grid command.
+        /// </summary>
+        /// <value>
+        ///     The show grid command.
+        /// </value>
         public RelayCommand ShowGridCommand { get; set; }
 
+        /// <summary>
+        ///     Toggles between black and white based off triggers.
+        /// </summary>
+        /// <value>
+        ///     The toggle black and white command.
+        /// </value>
         public RelayCommand ToggleBlackAndWhiteCommand { get; set; }
 
         /// <summary>
@@ -133,6 +158,12 @@ namespace ImageSandbox.ViewModel
             }
         }
 
+        /// <summary>
+        ///     Gets or sets the mosaic.
+        /// </summary>
+        /// <value>
+        ///     The mosaic.
+        /// </value>
         public Mosaic Mosaic
         {
             get
@@ -151,6 +182,12 @@ namespace ImageSandbox.ViewModel
             }
         }
 
+        /// <summary>
+        ///     Gets or sets the grid factory.
+        /// </summary>
+        /// <value>
+        ///     The grid factory.
+        /// </value>
         public GridFactory GridFactory
         {
             get
@@ -168,7 +205,6 @@ namespace ImageSandbox.ViewModel
                 this.OnPropertyChanged();
             }
         }
-
 
         /// <summary>
         ///     Gets or sets the currently displayed mosaic.
@@ -205,6 +241,7 @@ namespace ImageSandbox.ViewModel
                 {
                     throw new ArgumentOutOfRangeException();
                 }
+
                 this.cellSideLength = value;
                 this.GridFactory.CellSideLength = this.cellSideLength;
                 this.CreateMosaicCommand.OnCanExecuteChanged();
@@ -246,6 +283,13 @@ namespace ImageSandbox.ViewModel
             }
         }
 
+        /// <summary>
+        ///     Gets or sets the mosaic palette.
+        /// </summary>
+        /// <value>
+        ///     The mosaic palette.
+        /// </value>
+        /// <exception cref="ArgumentNullException"></exception>
         public ObservableCollection<WriteableBitmap> MosaicPalette
         {
             get => this.mosaicPalette;
@@ -256,6 +300,12 @@ namespace ImageSandbox.ViewModel
             }
         }
 
+        /// <summary>
+        ///     Gets or sets the maximum height of the image.
+        /// </summary>
+        /// <value>
+        ///     The maximum height of the image.
+        /// </value>
         public int MaxImageHeight
         {
             get => this.maxHeight;
@@ -272,6 +322,12 @@ namespace ImageSandbox.ViewModel
             }
         }
 
+        /// <summary>
+        ///     Gets or sets a value indicating whether this instance is black and white.
+        /// </summary>
+        /// <value>
+        ///     <c>true</c> if this instance is black and white; otherwise, <c>false</c>.
+        /// </value>
         public bool IsBlackAndWhite
         {
             get => this.isBlackAndWhite;
@@ -283,6 +339,12 @@ namespace ImageSandbox.ViewModel
             }
         }
 
+        /// <summary>
+        ///     Gets or sets the black and white mosaic.
+        /// </summary>
+        /// <value>
+        ///     The black and white mosaic.
+        /// </value>
         public WriteableBitmap BlackAndWhiteMosaic
         {
             get => this.blackAndWhiteMosaic;
@@ -298,6 +360,9 @@ namespace ImageSandbox.ViewModel
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="MainPageViewModel" /> class.
+        /// </summary>
         public MainPageViewModel()
         {
             this.loadCommands();
@@ -318,15 +383,21 @@ namespace ImageSandbox.ViewModel
 
         #region Methods
 
+        /// <summary>
+        ///     Occurs when a property value changes.
+        /// </summary>
+        /// <returns></returns>
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private void loadCommands()
         {
             this.LoadImageCommand = new RelayCommand(this.loadImage, canAlwaysExecute);
             this.SaveImageCommand = new RelayCommand(this.saveImage, this.canSaveImage);
             this.CreateMosaicCommand = new RelayCommand(this.createMosaic, this.canCreateMosaic);
             this.LoadPaletteCommand = new RelayCommand(this.loadPalette, canAlwaysExecute);
-            this.ToggleBlackAndWhiteCommand = new RelayCommand(this.changeDisplayedMosaic, this.canChangeDisplayedMosaic);
+            this.ToggleBlackAndWhiteCommand =
+                new RelayCommand(this.changeDisplayedMosaic, this.canChangeDisplayedMosaic);
         }
-
 
         private async void loadImage(object obj)
         {
@@ -357,7 +428,8 @@ namespace ImageSandbox.ViewModel
         private void saveImage(object obj)
         {
             var imageWriter = new ImageWriter();
-            imageWriter.SaveImage(this.currentlyDisplayedMosaic, this.currentDpiX, this.currentDpiY, this.originalImageFileType);
+            imageWriter.SaveImage(this.currentlyDisplayedMosaic, this.currentDpiX, this.currentDpiY,
+                this.originalImageFileType);
         }
 
         private bool canSaveImage(object obj)
@@ -375,7 +447,7 @@ namespace ImageSandbox.ViewModel
                 this.normalMosaic = mosaic;
                 this.changeToBlackAndWhite(mosaic);
             }
-            else if(this.SolidMosaicType)
+            else if (this.SolidMosaicType)
             {
                 this.Mosaic = new SolidMosaic(this.CurrentlyDisplayedImage, this.GridFactory);
                 var mosaic = await this.Mosaic.SetCellData();
@@ -391,18 +463,13 @@ namespace ImageSandbox.ViewModel
             {
                 return this.CurrentlyDisplayedImage != null;
             }
-            else
+
+            if (this.SolidMosaicType)
             {
-                if (this.SolidMosaicType)
-                {
-                    return this.CurrentlyDisplayedImage != null;
-                }
-                else
-                {
-                    return false;
-                }
+                return this.CurrentlyDisplayedImage != null;
             }
-            
+
+            return false;
         }
 
         private async void loadPalette(object obj)
@@ -447,13 +514,11 @@ namespace ImageSandbox.ViewModel
             return this.blackAndWhiteMosaic != null;
         }
 
-        #endregion
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        #endregion
     }
 }

@@ -2,6 +2,9 @@
 
 namespace ImageSandbox.ViewModel
 {
+    /// <summary>
+    ///     The active image.
+    /// </summary>
     public static class ActiveImage
     {
         #region Properties

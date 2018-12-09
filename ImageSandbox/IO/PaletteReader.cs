@@ -57,9 +57,8 @@ namespace ImageSandbox.IO
                 }
                 catch (Exception)
                 {
-                    continue;
+                    // If a file is not an image it will be ignored.
                 }
-                
             }
 
             this.EditablePalette = bitmapPalette;

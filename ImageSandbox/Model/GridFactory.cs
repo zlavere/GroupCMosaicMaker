@@ -9,6 +9,9 @@ using Windows.UI.Xaml.Shapes;
 
 namespace ImageSandbox.Model
 {
+    /// <summary>
+    ///     The grid factory class handles the math behind splitting images and displaying grid lines.
+    /// </summary>
     public class GridFactory
     {
         #region Data members
@@ -24,6 +27,12 @@ namespace ImageSandbox.Model
 
         #region Properties
 
+        /// <summary>
+        ///     Gets or sets the mosaic.
+        /// </summary>
+        /// <value>
+        ///     The mosaic.
+        /// </value>
         public Mosaic Mosaic { get; set; }
 
         /// <summary>
@@ -243,6 +252,9 @@ namespace ImageSandbox.Model
             }
         }
 
+        /// <summary>
+        ///     Calculates the cell attributes.
+        /// </summary>
         public void CalculateCellAttributes()
         {
             this.Cells = new List<Cell>();

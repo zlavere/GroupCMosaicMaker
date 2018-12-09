@@ -6,31 +6,35 @@ using WriteableBitmapExtensions = Windows.UI.Xaml.Media.Imaging.WriteableBitmapE
 
 namespace ImageSandbox.Model
 {
-    public class PictureMosaic:Mosaic
+    /// <summary>
+    ///     A type of mosaic that is made with multiple individual images.
+    /// </summary>
+    /// <seealso cref="ImageSandbox.Model.Mosaic" />
+    public class PictureMosaic : Mosaic
     {
-        private Palette Palette { get; set; }
+        #region Properties
 
-        public PictureMosaic(WriteableBitmap sourceImage, GridFactory gridFactory, Palette palette) : base(sourceImage, gridFactory)
+        private Palette Palette { get; }
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="PictureMosaic" /> class.
+        /// </summary>
+        /// <param name="sourceImage">The source image.</param>
+        /// <param name="gridFactory">The grid factory.</param>
+        /// <param name="palette">The palette.</param>
+        public PictureMosaic(WriteableBitmap sourceImage, GridFactory gridFactory, Palette palette) : base(sourceImage,
+            gridFactory)
         {
             this.Palette = palette;
         }
 
-//        public WriteableBitmap ResizeImage(WriteableBitmap sourceImage)
-//        {
-//            var origHeight = this.SourceImage.PixelHeight;
-//            var origWidth = this.SourceImage.PixelWidth;
-//            var ratioX = this.GridFactory.CellSideLength/(float) this.GridFactory.CellSideLength;
-//            var ratioY = this.GridFactory.CellSideLength/(float) origHeight;
-//            var ratio = Math.Min(ratioX, ratioY);
-//            var newHeight = (int) (origHeight * ratio);
-//            var newWidth = (int) (origWidth * ratio);
-//
-//            var newBitmap = new WriteableBitmap(newWidth, newHeight);
-//
-//            var source = sourceImage.PixelBuffer.AsStream().AsRandomAccessStream();
-//            newBitmap.SetSource(source);
-//            return newBitmap;
-//        }
+        #endregion
+
+        #region Methods
 
         protected override byte[] SetUpPixelData()
         {
@@ -66,10 +70,16 @@ namespace ImageSandbox.Model
             return offsetByteDictionary;
         }
 
+        /// <summary>
+        ///     Sets the cell data.
+        /// </summary>
+        /// <returns></returns>
         public override async Task<WriteableBitmap> SetCellData()
         {
             GridFactory.CalculateCellAttributes();
             return await WritePixelDataToBitmap();
         }
+
+        #endregion
     }
 }
