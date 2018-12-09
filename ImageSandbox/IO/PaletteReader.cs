@@ -48,10 +48,18 @@ namespace ImageSandbox.IO
             var imagePalette = new List<Image>();
             foreach (var currentFile in filesList)
             {
-                var newBitmap = await BitmapUtilities.DecodeStorageFileToBitmap(currentFile);
-                var newImage = new Image {Source = newBitmap};
-                imagePalette.Add(newImage);
-                bitmapPalette.Add(newBitmap);
+                try
+                {
+                    var newBitmap = await BitmapUtilities.DecodeStorageFileToBitmap(currentFile);
+                    var newImage = new Image {Source = newBitmap};
+                    imagePalette.Add(newImage);
+                    bitmapPalette.Add(newBitmap);
+                }
+                catch (Exception)
+                {
+                    continue;
+                }
+                
             }
 
             this.EditablePalette = bitmapPalette;
