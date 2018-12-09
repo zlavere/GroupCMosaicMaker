@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.UI;
@@ -37,6 +39,22 @@ namespace ImageSandbox.Extensions
                 }
                 return colors;
             }
+        }
+
+        public static WriteableBitmap ResizeImage(this WriteableBitmap sourceImage, int blockSize, int origWidth, int origHeight)
+        {
+            var ratioX = blockSize / (float)origWidth;
+            var ratioY = blockSize / (float)origHeight;
+            var ratio = Math.Min(ratioX, ratioY);
+            var newHeight = (int)(origHeight * ratio);
+            var newWidth = (int)(origWidth * ratio);
+
+            var newBitmap = new WriteableBitmap(newWidth, newHeight);
+
+            var source = sourceImage.PixelBuffer.AsStream().AsRandomAccessStream();
+            newBitmap.SetSource(source);
+
+            return newBitmap;
         }
 
         #endregion

@@ -30,13 +30,13 @@
     <AppXManifest Include="C:\Users\zach\GroupCMosaicMaker\ImageSandbox\bin\x64\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2018-12-08T22:57:00.273</Modified>
+      <Modified>2018-12-09T00:08:22.235</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\zach\GroupCMosaicMaker\ImageSandbox\bin\x64\Debug\ImageSandbox.exe">
       <PackagePath>entrypoint\ImageSandbox.exe</PackagePath>
-      <Modified>2018-12-08T22:56:58.809</Modified>
+      <Modified>2018-12-09T00:08:21.508</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\zach\.nuget\packages\runtime.win10-x64.microsoft.netcore.universalwindowsplatform\6.1.7\runtimes\win10-x64\nativeassets\uap10.0.15138\clrcompression.dll">
       <PackagePath>clrcompression.dll</PackagePath>
@@ -694,6 +694,10 @@
       <PackagePath>netstandard.dll</PackagePath>
       <Modified>2018-07-20T14:48:56.000</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\zach\.nuget\packages\writeablebitmapex\1.5.1\lib\NetCore45\WriteableBitmapEx.WinRT.dll">
+      <PackagePath>WriteableBitmapEx.WinRT.dll</PackagePath>
+      <Modified>2017-05-05T17:15:54.000</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\zach\GroupCMosaicMaker\ImageSandbox\Properties\Default.rd.xml">
       <PackagePath>Properties\Default.rd.xml</PackagePath>
       <Modified>2018-12-05T02:06:38.227</Modified>
@@ -738,15 +742,15 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\zach\GroupCMosaicMaker\ImageSandbox\bin\x64\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
-      <Modified>2018-12-08T22:56:58.434</Modified>
+      <Modified>2018-12-09T00:08:21.147</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\zach\GroupCMosaicMaker\ImageSandbox\bin\x64\Debug\View\MainPage.xbf">
       <PackagePath>View\MainPage.xbf</PackagePath>
-      <Modified>2018-12-08T22:56:58.433</Modified>
+      <Modified>2018-12-09T00:08:21.146</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\zach\GroupCMosaicMaker\ImageSandbox\bin\x64\Debug\View\SettingsPage.xbf">
       <PackagePath>View\SettingsPage.xbf</PackagePath>
-      <Modified>2018-12-08T22:56:58.438</Modified>
+      <Modified>2018-12-09T00:08:21.149</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\10.0.17134.0\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
@@ -754,11 +758,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\zach\GroupCMosaicMaker\ImageSandbox\bin\x64\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2018-12-08T22:48:53.275</Modified>
+      <Modified>2018-12-09T00:06:26.161</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\zach\GroupCMosaicMaker\ImageSandbox\bin\x64\Debug\Core\ImageSandbox.exe">
       <PackagePath>ImageSandbox.exe</PackagePath>
-      <Modified>2018-12-08T22:57:00.255</Modified>
+      <Modified>2018-12-09T00:08:22.224</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

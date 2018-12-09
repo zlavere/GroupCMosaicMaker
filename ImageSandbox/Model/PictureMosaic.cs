@@ -8,9 +8,10 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using ImageSandbox.Utility;
 using Windows.UI;
-using System.Linq;
 using System.Threading.Tasks;
+using Windows.Graphics.Imaging;
 using ImageSandbox.Extensions;
+using WriteableBitmapExtensions = Windows.UI.Xaml.Media.Imaging.WriteableBitmapExtensions;
 
 namespace ImageSandbox.Model
 {
@@ -22,34 +23,23 @@ namespace ImageSandbox.Model
         {
             this.Palette = palette;
         }
-        //        public WriteableBitmap CreatePictureMosaic(WriteableBitmap originalImage, List<WriteableBitmap> palette, int blockSize)
-        //        {
-        //            //TODO
-        //        }
-        //
-        //        private void calculateAverageColorOfPaletteImages()
-        //        {
-        //            //TODO
-        //        }
 
-
-        public static WriteableBitmap ResizeImage(WriteableBitmap sourceImage, int blockSize)
-        {
-            var origHeight = sourceImage.PixelHeight;
-            var origWidth = sourceImage.PixelWidth;
-            var ratioX = blockSize/(float) origWidth;
-            var ratioY = blockSize/(float) origHeight;
-            var ratio = Math.Min(ratioX, ratioY);
-            var newHeight = (int) (origHeight * ratio);
-            var newWidth = (int) (origWidth * ratio);
-
-            var newBitmap = new WriteableBitmap(newWidth, newHeight);
-
-            var source = sourceImage.PixelBuffer.AsStream().AsRandomAccessStream();
-            newBitmap.SetSource(source);
-
-            return newBitmap;
-        }
+//        public WriteableBitmap ResizeImage(WriteableBitmap sourceImage)
+//        {
+//            var origHeight = this.SourceImage.PixelHeight;
+//            var origWidth = this.SourceImage.PixelWidth;
+//            var ratioX = this.GridFactory.CellSideLength/(float) this.GridFactory.CellSideLength;
+//            var ratioY = this.GridFactory.CellSideLength/(float) origHeight;
+//            var ratio = Math.Min(ratioX, ratioY);
+//            var newHeight = (int) (origHeight * ratio);
+//            var newWidth = (int) (origWidth * ratio);
+//
+//            var newBitmap = new WriteableBitmap(newWidth, newHeight);
+//
+//            var source = sourceImage.PixelBuffer.AsStream().AsRandomAccessStream();
+//            newBitmap.SetSource(source);
+//            return newBitmap;
+//        }
 
         protected override byte[] SetUpPixelData()
         {
@@ -62,13 +52,14 @@ namespace ImageSandbox.Model
                 }
             }
 
-            
             return buffer;
         }
 
         private async Task<Dictionary<int, byte>> setCellToPicture(Cell cell)
         {
             var picture = this.Palette.FindImageWithClosestColor(cell.AverageColor);
+            picture = picture.Resize(this.GridFactory.CellSideLength, this.GridFactory.CellSideLength,
+                WriteableBitmapExtensions.Interpolation.Bilinear);
             var picPixelData = await picture.GetPixelColors();
             var pixelIndex = 0;
             var offsetByteDictionary = new Dictionary<int, byte>();
@@ -89,6 +80,5 @@ namespace ImageSandbox.Model
             this.GridFactory.CalculateCellAttributes();
             return await this.writePixelDataToBitmap();
         }
-  
     }
 }
