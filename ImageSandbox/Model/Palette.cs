@@ -86,16 +86,20 @@ namespace ImageSandbox.Model
         /// </returns>
         public WriteableBitmap FindImageWithClosestColor(Color color)
         {
-            var minimumDifference = this.ImageAverageColorDictionary.Values.Min(value =>
+            var colorSimilarity = this.ImageAverageColorDictionary.Values.OrderBy(value =>
                 Math.Abs(value.B - color.B) + Math.Abs(value.B - color.B) +
-                Math.Abs(value.R - color.R));
+                Math.Abs(value.R - color.R)).Take(5);
 
-            var bestIndexColorPair = this.ImageAverageColorDictionary.Where(value =>
-                minimumDifference ==
-                Math.Abs(value.Value.B - color.B) + Math.Abs(value.Value.B - color.B) +
-                Math.Abs(value.Value.R - color.R));
+            var top5ClosestColors = colorSimilarity.ToList();
 
-            var index = bestIndexColorPair.First().Key;
+            var bestIndexColorPair =
+                this.ImageAverageColorDictionary.Where(value => top5ClosestColors.Contains(value.Value));
+
+            var rand = new Random();
+
+            var randomKey = rand.Next(0, 5);
+
+            var index = bestIndexColorPair.ToList()[randomKey].Key;
 
             return this.PaletteImages[index];
         }
