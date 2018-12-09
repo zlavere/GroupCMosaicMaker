@@ -3,6 +3,7 @@ using Windows.Foundation;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using ImageSandbox.Model;
 using ImageSandbox.ViewModel;
 
@@ -83,7 +84,7 @@ namespace ImageSandbox.View
             }
         }
 
-        private Grid setGrid()
+        private void setGrid()
         {
             if (this.canUpdateGrid())
             {
@@ -100,8 +101,6 @@ namespace ImageSandbox.View
                     this.OverlayGrid = gridFactory.DrawGrid();
                 }
             }
-
-            return this.OverlayGrid;
         }
 
         private bool canUpdateGrid()
@@ -110,7 +109,6 @@ namespace ImageSandbox.View
             {
                 var isImageSourceSet = this.originalImage.Source != null;
                 var cellSizeParsed = Convert.ToInt32(this.gridSizeInput.Value);
-                var isResultNew = cellSizeParsed != this.CellSideLength;
                 var isResultValid = cellSizeParsed >= 5 && cellSizeParsed <= 50;
 
                 var isReadyForUpdate = isImageSourceSet && isResultValid;
@@ -127,16 +125,18 @@ namespace ImageSandbox.View
             {
                 return false;
             }
-
         }
 
+        // ReSharper disable once UnusedParameter.Local
+        // Used to listen for event
+        // ReSharper disable once UnusedParameter.Local
+        // Used to listen for event
         private void checked_HideGrid(object sender, RoutedEventArgs e)
         {
             if (this.originalImageOverlay != null)
             {
                 this.hideGridOverlay();
             }
-
         }
 
         private void hideGridOverlay()
@@ -149,12 +149,20 @@ namespace ImageSandbox.View
             this.IsGridChangedOrHidden = true;
         }
 
+        // ReSharper disable once UnusedParameter.Local
+        // Used to listen for event
+        // ReSharper disable once UnusedParameter.Local
+        // Used to listen for event
         private void lostFocus_UpdateGrid(object sender, RoutedEventArgs e)
         {
             this.setGrid();
             this.showGridOverlay();
         }
 
+        // ReSharper disable once UnusedParameter.Local
+        // Used to listen for event
+        // ReSharper disable once UnusedParameter.Local
+        // Used to listen for event
         private void imageOpened_RemoveAndRecalculateGridOverlay(object sender, RoutedEventArgs e)
         {
             this.IsGridChangedOrHidden = true;
@@ -162,16 +170,20 @@ namespace ImageSandbox.View
             this.showGridOverlay();
         }
 
-        #endregion
-
-
+        // ReSharper disable once UnusedParameter.Local
+        // Used to listen for event
+        // ReSharper disable once UnusedParameter.Local
+        // Used to listen for event
         private void OpenImageButton_Click(object sender, RoutedEventArgs e)
         {
             this.actionHideGrid();
-
         }
 
-        private void GridSizeInput_PointerCaptureLost(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        // ReSharper disable once UnusedParameter.Local
+        // Used to listen for event
+        // ReSharper disable once UnusedParameter.Local
+        // Used to listen for event
+        private void GridSizeInput_PointerCaptureLost(object sender, PointerRoutedEventArgs e)
         {
             this.actionHideGrid();
         }
@@ -185,5 +197,7 @@ namespace ImageSandbox.View
                 this.OverlayGrid = new Grid();
             }
         }
+
+        #endregion
     }
 }

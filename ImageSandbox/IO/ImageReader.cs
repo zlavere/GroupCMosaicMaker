@@ -100,6 +100,8 @@ namespace ImageSandbox.IO
             {
             }
 
+            // ReSharper disable once PossibleNullReferenceException -
+            //Checks for null above
             this.FileType = file.FileType;
             return file;
         }

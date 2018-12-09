@@ -236,7 +236,7 @@ namespace ImageSandbox.ViewModel
 
                 this.cellSideLength = value;
                 this.GridFactory.CellSideLength = this.cellSideLength;
-                
+
                 this.CreateMosaicCommand.OnCanExecuteChanged();
                 this.OnPropertyChanged();
             }

@@ -11,158 +11,181 @@
         <vm:MainPageViewModel />
     </Page.DataContext>
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <CommandBar Grid.Column="0" Grid.Row="0" Background="{ThemeResource AppBarBorderThemeBrush}">
+            <AppBarButton Icon="Folder" Label="Load Palette" VerticalAlignment="Top"
+                          Command="{Binding LoadPaletteCommand}" />
+            <AppBarButton x:Name="openImageButton" Icon="BrowsePhotos" Label="Open" Margin="0" VerticalAlignment="Top"
+                          Command="{Binding LoadImageCommand}" Click="OpenImageButton_Click" />
+            <AppBarButton x:Name="saveMosaicButton" Icon="SaveLocal" Label="Save Mosaic" Margin="0"
+                          VerticalAlignment="Top" Command="{Binding SaveImageCommand}" />
+        </CommandBar>
+        <Grid Grid.Row="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" x:Name="gridSizeLabel"
+                           Text="Grid Cell Size:" />
+                <Slider MinWidth="100" Margin="10" x:Name="gridSizeInput" Grid.Row="0" Grid.Column="1" Maximum="50"
+                        Minimum="5" Value="{Binding CellSideLength, Mode=TwoWay}"
+                        PointerCaptureLost="GridSizeInput_PointerCaptureLost" />
+
+                <Button x:Name="createMosaicButton" Content="Create Mosaic" HorizontalAlignment="Left"
+                        Grid.Row="2"
+                        Grid.Column="0" VerticalAlignment="Top" Command="{Binding CreateMosaicCommand}"
+                        Background="{ThemeResource ButtonBackgroundThemeBrush}" />
+                <Grid Grid.Column="0" Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock x:Name="mosaicTypeBlock" HorizontalAlignment="Left" Grid.Row="0"
+                               Grid.Column="0" Text="Mosaic Type:" TextWrapping="Wrap" VerticalAlignment="Top" />
+                    <RadioButton x:Name="solidMosaicRadio" Content="Solid" HorizontalAlignment="Left"
+                                 Grid.Row="1"
+                                 Grid.Column="0" Margin="5" VerticalAlignment="Top" GroupName="MosaicType"
+                                 IsChecked="{Binding SolidMosaicType, Mode=TwoWay}" />
+                    <RadioButton x:Name="pictureMosaicRadio" Content="Picture" HorizontalAlignment="Left" Margin="5"
+                                 Grid.Row="2"
+                                 Grid.Column="0" VerticalAlignment="Top" GroupName="MosaicType"
+                                 IsChecked="{Binding PictureMosaicType, Mode=TwoWay}" />
+                    <CheckBox Content="Black and White" HorizontalAlignment="Left" Margin="10" Grid.Row="3"
+                              VerticalAlignment="Top" Command="{Binding ToggleBlackAndWhiteCommand}" />
+                </Grid>
+
+            </Grid>
+            <Grid Grid.Column="1" MaxHeight="800">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Column="0" Grid.Row="0" VerticalAlignment="Stretch"
+                      Background="{ThemeResource SystemControlHighlightAltListAccentMediumBrush}" Padding="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Grid.Row="0" x:Name="originalImageLabel" Text="Original Image"
+                                   FontWeight="Bold" />
+                        <RadioButton Grid.Column="1" x:Name="showGrid" GroupName="OverlayGrid"
+                                     Checked="checked_DisplayGrid">
+                            Overlay Grid
+                        </RadioButton>
+                        <RadioButton Grid.Column="2" x:Name="hideGrid" GroupName="OverlayGrid"
+                                     Checked="checked_HideGrid" IsChecked="True">
+                            Hide Grid
+                        </RadioButton>
+                    </Grid>
+                    <ScrollViewer Grid.Row="1" ZoomMode="Enabled" HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto" HorizontalAlignment="Center"
+                                  VerticalAlignment="Center" >
+                        <Grid x:Name="originalImageOverlay" Margin="10" >
+                            <ContentControl MaxHeight="1080" MaxWidth="720">
+                                <Image HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="originalImage"
+                                       Source="{Binding CurrentlyDisplayedImage, Mode=OneWay}" />
+                            </ContentControl>
+                            
+                        </Grid>
+                    </ScrollViewer>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="0" Padding="10"
+                      Background="{ThemeResource SystemControlHighlightAltListAccentLowBrush}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock x:Name="outputImageLabel" Text="Output Preview Image" FontWeight="Bold" />
+                    <ScrollViewer HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1"
+                                  ZoomMode="Enabled" HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto">
+                        <ContentControl MaxHeight="1080" MaxWidth="720">
+                            <Image HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   x:Name="outputImage" Source="{Binding CurrentlyDisplayedMosaic, Mode=OneWay}" />
+                        </ContentControl>
+                        
+
+                    </ScrollViewer>
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2" Grid.ColumnSpan="2" Padding="10" MaxHeight="375" MinHeight="150" VerticalAlignment="Bottom"
+              Background="{ThemeResource ListBoxItemPointerOverBackgroundThemeBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <CommandBar Grid.Column="0" Grid.Row="0" Background="{ThemeResource AppBarBorderThemeBrush}">
-                <AppBarButton Icon="Folder" Label="Load Palette" VerticalAlignment="Top"
-                              Command="{Binding LoadPaletteCommand}" />
-                <AppBarButton x:Name="openImageButton" Icon="BrowsePhotos" Label="Open" Margin="0" VerticalAlignment="Top"
-                              Command="{Binding LoadImageCommand}" Click="OpenImageButton_Click" />
-                <AppBarButton x:Name="saveMosaicButton" Icon="SaveLocal" Label="Save Mosaic" Margin="0"
-                              VerticalAlignment="Top" Command="{Binding SaveImageCommand}" />
-            </CommandBar>
-            <Grid Grid.Row="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" x:Name="gridSizeLabel"
-                               Text="Grid Cell Size:" />
-                <Slider MinWidth="100" Margin="10" x:Name="gridSizeInput"  Grid.Row="0" Grid.Column="1" Maximum="50" Minimum="5" Value="{Binding CellSideLength, Mode=TwoWay}" PointerCaptureLost="GridSizeInput_PointerCaptureLost" />
-
-                    <Button x:Name="createMosaicButton" Content="Create Mosaic" HorizontalAlignment="Left" 
-                            Grid.Row="2"
-                            Grid.Column="0" VerticalAlignment="Top" Command="{Binding CreateMosaicCommand}" Background="{ThemeResource ButtonBackgroundThemeBrush}" />
-                    <Grid Grid.Column="0" Grid.Row="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                        <TextBlock x:Name="mosaicTypeBlock" HorizontalAlignment="Left" Grid.Row="0"
-                                   Grid.Column="0" Text="Mosaic Type:" TextWrapping="Wrap" VerticalAlignment="Top" />
-                        <RadioButton x:Name="solidMosaicRadio" Content="Solid" HorizontalAlignment="Left"
-                                     Grid.Row="1"
-                                     Grid.Column="0" Margin="5" VerticalAlignment="Top" GroupName="MosaicType" IsChecked="{Binding SolidMosaicType, Mode=TwoWay}"
-                                      />
-                        <RadioButton x:Name="pictureMosaicRadio" Content="Picture" HorizontalAlignment="Left" Margin="5"
-                                     Grid.Row="2"
-                                     Grid.Column="0" VerticalAlignment="Top" GroupName="MosaicType"
-                                     IsChecked="{Binding PictureMosaicType, Mode=TwoWay}" />
-                        <CheckBox Content="Black and White" HorizontalAlignment="Left" Margin="10" Grid.Row="3" VerticalAlignment="Top" Command="{Binding ToggleBlackAndWhiteCommand}"/>
-                    </Grid>
-                
-            </Grid>
-                <Grid Grid.Column="1" MaxHeight="800">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Column="0" Grid.Row="0" VerticalAlignment="Stretch" Background="{ThemeResource SystemControlHighlightAltListAccentMediumBrush}"  Padding="10">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" x:Name="originalImageLabel" Text="Original Image" FontWeight="Bold" />
-                            <RadioButton Grid.Column="1" x:Name="showGrid" GroupName="OverlayGrid"
-                                         Checked="checked_DisplayGrid">
-                                Overlay Grid
-                            </RadioButton>
-                            <RadioButton Grid.Column="2" x:Name="hideGrid" GroupName="OverlayGrid" Checked="checked_HideGrid" IsChecked="True">Hide Grid</RadioButton>
-                        </Grid>
-                    <ScrollViewer Grid.Row="1" ZoomMode="Enabled" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Center" VerticalAlignment="Center"  MaxHeight="1080" MaxWidth="720">
-                        <Grid x:Name="originalImageOverlay" Margin="10" MaxHeight="1080" MaxWidth="720">
-
-                            <Image HorizontalAlignment="Center" VerticalAlignment="Center"  x:Name="originalImage" 
-                                   Source="{Binding CurrentlyDisplayedImage, Mode=OneWay}" MaxHeight="1080" MaxWidth="720" />
-                            
-                        </Grid>
-                        </ScrollViewer>
-                </Grid>
-                    <Grid  Grid.Column="1" Grid.Row="0" Padding="10" Background="{ThemeResource SystemControlHighlightAltListAccentLowBrush}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <TextBlock x:Name="outputImageLabel" Text="Output Preview Image" FontWeight="Bold"/>
-                    <ScrollViewer HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="0" Grid.Row="1" ZoomMode="Enabled" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                        <Image HorizontalAlignment="Center" VerticalAlignment="Center" 
-                                   x:Name="outputImage" Source="{Binding CurrentlyDisplayedMosaic, Mode=OneWay}" MaxHeight="1080" MaxWidth="720"/>
-                    </ScrollViewer>
-                        
-                    </Grid>
-                </Grid>
-            </Grid>
-            <Grid Grid.Row="2" Grid.ColumnSpan="2" Padding="10" MaxHeight="375" VerticalAlignment="Bottom" Background="{ThemeResource ListBoxItemPointerOverBackgroundThemeBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Picture Palette" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center"
+                       FontWeight="Bold" />
+            <TextBlock HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" Text="{Binding PaletteSize}"
+                       TextWrapping="Wrap" VerticalAlignment="Top" />
+            <ScrollViewer Grid.Row="2" Grid.Column="1" Margin="10" MaxHeight="250">
+                <GridView HorizontalAlignment="Center" VerticalAlignment="Top"
+                          x:Name="mosaicView" SelectionMode="Multiple"
+                          ItemsSource="{Binding MosaicPalette, Mode=TwoWay}" ScrollViewer.VerticalScrollMode="Auto">
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Image Source="{Binding}" Stretch="Fill" Height="150" Width="150" />
+                            </Grid>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid MaximumRowsOrColumns="10" Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                </GridView>
+            </ScrollViewer>
+            <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="3">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="Picture Palette" Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Center" FontWeight="Bold" />
-                <TextBlock HorizontalAlignment="Center"  Grid.Row="1"  Grid.Column="1" Text="{Binding PaletteSize}" TextWrapping="Wrap" VerticalAlignment="Top"/>
-                <ScrollViewer Grid.Row="2" Grid.Column="1" Margin="10" MaxHeight="250">
-                    <GridView HorizontalAlignment="Center" VerticalAlignment="Top" 
-                              x:Name="mosaicView" SelectionMode="Multiple"
-                              ItemsSource="{Binding MosaicPalette, Mode=TwoWay}" ScrollViewer.VerticalScrollMode ="Auto">
-                        <GridView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Image Source="{Binding}" Stretch="Fill" Height="150" Width="150" />
-                                </Grid>
-                            </DataTemplate>
-                        </GridView.ItemTemplate>
-                        <GridView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <ItemsWrapGrid MaximumRowsOrColumns="10" Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </GridView.ItemsPanel>
-                    </GridView>
-                </ScrollViewer>
-                <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="3">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" HorizontalAlignment="Left"  Text="Palette Options:" TextWrapping="Wrap" VerticalAlignment="Top"/>
-                    <CheckBox Grid.Row="1" Content="Prevent Image Repetition" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <CheckBox Grid.Row="2" Content="Use Each Image" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
-                </Grid>
+                <TextBlock Grid.Row="0" HorizontalAlignment="Left" Text="Palette Options:" TextWrapping="Wrap"
+                           VerticalAlignment="Top" />
+                <CheckBox Grid.Row="1" Content="Prevent Image Repetition" HorizontalAlignment="Left"
+                          VerticalAlignment="Top" />
+                <CheckBox Grid.Row="2" Content="Use Each Image" HorizontalAlignment="Left" VerticalAlignment="Top" />
             </Grid>
-
         </Grid>
+
+    </Grid>
 
 </Page>
