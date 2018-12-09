@@ -72,6 +72,9 @@
       <RootProperty Name="Margin" />
       <RootProperty Name="MaxHeight" />
       <RootProperty Name="Content" />
+      <RootProperty Name="ZoomMode" />
+      <RootProperty Name="HorizontalScrollBarVisibility" />
+      <RootProperty Name="VerticalScrollBarVisibility" />
       <RootMethod Name="GetVerticalScrollMode" />
       <RootMethod Name="SetVerticalScrollMode" />
     </RootType>
