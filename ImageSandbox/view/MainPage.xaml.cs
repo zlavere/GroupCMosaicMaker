@@ -1,4 +1,5 @@
-﻿using Windows.Foundation;
+﻿using System;
+using Windows.Foundation;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -82,15 +83,15 @@ namespace ImageSandbox.View
         private bool canUpdateGrid()
         {
             var isImageSourceSet = this.originalImage.Source != null;
-            var cellSizeParsed = int.TryParse(this.gridSizeInput.Text, out var result);
-            var isResultNew = result != this.CellSideLength;
-            var isResultValid = result > 0;
+            var cellSizeParsed = Convert.ToInt32(this.gridSizeInput.Value);
+            var isResultNew = cellSizeParsed != this.CellSideLength;
+            var isResultValid = cellSizeParsed >= 5 && cellSizeParsed <= 50;
 
-            var isReadyForUpdate = isImageSourceSet && cellSizeParsed && isResultNew && isResultValid;
+            var isReadyForUpdate = isImageSourceSet && isResultNew && isResultValid;
 
             if (isReadyForUpdate)
             {
-                this.CellSideLength = result;
+                this.CellSideLength = cellSizeParsed;
                 this.IsGridChangedOrHidden = true;
             }
             

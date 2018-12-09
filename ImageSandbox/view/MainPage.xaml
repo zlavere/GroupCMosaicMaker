@@ -46,9 +46,10 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" x:Name="gridSizeLabel"
                                Text="Grid Cell Size:" />
-                    <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" x:Name="gridSizeInput"
-                             InputScope="Number"
-                             Text="{Binding CellSideLength, Mode=TwoWay, Converter={StaticResource textInputToIntConverter}}" />
+                <Slider MinWidth="100" Margin="10" x:Name="gridSizeInput"  Grid.Row="0" Grid.Column="1" Maximum="50" Minimum="5" Value="{Binding CellSideLength}" />
+                    <!-- <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" x:Name="gridSizeInput" -->
+                    <!--          InputScope="Number" -->
+                    <!--          Text="{Binding CellSideLength, Mode=TwoWay, Converter={StaticResource textInputToIntConverter}}" /> -->
                     <Button x:Name="createMosaicButton" Content="Create Mosaic" HorizontalAlignment="Left" 
                             Grid.Row="2"
                             Grid.Column="0" VerticalAlignment="Top" Command="{Binding CreateMosaicCommand}" Background="{ThemeResource ButtonBackgroundThemeBrush}" />
@@ -57,7 +58,9 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+
+                    </Grid.RowDefinitions>
                         <TextBlock x:Name="mosaicTypeBlock" HorizontalAlignment="Left" Grid.Row="0"
                                    Grid.Column="0" Text="Mosaic Type:" TextWrapping="Wrap" VerticalAlignment="Top" />
                         <RadioButton x:Name="solidMosaicRadio" Content="Solid" HorizontalAlignment="Left"
@@ -68,9 +71,10 @@
                                      Grid.Row="2"
                                      Grid.Column="0" VerticalAlignment="Top" GroupName="MosaicType"
                                      IsChecked="{Binding PictureMosaicType, Mode=TwoWay}" />
-                        <CheckBox Content="Black and White" HorizontalAlignment="Left" Margin="5,37,0,0" Grid.Row="2" VerticalAlignment="Top" Command="{Binding ToggleBlackAndWhiteCommand}"/>
+                        <CheckBox Content="Black and White" HorizontalAlignment="Left" Margin="10" Grid.Row="3" VerticalAlignment="Top" Command="{Binding ToggleBlackAndWhiteCommand}"/>
                     </Grid>
-                </Grid>
+                
+            </Grid>
                 <Grid Grid.Column="1" MaxHeight="800">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
