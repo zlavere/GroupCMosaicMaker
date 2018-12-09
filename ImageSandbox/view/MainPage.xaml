@@ -46,7 +46,7 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" x:Name="gridSizeLabel"
                                Text="Grid Cell Size:" />
-                <Slider MinWidth="100" Margin="10" x:Name="gridSizeInput"  Grid.Row="0" Grid.Column="1" Maximum="50" Minimum="5" Value="{Binding CellSideLength}" />
+                <Slider MinWidth="100" Margin="10" x:Name="gridSizeInput"  Grid.Row="0" Grid.Column="1" Maximum="50" Minimum="5" Value="{Binding CellSideLength, Mode=TwoWay}" />
                     <!-- <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" x:Name="gridSizeInput" -->
                     <!--          InputScope="Number" -->
                     <!--          Text="{Binding CellSideLength, Mode=TwoWay, Converter={StaticResource textInputToIntConverter}}" /> -->
