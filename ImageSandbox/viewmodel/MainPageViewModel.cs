@@ -343,7 +343,7 @@ namespace ImageSandbox.ViewModel
                 this.currentDpiY = readImage.DpiY;
                 this.originalImageFileType = readImage.FileType;
             }
-            catch (NullReferenceException e)
+            catch (NullReferenceException)
             {
                 this.CurrentlyDisplayedImage = null;
             }
