@@ -144,7 +144,7 @@ namespace ImageSandbox.Utility
             int red = baseColor.R;
             var total = blue + green + red;
             var returnColor = new Color();
-            if (total > 382)
+            if (total > 384)
             {
                 returnColor.B = (byte) white;
                 returnColor.G = (byte) white;
