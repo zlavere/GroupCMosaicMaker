@@ -65,8 +65,6 @@
       <RootProperty Name="FontWeight" />
       <RootProperty Name="TextWrapping" />
       <RootProperty Name="VerticalAlignment" />
-      <RootProperty Name="Margin" />
-      <RootProperty Name="FontSize" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ScrollViewer">
       <RootProperty Name="Margin" />
@@ -120,7 +118,6 @@
       <RootProperty Name="Margin" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="IsChecked" />
-      <RootProperty Name="RenderTransformOrigin" />
       <RootEvent Name="Checked" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.TextBox">
@@ -144,6 +141,5 @@
       <RootProperty Name="Margin" />
     </RootType>
     <RootType FullName="ImageSandbox.View.MainPage" />
-    <RootType FullName="ImageSandbox.view.SettingsPage" />
   </Roots.RootTypes>
 </Roots>

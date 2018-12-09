@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.UI;
+﻿using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Imaging;
-using ImageSandbox.Extensions;
 
 namespace ImageSandbox.Model
 {
@@ -35,15 +27,15 @@ namespace ImageSandbox.Model
         /// <returns>WriteableBitmap with solid cell colors.</returns>
         public override async Task<WriteableBitmap> SetCellData()
         {
-            this.GridFactory.CalculateCellAttributes();
-            return await this.writePixelDataToBitmap();
+            GridFactory.CalculateCellAttributes();
+            return await WritePixelDataToBitmap();
         }
 
         protected override byte[] SetUpPixelData()
         {
             var buffer = new byte[SourceImage.PixelWidth * SourceImage.PixelHeight * 4];
 
-                Parallel.ForEach(this.GridFactory.Cells, cell =>
+                Parallel.ForEach(GridFactory.Cells, cell =>
                 {
                     Parallel.ForEach(cell.PixelOffsetsInByteArray, offset =>
                     {

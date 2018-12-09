@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Storage.Streams;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Imaging;
-using ImageSandbox.Utility;
-using Windows.UI;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Windows.Graphics.Imaging;
+using Windows.UI.Xaml.Media.Imaging;
 using ImageSandbox.Extensions;
 using WriteableBitmapExtensions = Windows.UI.Xaml.Media.Imaging.WriteableBitmapExtensions;
 
@@ -44,7 +35,7 @@ namespace ImageSandbox.Model
         protected override byte[] SetUpPixelData()
         {
             var buffer = new byte[SourceImage.PixelWidth * SourceImage.PixelHeight * 4];
-            foreach (var cell in this.GridFactory.Cells)
+            foreach (var cell in GridFactory.Cells)
             {
                 foreach (var current in this.setCellToPicture(cell).Result)
                 {
@@ -58,7 +49,7 @@ namespace ImageSandbox.Model
         private async Task<Dictionary<int, byte>> setCellToPicture(Cell cell)
         {
             var picture = this.Palette.FindImageWithClosestColor(cell.AverageColor);
-            picture = picture.Resize(this.GridFactory.CellSideLength, this.GridFactory.CellSideLength,
+            picture = picture.Resize(GridFactory.CellSideLength, GridFactory.CellSideLength,
                 WriteableBitmapExtensions.Interpolation.Bilinear);
             var picPixelData = await picture.GetPixelColors();
             var pixelIndex = 0;
@@ -77,8 +68,8 @@ namespace ImageSandbox.Model
 
         public override async Task<WriteableBitmap> SetCellData()
         {
-            this.GridFactory.CalculateCellAttributes();
-            return await this.writePixelDataToBitmap();
+            GridFactory.CalculateCellAttributes();
+            return await WritePixelDataToBitmap();
         }
     }
 }
