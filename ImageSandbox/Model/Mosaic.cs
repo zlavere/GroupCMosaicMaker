@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.UI;
@@ -65,7 +63,7 @@ namespace ImageSandbox.Model
             
         }
 
-        protected async Task<WriteableBitmap> writePixelDataToBitmap()
+        protected async Task<WriteableBitmap> WritePixelDataToBitmap()
         {
             var sourcePixels = this.SourceImage.PixelWidth * this.SourceImage.PixelHeight;
             var mosaic = new WriteableBitmap(this.SourceImage.PixelWidth, this.SourceImage.PixelHeight);

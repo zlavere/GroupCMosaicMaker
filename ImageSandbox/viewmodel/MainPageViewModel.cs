@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Imaging;
 using ImageSandbox.Extensions;
 using ImageSandbox.IO;
@@ -441,9 +437,9 @@ namespace ImageSandbox.ViewModel
             }
         }
 
-        private void changeToBlackAndWhite(WriteableBitmap mosaic)
+        private void changeToBlackAndWhite(WriteableBitmap mosaicToChange)
         {
-            this.BlackAndWhiteMosaic = BitmapUtilities.ConvertToBlackAndWhite(mosaic);
+            this.BlackAndWhiteMosaic = BitmapUtilities.ConvertToBlackAndWhite(mosaicToChange);
         }
 
         private bool canChangeDisplayedMosaic(object obj)

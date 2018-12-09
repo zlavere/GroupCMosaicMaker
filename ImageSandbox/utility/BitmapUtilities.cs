@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
@@ -7,7 +6,6 @@ using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI;
 using Windows.UI.Xaml.Media.Imaging;
-using ImageSandbox.Extensions;
 
 namespace ImageSandbox.Utility
 {
@@ -49,54 +47,6 @@ namespace ImageSandbox.Utility
             var g = pixels[offset + 1];
             var b = pixels[offset + 0];
             return Color.FromArgb(0, r, g, b);
-        }
-
-        /// <summary>
-        ///     Gets the average color of the pixels in an image.
-        /// </summary>
-        /// <param name="pixels">The pixels.</param>
-        /// <param name="width">The width.</param>
-        /// <param name="height">The height.</param>
-        /// <returns></returns>
-        public static Color GetAveragePixelColor(byte[] pixels, uint width, uint height)
-        {
-            var totalPixels = width * height;
-            var currentColor = 0;
-            var totalR = 0;
-            var totalG = 0;
-            var totalB = 0;
-            for (var x = 0; x < totalPixels; x++)
-            {
-                if (currentColor == 0)
-                {
-                    totalB += pixels[x];
-                }
-
-                if (currentColor == 1)
-                {
-                    totalG += pixels[x];
-                }
-
-                if (currentColor == 2)
-                {
-                    totalR += pixels[x];
-                }
-
-                if (currentColor != 2)
-                {
-                    currentColor++;
-                }
-                else
-                {
-                    currentColor = 0;
-                }
-            }
-
-            var averageR = totalR / totalPixels;
-            var averageG = totalG / totalPixels;
-            var averageB = totalB / totalPixels;
-            var averageColor = Color.FromArgb(0, (byte) averageR, (byte) averageG, (byte) averageB);
-            return averageColor;
         }
 
         /// <summary>
