@@ -84,9 +84,12 @@ namespace ImageSandbox.Model
 
         private async void getColors()
         {
-            this.Colors = await this.SourceImage.GetPixelColors();
+            if (this.SourceImage != null)
+            {
+                this.Colors = await this.SourceImage.GetPixelColors();
+            }
         }
-
+           
         #endregion
     }
 }
