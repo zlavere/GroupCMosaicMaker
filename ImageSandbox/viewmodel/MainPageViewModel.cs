@@ -244,6 +244,7 @@ namespace ImageSandbox.ViewModel
 
                 this.cellSideLength = value;
                 this.GridFactory.CellSideLength = this.cellSideLength;
+                
                 this.CreateMosaicCommand.OnCanExecuteChanged();
                 this.OnPropertyChanged();
             }
@@ -377,6 +378,7 @@ namespace ImageSandbox.ViewModel
             this.MaxImageHeight = 800;
             this.IsBlackAndWhite = false;
             this.PaletteSize = 0;
+            this.CellSideLength = 5;
         }
 
         #endregion
