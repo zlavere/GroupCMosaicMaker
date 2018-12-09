@@ -97,8 +97,8 @@
                             </RadioButton>
                             <RadioButton Grid.Column="2" x:Name="hideGrid" GroupName="OverlayGrid" Checked="checked_HideGrid">Hide Grid</RadioButton>
                         </Grid>
-                    <ScrollViewer Grid.Row="1" ZoomMode="Enabled" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Center" VerticalAlignment="Center"  >
-                        <Grid x:Name="originalImageOverlay" Margin="10"  >
+                    <ScrollViewer Grid.Row="1" ZoomMode="Enabled" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Center" VerticalAlignment="Center"  MaxHeight="1080" MaxWidth="720">
+                        <Grid x:Name="originalImageOverlay" Margin="10" MaxHeight="1080" MaxWidth="720">
 
                             <Image HorizontalAlignment="Center" VerticalAlignment="Center"  x:Name="originalImage" 
                                    Source="{Binding CurrentlyDisplayedImage, Mode=OneWay}" MaxHeight="1080" MaxWidth="720" />

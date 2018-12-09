@@ -39,6 +39,7 @@
       <RootProperty Name="Padding" />
       <RootProperty Name="MaxHeight" />
       <RootProperty Name="Margin" />
+      <RootProperty Name="MaxWidth" />
       <RootMethod Name="GetColumn" />
       <RootMethod Name="SetColumn" />
       <RootMethod Name="GetRow" />
@@ -74,6 +75,7 @@
       <RootProperty Name="ZoomMode" />
       <RootProperty Name="HorizontalScrollBarVisibility" />
       <RootProperty Name="VerticalScrollBarVisibility" />
+      <RootProperty Name="MaxWidth" />
       <RootMethod Name="GetVerticalScrollMode" />
       <RootMethod Name="SetVerticalScrollMode" />
     </RootType>
