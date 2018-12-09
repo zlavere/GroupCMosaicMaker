@@ -9,9 +9,16 @@ namespace ImageSandbox.Model
 {
     public abstract class Mosaic
     {
-        public WriteableBitmap sourceImage;
-        #region Properties
+        #region Data members
 
+        /// <summary>
+        ///     The source image
+        /// </summary>
+        private WriteableBitmap sourceImage;
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         ///     Gets or sets the source image.
@@ -37,12 +44,11 @@ namespace ImageSandbox.Model
         /// </value>
         public GridFactory GridFactory { get; set; }
 
-        
         /// <summary>
-        /// Gets or sets the colors.
+        ///     Gets or sets the colors.
         /// </summary>
         /// <value>
-        /// The colors.
+        ///     The colors.
         /// </value>
         public List<Color> Colors { get; set; }
 
@@ -60,8 +66,11 @@ namespace ImageSandbox.Model
         {
             this.SourceImage = sourceImage;
             this.GridFactory = gridFactory;
-            
         }
+
+        #endregion
+
+        #region Methods
 
         protected async Task<WriteableBitmap> WritePixelDataToBitmap()
         {
@@ -78,8 +87,13 @@ namespace ImageSandbox.Model
 
             return mosaic;
         }
+
         protected abstract byte[] SetUpPixelData();
 
+        /// <summary>
+        ///     Sets the cell data.
+        /// </summary>
+        /// <returns></returns>
         public abstract Task<WriteableBitmap> SetCellData();
 
         private async void getColors()
@@ -89,7 +103,7 @@ namespace ImageSandbox.Model
                 this.Colors = await this.SourceImage.GetPixelColors();
             }
         }
-           
+
         #endregion
     }
 }

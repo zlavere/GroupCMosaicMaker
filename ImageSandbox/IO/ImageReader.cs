@@ -33,12 +33,12 @@ namespace ImageSandbox.IO
         public double DpiY { get; private set; }
 
         /// <summary>
-        /// Gets or sets the type of the file.
+        ///     Gets or sets the type of the file.
         /// </summary>
         /// <value>
-        /// The type of the file.
+        ///     The type of the file.
         /// </value>
-        public String FileType { get; set; }
+        public string FileType { get; set; }
 
         #endregion
 

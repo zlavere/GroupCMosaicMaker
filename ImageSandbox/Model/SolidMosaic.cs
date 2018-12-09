@@ -3,9 +3,14 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace ImageSandbox.Model
 {
+    /// <summary>
+    ///     A type of mosaic that is created using solid colors.
+    /// </summary>
+    /// <seealso cref="ImageSandbox.Model.Mosaic" />
     public class SolidMosaic : Mosaic
     {
         #region Constructors
+
         /// <inheritdoc />
         /// <summary>
         ///     Initializes a new instance of the <see cref="T:ImageSandbox.Model.SolidMosaic" /> class.
@@ -17,12 +22,13 @@ namespace ImageSandbox.Model
             : base(sourceImage, gridFactory)
         {
         }
+
         #endregion
 
         #region Methods
 
         /// <summary>
-        /// Returns a WriteableBitmap with solid cell colors.
+        ///     Returns a WriteableBitmap with solid cell colors.
         /// </summary>
         /// <returns>WriteableBitmap with solid cell colors.</returns>
         public override async Task<WriteableBitmap> SetCellData()
@@ -35,16 +41,16 @@ namespace ImageSandbox.Model
         {
             var buffer = new byte[SourceImage.PixelWidth * SourceImage.PixelHeight * 4];
 
-                Parallel.ForEach(GridFactory.Cells, cell =>
+            Parallel.ForEach(GridFactory.Cells, cell =>
+            {
+                Parallel.ForEach(cell.PixelOffsetsInByteArray, offset =>
                 {
-                    Parallel.ForEach(cell.PixelOffsetsInByteArray, offset =>
-                    {
-                        buffer[offset] = cell.AverageColor.B;
-                        buffer[offset + 1] = cell.AverageColor.G;
-                        buffer[offset + 2] = cell.AverageColor.R;
-                        buffer[offset + 3] = 255;
-                    }); 
+                    buffer[offset] = cell.AverageColor.B;
+                    buffer[offset + 1] = cell.AverageColor.G;
+                    buffer[offset + 2] = cell.AverageColor.R;
+                    buffer[offset + 3] = 255;
                 });
+            });
 
             return buffer;
         }

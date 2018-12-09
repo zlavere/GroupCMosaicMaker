@@ -18,7 +18,9 @@ namespace ImageSandbox.Converter
         /// <param name="targetType">Type of the target.</param>
         /// <param name="parameter">The parameter.</param>
         /// <param name="language">The language.</param>
-        /// <returns></returns>
+        /// <returns>
+        ///     A object.
+        /// </returns>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             var stringValue = value.ToString();
@@ -33,7 +35,9 @@ namespace ImageSandbox.Converter
         /// <param name="targetType">Type of the target.</param>
         /// <param name="parameter">The parameter.</param>
         /// <param name="language">The language.</param>
-        /// <returns></returns>
+        /// <returns>
+        ///     A object.
+        /// </returns>
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             return value.ToString();

@@ -17,9 +17,30 @@ namespace ImageSandbox.View
     {
         #region Properties
 
+        /// <summary>
+        ///     Gets or sets the show grid.
+        /// </summary>
+        /// <value>
+        ///     The show grid.
+        /// </value>
         public RadioButton ShowGrid { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the hide grid.
+        /// </summary>
+        /// <value>
+        ///     The hide grid.
+        /// </value>
         public RadioButton HideGrid { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the length of the cell side.
+        /// </summary>
+        /// <value>
+        ///     The length of the cell side.
+        /// </value>
         public int CellSideLength { get; set; }
+
         private Grid OverlayGrid { get; set; }
         private bool IsGridChangedOrHidden { get; set; }
 
@@ -27,6 +48,9 @@ namespace ImageSandbox.View
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="MainPage" /> class.
+        /// </summary>
         public MainPage()
         {
             this.InitializeComponent();
@@ -93,7 +117,7 @@ namespace ImageSandbox.View
                 this.CellSideLength = result;
                 this.IsGridChangedOrHidden = true;
             }
-            
+
             return isReadyForUpdate;
         }
 

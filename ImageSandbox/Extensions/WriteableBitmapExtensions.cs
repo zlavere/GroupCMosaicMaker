@@ -6,6 +6,9 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace ImageSandbox.Extensions
 {
+    /// <summary>
+    ///     Provides new functionality to writeable bitmaps.
+    /// </summary>
     public static class WriteableBitmapExtensions
     {
         #region Methods
@@ -21,7 +24,7 @@ namespace ImageSandbox.Extensions
         {
             using (var stream = wb.PixelBuffer.AsStream())
             {
-                var pixelsCount = (wb.PixelWidth * wb.PixelHeight);
+                var pixelsCount = wb.PixelWidth * wb.PixelHeight;
                 var bytesCount = pixelsCount * 4;
                 var pixelBuffer = new byte[bytesCount];
                 await stream.ReadAsync(pixelBuffer, 0, bytesCount);
@@ -33,8 +36,9 @@ namespace ImageSandbox.Extensions
                     var pixelGreen = pixelBuffer[offsetPosition + 1];
                     var pixelRed = pixelBuffer[offsetPosition + 2];
 
-                    colors.Add(Color.FromArgb(255, pixelRed, pixelGreen, pixelBlue));  
+                    colors.Add(Color.FromArgb(255, pixelRed, pixelGreen, pixelBlue));
                 }
+
                 return colors;
             }
         }

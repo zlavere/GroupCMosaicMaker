@@ -17,7 +17,7 @@ namespace ImageSandbox.IO
         #region Methods
 
         /// <summary>
-        /// Saves the image.
+        ///     Saves the image.
         /// </summary>
         /// <param name="imageToSave">The image to save.</param>
         /// <param name="dpiX">The dpi x.</param>
@@ -47,8 +47,6 @@ namespace ImageSandbox.IO
             {
                 //TODO Nothing happens.
             }
-
-
         }
 
         private async Task saveAsBmp(StorageFile saveFile, WriteableBitmap imageToSave, double dpiX, double dpiY)
