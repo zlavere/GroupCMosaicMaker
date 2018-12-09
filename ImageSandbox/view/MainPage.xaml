@@ -23,7 +23,7 @@
                 <AppBarButton Icon="Folder" Label="Load Palette" VerticalAlignment="Top"
                               Command="{Binding LoadPaletteCommand}" />
                 <AppBarButton x:Name="openImageButton" Icon="BrowsePhotos" Label="Open" Margin="0" VerticalAlignment="Top"
-                              Command="{Binding LoadImageCommand}" />
+                              Command="{Binding LoadImageCommand}" Click="OpenImageButton_Click" />
                 <AppBarButton x:Name="saveMosaicButton" Icon="SaveLocal" Label="Save Mosaic" Margin="0"
                               VerticalAlignment="Top" Command="{Binding SaveImageCommand}" />
             </CommandBar>
@@ -46,7 +46,7 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" x:Name="gridSizeLabel"
                                Text="Grid Cell Size:" />
-                <Slider MinWidth="100" Margin="10" x:Name="gridSizeInput"  Grid.Row="0" Grid.Column="1" Maximum="50" Minimum="5" Value="{Binding CellSideLength, Mode=TwoWay}" />
+                <Slider MinWidth="100" Margin="10" x:Name="gridSizeInput"  Grid.Row="0" Grid.Column="1" Maximum="50" Minimum="5" Value="{Binding CellSideLength, Mode=TwoWay}" PointerCaptureLost="GridSizeInput_PointerCaptureLost" />
                     <!-- <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" x:Name="gridSizeInput" -->
                     <!--          InputScope="Number" -->
                     <!--          Text="{Binding CellSideLength, Mode=TwoWay, Converter={StaticResource textInputToIntConverter}}" /> -->
@@ -99,7 +99,7 @@
                                          Checked="checked_DisplayGrid">
                                 Overlay Grid
                             </RadioButton>
-                            <RadioButton Grid.Column="2" x:Name="hideGrid" GroupName="OverlayGrid" Checked="checked_HideGrid">Hide Grid</RadioButton>
+                            <RadioButton Grid.Column="2" x:Name="hideGrid" GroupName="OverlayGrid" Checked="checked_HideGrid" IsChecked="True">Hide Grid</RadioButton>
                         </Grid>
                     <ScrollViewer Grid.Row="1" ZoomMode="Enabled" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Center" VerticalAlignment="Center"  MaxHeight="1080" MaxWidth="720">
                         <Grid x:Name="originalImageOverlay" Margin="10" MaxHeight="1080" MaxWidth="720">

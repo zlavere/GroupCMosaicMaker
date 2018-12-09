@@ -106,14 +106,6 @@ namespace ImageSandbox.ViewModel
         public RelayCommand CreateMosaicCommand { get; set; }
 
         /// <summary>
-        ///     Toggles the grid.
-        /// </summary>
-        /// <value>
-        ///     The toggle grid command.
-        /// </value>
-        public RelayCommand ToggleGridCommand { get; set; }
-
-        /// <summary>
         ///     Gets or sets the load palette command.
         /// </summary>
         /// <value>

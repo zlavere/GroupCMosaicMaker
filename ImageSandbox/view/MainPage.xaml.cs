@@ -106,25 +106,37 @@ namespace ImageSandbox.View
 
         private bool canUpdateGrid()
         {
-            var isImageSourceSet = this.originalImage.Source != null;
-            var cellSizeParsed = Convert.ToInt32(this.gridSizeInput.Value);
-            var isResultNew = cellSizeParsed != this.CellSideLength;
-            var isResultValid = cellSizeParsed >= 5 && cellSizeParsed <= 50;
-
-            var isReadyForUpdate = isImageSourceSet && isResultNew && isResultValid;
-
-            if (isReadyForUpdate)
+            try
             {
-                this.CellSideLength = cellSizeParsed;
-                this.IsGridChangedOrHidden = true;
+                var isImageSourceSet = this.originalImage.Source != null;
+                var cellSizeParsed = Convert.ToInt32(this.gridSizeInput.Value);
+                var isResultNew = cellSizeParsed != this.CellSideLength;
+                var isResultValid = cellSizeParsed >= 5 && cellSizeParsed <= 50;
+
+                var isReadyForUpdate = isImageSourceSet && isResultValid;
+
+                if (isReadyForUpdate)
+                {
+                    this.CellSideLength = cellSizeParsed;
+                    this.IsGridChangedOrHidden = true;
+                }
+
+                return isReadyForUpdate;
+            }
+            catch (NullReferenceException)
+            {
+                return false;
             }
 
-            return isReadyForUpdate;
         }
 
         private void checked_HideGrid(object sender, RoutedEventArgs e)
         {
-            this.hideGridOverlay();
+            if (this.originalImageOverlay != null)
+            {
+                this.hideGridOverlay();
+            }
+
         }
 
         private void hideGridOverlay()
@@ -151,5 +163,27 @@ namespace ImageSandbox.View
         }
 
         #endregion
+
+
+        private void OpenImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.actionHideGrid();
+
+        }
+
+        private void GridSizeInput_PointerCaptureLost(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            this.actionHideGrid();
+        }
+
+        private void actionHideGrid()
+        {
+            if (this.originalImageOverlay != null)
+            {
+                this.hideGridOverlay();
+                this.hideGrid.IsChecked = true;
+                this.OverlayGrid = new Grid();
+            }
+        }
     }
 }
