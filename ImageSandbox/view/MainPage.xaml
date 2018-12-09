@@ -46,11 +46,8 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" x:Name="gridSizeLabel"
                                Text="Grid Cell Size:" />
-                <Slider MinWidth="100" Margin="10" x:Name="gridSizeInput"  Grid.Row="0" Grid.Column="1" Maximum="50" Minimum="5" Value="{Binding CellSideLength}" />
-                    <!-- <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" x:Name="gridSizeInput" -->
-                    <!--          InputScope="Number" -->
-                    <!--          Text="{Binding CellSideLength, Mode=TwoWay, Converter={StaticResource textInputToIntConverter}}" /> -->
-                    <Button x:Name="createMosaicButton" Content="Create Mosaic" HorizontalAlignment="Left" 
+                <Slider MinWidth="100" Margin="10" x:Name="gridSizeInput"  Grid.Row="0" Grid.Column="1" Maximum="50" Minimum="5" Value="{Binding CellSideLength, Mode =TwoWay}" />
+                   <Button x:Name="createMosaicButton" Content="Create Mosaic" HorizontalAlignment="Left" 
                             Grid.Row="2"
                             Grid.Column="0" VerticalAlignment="Top" Command="{Binding CreateMosaicCommand}" Background="{ThemeResource ButtonBackgroundThemeBrush}" />
                     <Grid Grid.Column="0" Grid.Row="1">
@@ -59,7 +56,6 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
-
                     </Grid.RowDefinitions>
                         <TextBlock x:Name="mosaicTypeBlock" HorizontalAlignment="Left" Grid.Row="0"
                                    Grid.Column="0" Text="Mosaic Type:" TextWrapping="Wrap" VerticalAlignment="Top" />

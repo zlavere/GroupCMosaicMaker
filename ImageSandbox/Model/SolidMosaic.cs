@@ -43,11 +43,14 @@ namespace ImageSandbox.Model
 
             Parallel.ForEach(GridFactory.Cells, cell =>
             {
+                var averageB = cell.AverageColor.B;
+                var averageR = cell.AverageColor.R;
+                var averageG = cell.AverageColor.G;
                 Parallel.ForEach(cell.PixelOffsetsInByteArray, offset =>
                 {
-                    buffer[offset] = cell.AverageColor.B;
-                    buffer[offset + 1] = cell.AverageColor.G;
-                    buffer[offset + 2] = cell.AverageColor.R;
+                    buffer[offset] = averageB;
+                    buffer[offset + 1] = averageG;
+                    buffer[offset + 2] = averageR;
                     buffer[offset + 3] = 255;
                 });
             });
